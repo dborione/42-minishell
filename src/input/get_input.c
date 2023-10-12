@@ -36,14 +36,11 @@ void ft_get_input(t_shell_data **shell_data)
 	{
 		using_history();
 		stifle_history(1000);
-		ft_show_user_path((*shell_data)->envp);
-		line = readline(" ");
-		using_history();
-		stifle_history(1000);
+		//ft_show_user_path((*shell_data)->envp);
+		line = readline(ft_show_user_path((*shell_data)->envp));
 		ft_add_to_history_file(*shell_data, &hist_file, line);
 		if (!line || !line[0])
 			continue;
-		add_history(line);
 		//printf("%s", current_history()->line);
 		if (ft_isequal(line, "exit"))
 		{

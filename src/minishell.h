@@ -70,7 +70,8 @@ int 			ft_envp_add(char **envp, char **input);
 
 /* Prompt */
 
-int				ft_show_user_path(char **enpv);
+// int				ft_show_user_path(char **enpv);
+char	*ft_show_user_path(char **envp);
 
 /*	Input */
 
