@@ -53,7 +53,7 @@ int		ft_parse_builtin(t_shell_data **shell_data, t_lexer_tokens *target)
 		return (ft_env((*shell_data)->envp));
 }
 
-void	ft_parse_elemets(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
+void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 {
 	t_lexer_tokens	*target;
 

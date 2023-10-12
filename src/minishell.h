@@ -81,7 +81,7 @@ void			ft_get_input(t_shell_data	**shell_data);
 
 t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line);
 int				ft_get_token_from_input(char *input);
-void			ft_parse_elemets(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
+void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
 
 /* Commands */
 

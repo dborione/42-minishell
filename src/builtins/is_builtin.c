@@ -20,5 +20,11 @@ int	ft_is_builtin(char *input)
 		return (1);
 	if (ft_startswith(input, "env ") || ft_isequal(input, "env"))
 		return (1);
+	if (ft_isequal(input, "echo") || ft_startswith(input, "cd "))
+		return (1);
+	if (ft_startswith(input, "export") || ft_isequal(input, "pwd"))
+		return (1);
+	if (ft_startswith(input, "unset") || ft_isequal(input, "env"))
+		return (1);
 	return (0);
 }
