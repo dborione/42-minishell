@@ -112,6 +112,7 @@ int				ft_is_builtin(char *input);
 int				ft_cd(char **envp, char *input);
 int				ft_env(char **envp);
 int				ft_pwd(char **envp);
+int ft_echo(t_lexer_tokens *target);
 
 /* Quotes */
 

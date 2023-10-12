@@ -45,12 +45,16 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 static
 int		ft_parse_builtin(t_shell_data **shell_data, t_lexer_tokens *target)
 {
+	if (ft_startswith(target->input, "echo"))
+		return (ft_echo(target));
 	if (ft_startswith(target->input, "pwd"))
 		return (ft_pwd((*shell_data)->envp));
 	if (ft_startswith(target->input, "cd"))
 		return (ft_cd((*shell_data)->envp, target->input));
 	if (ft_startswith(target->input, "env"))
 		return (ft_env((*shell_data)->envp));
+
+		// return (ft_echo(line));
 }
 
 void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
