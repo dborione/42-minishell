@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
+
 int ft_env(char **envp)
 {
 	int	i;
 
-ft_printf("hihihiha\n");
+	//ft_printf("hihihiha\n");
 	i = 0;
 	while (envp[i])
 	{

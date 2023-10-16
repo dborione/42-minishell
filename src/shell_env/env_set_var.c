@@ -27,7 +27,7 @@ int		ft_envp_set(char **envp, char **input)
 		{
 			free(envp[i]);
 			free(key);
-			ft_printf(">>>> '%s' <<<<\n", *input);
+			//ft_printf(">>>> '%s' <<<<\n", *input);
 			envp[i] = *input;
 			return (1);
 		}

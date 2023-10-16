@@ -176,6 +176,6 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 	{
 		// prendre en charge les cas d'erreurs ici
 	}
-    ft_print_lst(&lexer_list);
+    //ft_print_lst(&lexer_list);
     return (lexer_list);
 }

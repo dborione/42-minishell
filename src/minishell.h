@@ -70,7 +70,8 @@ int 			ft_envp_add(char **envp, char **input);
 
 /* Prompt */
 
-int				ft_show_user_path(char **enpv);
+// int				ft_show_user_path(char **enpv);
+char	*ft_show_user_path(char **envp);
 
 /*	Input */
 
@@ -80,7 +81,7 @@ void			ft_get_input(t_shell_data	**shell_data);
 
 t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line);
 int				ft_get_token_from_input(char *input);
-void			ft_parse_elemets(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
+void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
 
 /* Commands */
 
@@ -111,6 +112,7 @@ int				ft_is_builtin(char *input);
 int				ft_cd(char **envp, char *input);
 int				ft_env(char **envp);
 int				ft_pwd(char **envp);
+int ft_echo(t_lexer_tokens *target);
 
 /* Quotes */
 

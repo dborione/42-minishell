@@ -23,18 +23,16 @@ static int	ft_print_user_path(char *user, char *host, char *path, int home)
 			user, host, path));
 }
 
-char	*ft_show_user_path(char **envp)
+int	ft_show_user_path(char **envp)
 {
 	char	*user;
 	char	*path;
 	char	*home;
 	size_t	len;
-	char	*prompt;
 
 	user = ft_envp_get_value(envp, "USER");
 	path = ft_envp_get_value(envp, "PWD");
 	home = ft_envp_get_value(envp, "HOME");
-	prompt = malloc
 	if (ft_startswith(path, home))
 	{
 		len = ft_strlen(home);
@@ -44,6 +42,4 @@ char	*ft_show_user_path(char **envp)
 			return (ft_print_user_path(user, "student.s19.be", &path[len], 1));
 	}
 	return (ft_print_user_path(user, "student.s19.be", path, 0));
-
-	
 }
