@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 16:06:47 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:16:19 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,31 @@ int	ft_cd_home(t_shell_data **shell_data)
 // 	return (absolute_shell_path);
 // }
 
-// static
-// int	ft_cd_path(char **envp, char *path)
-// {
-// 	//char	*new_path;
+static
+int	ft_cd_path(t_shell_data **shell_data, char *path)
+{
+	char	*new_path;
+	int		exit_code;
 
-// 	// if (!ft_envp_set(envp, ''))
-// 	// 	return (127);
-// 	return (0);
-// }
+	exit_code = chdir(path);
+	if (exit_code)
+	{
+		perror("cd");
+		return (exit_code);
+	}
+	exit_code = ft_change_oldpwd(shell_data);
+	if (exit_code)
+		return (exit_code);
+	new_path = ft_strjoin("PWD=", path);
+	if (!new_path)
+		return (127);
+	if (!ft_envp_set(shell_data, &new_path))
+	{
+		free(new_path);
+		return (127);
+	}
+	return (0);
+}
 
 int	ft_cd(t_shell_data **shell_data, char *input)
 {
@@ -108,6 +124,6 @@ int	ft_cd(t_shell_data **shell_data, char *input)
 		ft_putendl_fd("too many arguments.", 2);
 		return (1);
 	}
-	//ft_cd_path(envp, args[1]);
+	ft_cd_path(shell_data, args[1]);
 	return (0);
 }
