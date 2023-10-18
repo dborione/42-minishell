@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 15:17:28 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:29:10 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_change_oldpwd(t_shell_data **shell_data)
 	char	*current_pwd;
 
 	current_pwd = ft_envp_get_value((*shell_data)->envp, "PWD");
-	//ft_printf("%s\n", current_pwd);
 	old_path = ft_strjoin("OLDPWD=", current_pwd);
 	if (!old_path)
 		return (EXIT_FAILURE);
@@ -37,11 +36,7 @@ int	ft_cd_home(t_shell_data **shell_data)
 	char	*new_path;
 	int		exit_code;
 
-	// ft_printf("before\n\n");
-	// ft_env(envp);
 	exit_code = ft_change_oldpwd(shell_data);
-	// ft_printf("after\n\n");
-	// ft_env(envp);
 	if (exit_code)
 		return (exit_code);
 	// ft_printf("after\n\n");
