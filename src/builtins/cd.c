@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 15:29:10 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:06:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,23 @@ int	ft_cd_home(t_shell_data **shell_data)
 {
 	char	*new_path;
 	int		exit_code;
+	char	*home;
 
+	home = ft_envp_get_value((*shell_data)->envp, "HOME"); // voir que faire si la var home n'existe pas
+	exit_code = chdir(home);
+	if (exit_code)
+	{
+		perror("cd");
+		return (exit_code);
+	}
 	exit_code = ft_change_oldpwd(shell_data);
 	if (exit_code)
 		return (exit_code);
-	// ft_printf("after\n\n");
-	// ft_env(envp);
-	new_path = ft_strjoin("PWD=", ft_envp_get_value((*shell_data)->envp, "HOME"));
-	// ft_printf("after\n\n");
-	// ft_env(envp);
+	new_path = ft_strjoin("PWD=", home);
 	if (!new_path)
 		return (127);
-	//ft_printf("cd home %s\n", new_path);
 	if (!ft_envp_set(shell_data, &new_path))
 	{
-		//ft_printf("cd home faild!\n");
 		free(new_path);
 		return (127);
 	}
