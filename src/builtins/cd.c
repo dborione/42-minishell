@@ -6,27 +6,58 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 18:01:23 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:17:28 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 static
-int	ft_cd_home(char **envp)
+int	ft_change_oldpwd(t_shell_data **shell_data)
 {
-	char	*tmp;
+	char	*old_path;
+	char	*current_pwd;
 
-	tmp = ft_strjoin("PWD=", ft_envp_get_value(envp, "HOME"));
-	ft_printf("cd hoome %s\n", tmp);
-	if (!tmp)
-		return (127);
-	if (!ft_envp_set(envp, &tmp))
+	current_pwd = ft_envp_get_value((*shell_data)->envp, "PWD");
+	//ft_printf("%s\n", current_pwd);
+	old_path = ft_strjoin("OLDPWD=", current_pwd);
+	if (!old_path)
+		return (EXIT_FAILURE);
+	if (!ft_envp_set(shell_data, &old_path))
 	{
-		free(tmp);
+		free(old_path);
+		return (EXIT_FAILURE);
+	}
+	return (0);
+}
+
+static
+int	ft_cd_home(t_shell_data **shell_data)
+{
+	char	*new_path;
+	int		exit_code;
+
+	// ft_printf("before\n\n");
+	// ft_env(envp);
+	exit_code = ft_change_oldpwd(shell_data);
+	// ft_printf("after\n\n");
+	// ft_env(envp);
+	if (exit_code)
+		return (exit_code);
+	// ft_printf("after\n\n");
+	// ft_env(envp);
+	new_path = ft_strjoin("PWD=", ft_envp_get_value((*shell_data)->envp, "HOME"));
+	// ft_printf("after\n\n");
+	// ft_env(envp);
+	if (!new_path)
+		return (127);
+	//ft_printf("cd home %s\n", new_path);
+	if (!ft_envp_set(shell_data, &new_path))
+	{
+		//ft_printf("cd home faild!\n");
+		free(new_path);
 		return (127);
 	}
-	free(tmp);
 	return (0);
 }
 
@@ -35,34 +66,34 @@ int	ft_cd_home(char **envp)
 // {
 // 	char	*absolute_shell_path;
 // 	char	*pwd;
-// 	char	*tmp;
+// 	char	*new_path;
 
-// 	tmp = NULL;
+// 	new_path = NULL;
 // 	pwd = ft_envp_get_value(envp, "PWD");
 // 	if (!ft_endswith(pwd, "/"))
 // 	{
-// 		tmp = ft_strjoin(pwd, "/");
-// 		if (!tmp)
+// 		new_path = ft_strjoin(pwd, "/");
+// 		if (!new_path)
 // 			return (NULL);
-// 		pwd = tmp;
+// 		pwd = new_path;
 // 	}
 // 	absolute_shell_path = ft_strjoin(pwd, shell_name);
-// 	if (tmp)
-// 		free(tmp);
+// 	if (new_path)
+// 		free(new_path);
 // 	return (absolute_shell_path);
 // }
 
 // static
 // int	ft_cd_path(char **envp, char *path)
 // {
-// 	//char	*tmp;
+// 	//char	*new_path;
 
 // 	// if (!ft_envp_set(envp, ''))
 // 	// 	return (127);
 // 	return (0);
 // }
 
-int	ft_cd(char **envp, char *input)
+int	ft_cd(t_shell_data **shell_data, char *input)
 {
 	char	**args;
 
@@ -72,7 +103,7 @@ int	ft_cd(char **envp, char *input)
 	if (!args[1])
 	{
 		ft_free_split(args);
-		return (ft_cd_home(envp));
+		return (ft_cd_home(shell_data));
 	}
 	if (args[2])
 	{
