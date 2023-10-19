@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 21:32:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 17:08:22 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:09:07 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ size_t	ft_split_from_quotes(t_cmd_split **cmd_split, char *str_before, char *str
 	if (str_before[0] && !ft_add_command_arg(cmd_split, str_before))
 		return (0);
 	tmp = ft_get_with_quotes(str_after);
+	//ft_putendl_fd(tmp, 1);
 	if (!tmp)
 		return (0);
 	if (!ft_add_command_arg(cmd_split, tmp))
@@ -30,7 +31,7 @@ size_t	ft_split_from_quotes(t_cmd_split **cmd_split, char *str_before, char *str
 	}
 	len = ft_strlen(tmp);
 	free(tmp);
-	return (len);
+	return (len + 2);
 }
 
 static
@@ -75,6 +76,8 @@ t_cmd_split	*ft_commands_args_with_quotes(char *full_cmd, size_t len)
 				return (NULL);
 			}
 			i += start;
+			while (ft_isspace(full_cmd[i]))
+				i++;
 			start = i;
 		}
 		tmp[i - start] = full_cmd[i];
