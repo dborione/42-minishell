@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 16:16:19 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:00:55 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static
 int	ft_cd_path(t_shell_data **shell_data, char *path)
 {
 	char	*new_path;
+	char	cwd[PATH_MAX];
 	int		exit_code;
 
 	exit_code = chdir(path);
@@ -95,7 +96,9 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	exit_code = ft_change_oldpwd(shell_data);
 	if (exit_code)
 		return (exit_code);
-	new_path = ft_strjoin("PWD=", path);
+	if (!getcwd(cwd, PATH_MAX))
+		return (1);
+	new_path = ft_strjoin("PWD=", cwd);
 	if (!new_path)
 		return (127);
 	if (!ft_envp_set(shell_data, &new_path))
