@@ -18,7 +18,7 @@ int	ft_cd_home(char **envp)
 	char	*tmp;
 
 	tmp = ft_strjoin("PWD=", ft_envp_get_value(envp, "HOME"));
-	ft_printf("cd hoome %s\n", tmp);
+	ft_printf("cd home %s\n", tmp);
 	if (!tmp)
 		return (127);
 	if (!ft_envp_set(envp, &tmp))

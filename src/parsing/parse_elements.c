@@ -45,7 +45,8 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 static
 int		ft_parse_builtin(t_shell_data **shell_data, t_lexer_tokens *target)
 {
-	if (ft_startswith(target->input, "echo"))
+	if (!ft_strncmp(target->input, "echo", ft_strlen(target->input))
+		&& ft_strlen(target->input) == 4)
 		return (ft_echo(target));
 	if (ft_startswith(target->input, "pwd"))
 		return (ft_pwd((*shell_data)->envp));

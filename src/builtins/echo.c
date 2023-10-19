@@ -13,7 +13,13 @@ int ft_echo(t_lexer_tokens *target)
     }
     current = current->next;
     while (current)
-    {
+    {   
+        // if (!ft_strncmp(current->next->input, ">", 1) && ft_strlen(current->next->input) == 1)
+        // {
+        //      char *arg = current->input;
+        //      current = current->next;
+        //      
+        // }
         printf("%s", current->input);
         current = current->next;
     }
