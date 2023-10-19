@@ -10,7 +10,6 @@ void    ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char 
     {
         printf("error");
         return ;
-
     }
     // exp_result = history_expand(line, &expansion);
     // if (exp_result == 1)
@@ -21,4 +20,8 @@ void    ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char 
     write_history(*hist_file);
     //free(expansion);
     close(hist_fd);
+	if (shell_data) // juste pour retirer l'erreur de compile
+	{
+
+	}
 }

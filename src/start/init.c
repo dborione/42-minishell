@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 16:51:11 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:13:24 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_get_absolute_path(char **envp, char *shell_name)
 }
 
 static int	ft_set_shell_path(
-	char **envp, char *relative_shell_path)
+	t_shell_data **shell_data, char *relative_shell_path)
 {
 	char	**split_path;
 	char	*absolute_shell_path;
@@ -48,7 +48,7 @@ static int	ft_set_shell_path(
 	i = 0;
 	while (split_path[i] && split_path[i + 1])
 		i++;
-	absolute_shell_path = ft_get_absolute_path(envp, split_path[i]);
+	absolute_shell_path = ft_get_absolute_path((*shell_data)->envp, split_path[i]);
 	ft_free_split(split_path);
 	input = ft_strjoin("SHELL=", absolute_shell_path);
 	if (!input) // maybe some leaks here
@@ -56,7 +56,7 @@ static int	ft_set_shell_path(
 		free(absolute_shell_path);
 		return (0);
 	}
-	if (!ft_envp_set(envp, &input))
+	if (!ft_envp_set(shell_data, &input))
 	{
 		free(input);
 		free(absolute_shell_path);
@@ -91,7 +91,7 @@ int	ft_init_shell(
 {
 	if (!ft_init_defaults(shell_data, envp))
 		return (0);
-	if (!ft_set_shell_path((*shell_data)->envp, shell_path))
+	if (!ft_set_shell_path(shell_data, shell_path))
 	{
 		free((*shell_data)->envp);
 		free(shell_data);

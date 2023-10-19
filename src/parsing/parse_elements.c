@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_elemets.c                                    :+:      :+:    :+:   */
+/*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 17:30:29 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:01:20 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int		ft_parse_builtin(t_shell_data **shell_data, t_lexer_tokens *target)
 	if (ft_startswith(target->input, "pwd"))
 		return (ft_pwd((*shell_data)->envp));
 	if (ft_startswith(target->input, "cd"))
-		return (ft_cd((*shell_data)->envp, target->input));
+		return (ft_cd(shell_data, target->input));
 	if (ft_startswith(target->input, "env"))
 		return (ft_env((*shell_data)->envp));
-
 		// return (ft_echo(line));
+	return (0);
 }
 
 void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 17:30:12 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:07:22 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <fcntl.h>
+# include <fcntl.h>
+
+// # include <linux/limits.h> 
+# include <sys/syslimits.h>
 
 /* Parsing Tokens */
 # define CMD 1
@@ -65,13 +68,13 @@ int				ft_init_shell(t_shell_data **shell_data, char *shell_path, char *envp[]);
 char			**ft_envp_copy(char *envp[]);
 char			*ft_envp_get_key(char *input);
 char			*ft_envp_get_value(char **envp, char *key);
-int				ft_envp_set(char **envp, char **input);
-int 			ft_envp_add(char **envp, char **input);
+int				ft_envp_set(t_shell_data **shell_data, char **input);
+int				ft_envp_add(t_shell_data **shell_data, char **input);
 
 /* Prompt */
 
 // int				ft_show_user_path(char **enpv);
-char	*ft_show_user_path(char **envp);
+char			*ft_show_user_path(char **envp);
 
 /*	Input */
 
@@ -109,10 +112,10 @@ void        	ft_free_command_args(t_cmd_split **cmd_split);
 /* Builtins */
 
 int				ft_is_builtin(char *input);
-int				ft_cd(char **envp, char *input);
+int				ft_cd(t_shell_data **shell_data, char *input);
 int				ft_env(char **envp);
 int				ft_pwd(char **envp);
-int ft_echo(t_lexer_tokens *target);
+int				ft_echo(t_lexer_tokens *target);
 
 /* Quotes */
 
