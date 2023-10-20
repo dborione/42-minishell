@@ -8,7 +8,7 @@ void    ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char 
     hist_fd = open(*hist_file, O_CREAT | O_APPEND, 0777);
     if (hist_fd == -1)
     {
-        printf("error");
+        ft_printf("history error\n");
         return ;
     }
     // exp_result = history_expand(line, &expansion);

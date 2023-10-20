@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 15:13:24 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:02:01 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 {
 	*shell_data = malloc(sizeof(t_shell_data));
 	if (!shell_data)
-		return (0);	
+		return (0);
 	(*shell_data)->envp = ft_envp_copy(envp);
 	if (!(*shell_data)->envp)
 	{
