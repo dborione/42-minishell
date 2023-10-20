@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/18 15:01:20 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:35:01 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 			ft_execution(shell_data, cmd);
 		else
 		{
-			waitpid(parent, &status, 0);
+			waitpid(parent, shell_data->exit_code, 0);
 			//printf("exit code %d\n", status);
 		}
 	}

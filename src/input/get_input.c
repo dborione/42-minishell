@@ -53,11 +53,7 @@ void ft_get_input(t_shell_data **shell_data)
 			break;
 		}
 		ft_parse_elements(shell_data, &lexer_list);
-		//ft_print_env((*shell_data)->envp);
 		free(line);
-		// free(lexer);
 	}
-	//ft_printf("Bye minishell\n");
-	// ft_free_lst(lexer);
 	unlink(hist_file);
 }
