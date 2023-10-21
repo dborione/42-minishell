@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/20 10:45:00 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:30:41 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ typedef struct s_env_var
 typedef struct s_shell_data
 {
 	char 		**envp;
+	int			pipe[2];
 	int			input_fd;
 	int			output_fd;
 	int			in_file_err;
 	int			out_file_err;
 	int			exit_code;
+	int			exit;
 }				t_shell_data;
 
 /* Init */
@@ -116,6 +118,7 @@ int				ft_cd(t_shell_data **shell_data, char *input);
 int				ft_env(char **envp);
 int				ft_pwd(char **envp);
 int				ft_echo(t_lexer_tokens *target);
+int				ft_exit(t_shell_data **shell_data, char *input);
 
 /* Quotes */
 

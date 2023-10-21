@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/20 11:35:01 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:47:44 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 {
 	t_cmd			*cmd;
 	int				parent;
-	int				status;
 
 	// if input == BUILTIN set path to src/builtins
 	char **tmp_path = ft_split(ft_envp_get_value(shell_data->envp, "PATH"), ':');
@@ -35,7 +34,9 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 			ft_execution(shell_data, cmd);
 		else
 		{
-			waitpid(parent, shell_data->exit_code, 0);
+			waitpid(parent, &(shell_data)->exit_code, 0);
+			//if (dup2(STDOUT_FILENO, shell_data->output_fd) == -1)
+				//return (EXIT_FAILURE);
 			//printf("exit code %d\n", status);
 		}
 	}
@@ -53,22 +54,24 @@ int		ft_parse_builtin(t_shell_data **shell_data, t_lexer_tokens *target)
 		return (ft_cd(shell_data, target->input));
 	if (ft_startswith(target->input, "env"))
 		return (ft_env((*shell_data)->envp));
-		// return (ft_echo(line));
+	if (ft_startswith(target->input, "exit"))
+		return (ft_exit(shell_data, target->input));
 	return (0);
 }
 
 void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 {
 	t_lexer_tokens	*target;
+	int				exit_code;
 
 	target = *lexer_list;
 	while (target)
 	{
 		if (target->token == CMD)
-			ft_parse_command(*shell_data, target);
+			exit_code = ft_parse_command(*shell_data, target);
 		else if (target->token == BUILTIN)
-			ft_parse_builtin(shell_data, target);
+			exit_code = ft_parse_builtin(shell_data, target);
 		target = target->next;
 	}
-	//ft_printf("bye loop\n");
+	(*shell_data)->exit_code = exit_code;
 }
