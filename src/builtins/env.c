@@ -16,12 +16,10 @@ int ft_env(char **envp)
 {
 	int	i;
 
-	//ft_printf("hihihiha\n");
 	i = 0;
 	while (envp[i])
 	{
 		ft_putendl_fd(envp[i], 1);
-        // prendre en compte les erreurs potentiels avec write
 		i++;
 	}
     return (1);

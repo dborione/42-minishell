@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 01:30:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:02:17 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,22 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef	struct s_cmd_split
+typedef	struct s_args_split
 {
 	char				*arg;
-	struct s_cmd_split	*next;
-}						t_cmd_split;
+	struct s_args_split	*next;
+}						t_args_list;
 
 t_cmd			*ft_get_command(char *cmd, char **paths);
 char			**ft_get_command_args(char *full_cmd);
-t_cmd_split		*ft_new_command_arg(char *tmp);
-int				ft_add_command_arg(t_cmd_split **cmd_split, char *tmp);
-void        	ft_free_command_args(t_cmd_split **cmd_split);
+t_args_list		*ft_new_command_arg(char *tmp);
+int				ft_add_command_arg(t_args_list **cmd_split, char *tmp);
+
+/* Args */
+
+t_args_list		*ft_new_args_list(char *tmp);
+char			**ft_split_args(char *input);
+void        	ft_free_args_list(t_args_list **cmd_split);
 
 /* Builtins */
 
@@ -132,5 +137,10 @@ void			ft_execution(t_shell_data *t_shell_data, t_cmd *cmd);
 /* History */
 
 void    		ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char *line);
+
+/* Files */
+
+int				ft_get_infile(t_shell_data **shell_data, char *tmp);
+int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
 
 #endif

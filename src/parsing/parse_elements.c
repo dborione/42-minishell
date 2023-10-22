@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 01:47:44 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 14:02:10 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 {
 	t_cmd			*cmd;
 	int				parent;
+	char			**tmp_path;
 
-	// if input == BUILTIN set path to src/builtins
-	char **tmp_path = ft_split(ft_envp_get_value(shell_data->envp, "PATH"), ':');
+	tmp_path = ft_split(ft_envp_get_value(shell_data->envp, "PATH"), ':');
 	//ft_printf("cmd_full: %s\n", target->input);
 	cmd = ft_get_command(target->input, tmp_path); // je recupere pour le moment uniquement la premiere commande pour tester, en suite j'ai deja prevu la boucle tkt
 	ft_free_split(tmp_path);

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 16:14:13 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 14:54:46 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_cmd	*ft_get_command(char *cmd, char **paths)
 	char	**tmp;
 
 	//ft_printf("cmd_name: %s\n", cmd);
-	tmp = ft_get_command_args(cmd);
+	tmp = ft_split_args(cmd);//ft_get_command_args(cmd);
 	if (!tmp)
 		return (NULL);
 	new_cmd = ft_new_command(tmp[0]);
@@ -98,48 +98,3 @@ t_cmd	*ft_get_command(char *cmd, char **paths)
 		new_cmd->args = tmp;
 	return (new_cmd);
 }
-
-// static void	ft_add_command(t_cmd **cmds, t_cmd *new_cmd)
-// {
-// 	t_cmd	*target;
-
-// 	if (!cmds)
-// 		return ;
-// 	if (!*cmds)
-// 		*cmds = new_cmd;
-// 	else
-// 	{
-// 		target = (*cmds);
-// 		while (target->next)
-// 			target = target->next;
-// 		target->next = new_cmd;
-// 	}
-// }
-
-// int	ft_get_commands(t_pipex **data, char **argv)
-// {
-// 	int		i;
-// 	t_cmd	*new_cmd;
-
-// 	(*data)->cmds = NULL;
-// 	(*data)->cmds = ft_get_command(argv[2], (*data)->paths);
-// 	if (!(*data)->cmds)
-// 		return (-1);
-// 	i = 3;
-// 	new_cmd = (*data)->cmds->next;
-// 	while (argv[i] && argv[i + 1])
-// 	{
-// 		new_cmd = ft_get_command(argv[i], (*data)->paths);
-// 		if (!new_cmd)
-// 			return (-1);
-// 		if (!new_cmd->path)
-// 		{
-// 			free(new_cmd->name);
-// 			free(new_cmd);
-// 			return (127);
-// 		}
-// 		i++;
-// 		ft_add_command(&(*data)->cmds, new_cmd);
-// 	}
-// 	return (1);
-// }
