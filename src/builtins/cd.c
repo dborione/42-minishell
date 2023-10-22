@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/19 14:00:55 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:00:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,6 @@ int	ft_cd_home(t_shell_data **shell_data)
 	return (0);
 }
 
-// static
-// char	*ft_get_absolute_path(char **envp, char *shell_name)
-// {
-// 	char	*absolute_shell_path;
-// 	char	*pwd;
-// 	char	*new_path;
-
-// 	new_path = NULL;
-// 	pwd = ft_envp_get_value(envp, "PWD");
-// 	if (!ft_endswith(pwd, "/"))
-// 	{
-// 		new_path = ft_strjoin(pwd, "/");
-// 		if (!new_path)
-// 			return (NULL);
-// 		pwd = new_path;
-// 	}
-// 	absolute_shell_path = ft_strjoin(pwd, shell_name);
-// 	if (new_path)
-// 		free(new_path);
-// 	return (absolute_shell_path);
-// }
-
 static
 int	ft_cd_path(t_shell_data **shell_data, char *path)
 {
@@ -90,7 +68,7 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	exit_code = chdir(path);
 	if (exit_code)
 	{
-		perror("cd");
+		perror("bash: cd");
 		return (exit_code);
 	}
 	exit_code = ft_change_oldpwd(shell_data);
@@ -113,7 +91,7 @@ int	ft_cd(t_shell_data **shell_data, char *input)
 {
 	char	**args;
 
-	args = ft_split(input, ' ');
+	args = ft_split_args(input);
 	if (!args)
 		return (127);
 	if (!args[1])
@@ -123,8 +101,7 @@ int	ft_cd(t_shell_data **shell_data, char *input)
 	}
 	if (args[2])
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putendl_fd("too many arguments.", 2);
+		ft_putendl_fd("bash: cd: too many arguments.", 2);
 		return (1);
 	}
 	ft_cd_path(shell_data, args[1]);

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:28:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 17:57:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 01:09:50 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ft_is_builtin(char *input)
 	if (ft_startswith(input, "export") || ft_isequal(input, "pwd"))
 		return (1);
 	if (ft_startswith(input, "unset") || ft_isequal(input, "env"))
+		return (1);
+	if (ft_startswith(input, "exit") || ft_isequal(input, "exit"))
 		return (1);
 	return (0);
 }

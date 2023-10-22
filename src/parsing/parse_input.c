@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/20 12:04:26 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:11:24 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,44 +93,6 @@ int	ft_add_token_to_list(t_lexer_tokens **lexer_list, char **input, int token)
 }
 
 static
-int	ft_get_infile(t_shell_data **shell_data, char *tmp)
-{
-	char	*infile_path;
-
-	infile_path = ft_strtrim(tmp, " ");
-	if (!infile_path)
-		return (0);
-	//ft_printf("infile: %s\n", infile_path);
-	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
-	{
-		(*shell_data)->input_fd = open(infile_path, O_RDONLY, 0644);
-		if ((*shell_data)->input_fd == -1)
-			return (0);
-		return (1);
-	}
-	return (0);
-}
-
-static
-int	ft_get_outfile(t_shell_data **shell_data, char *tmp)
-{
-	char	*outfile_path;
-
-	outfile_path = ft_strtrim(tmp, " ");
-	if (!outfile_path)
-		return (0);
-	//ft_printf("outfile: %s\n", outfile_path);
-	if (access(outfile_path, F_OK) == 0 && access(outfile_path, R_OK) == 0)
-	{
-		(*shell_data)->output_fd = open(outfile_path, O_RDONLY, 0644);
-		if ((*shell_data)->output_fd == -1)
-			return (0);
-		return (1);
-	}
-	return (0);
-}
-
-static
 int	ft_extract_command(t_lexer_tokens **lexer_list, char *tmp)
 {
 	char	*res;
@@ -169,21 +131,31 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 	tmp[0] = '\0';
     while (line[i])
 	{
-		if (tmp[0] && i > 0 && ft_isspace(line[i - 1]) && line[i] == '<' && !infile)
+		if (tmp[0] && i > 0 && line[i] == '<' && !infile)
 		{
 			tmp[i - start] = '\0';
 			if (!ft_get_infile(shell_data, tmp))
 				perror("bash");
 			infile = 1;
+			i++;
 			start = i;
+			tmp[0] = '\0';
 		}
-		else if (tmp[0] && i > 0 && ft_isspace(line[i - 1]) && line[i] == '>' && !infile)
+		else if (tmp[0] && i > 0 && line[i] == '>' && !infile)
 		{
 			tmp[i - start] = '\0';
-			if (!ft_get_outfile(shell_data, tmp))
+			if (!ft_extract_command(&lexer_list, tmp))
+			{
+				// prendre en charge les cas d'erreurs ici
+			}
+			i++;
+			while (ft_isspace(line[i]))
+				i++;
+			if (!ft_get_outfile(shell_data, &line[i]))
 				perror("bash");
-			//infile = 1;
+			break;
 			start = i;
+			tmp[0] = '\0';
 		}
 		else if (line[i] == '|')
 		{
@@ -200,10 +172,11 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 		i++;
 	}
 	tmp[i - start] = '\0';
-    if (!ft_extract_command(&lexer_list, tmp))
+    if (tmp[0] && !ft_extract_command(&lexer_list, tmp))
 	{
 		// prendre en charge les cas d'erreurs ici
 	}
+	free(tmp);
     //ft_print_lst(&lexer_list);
     return (lexer_list);
 }

@@ -32,7 +32,7 @@ void ft_get_input(t_shell_data **shell_data)
 	t_lexer_tokens 	*lexer_list;
 
 	hist_file = ".history";
-	while (1)
+	while (!(*shell_data)->exit)
 	{
 		using_history();
 		stifle_history(1000);
@@ -40,11 +40,6 @@ void ft_get_input(t_shell_data **shell_data)
 		ft_add_to_history_file(*shell_data, &hist_file, line);
 		if (!line || !line[0])
 			continue;
-		if (ft_isequal(line, "exit"))
-		{
-			free(line);
-			break;
-		}
 		lexer_list = ft_parse_input(shell_data, line);
 		if (!lexer_list)
 		{

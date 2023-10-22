@@ -3,3 +3,4 @@ minishell
 */*/*.o
 */*/*/*.o
 libft/libft.a
+.history
