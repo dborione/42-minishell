@@ -50,5 +50,6 @@ void ft_get_input(t_shell_data **shell_data)
 		ft_parse_elements(shell_data, &lexer_list);
 		free(line);
 	}
+	// free(line); pour le break
 	unlink(hist_file);
 }
