@@ -35,6 +35,18 @@ int		ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 		else
 		{
 			waitpid(parent, &(shell_data)->exit_code, 0);
+			if (shell_data->input_fd > -1)
+			{
+				//close(shell_data->input_fd);
+				//shell_data->input_fd = -1;
+			}
+			if (shell_data->output_fd > -1)
+			{
+				// if (dup2(STDOUT_FILENO, shell_data->output_fd) == -1)
+				// 	return (1);
+				//close(shell_data->output_fd);
+				//shell_data->output_fd = -1;
+			}
 			//if (dup2(STDOUT_FILENO, shell_data->output_fd) == -1)
 				//return (EXIT_FAILURE);
 			//printf("exit code %d\n", status);

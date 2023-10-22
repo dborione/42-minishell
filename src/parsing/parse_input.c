@@ -66,7 +66,6 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 	char	*tmp;
 	size_t	start;
 	size_t	i;
-	int		infile;
     t_lexer_tokens  *lexer_list;
 
 	tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
@@ -74,17 +73,18 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 		return (NULL);
 	start = 0;
 	i = 0;
-	infile = 0;
+	(*shell_data)->infile = 0;
+	(*shell_data)->outfile = 0;
 	lexer_list = NULL;
 	tmp[0] = '\0';
     while (line[i])
 	{
-		if (tmp[0] && i > 0 && line[i] == '<' && !infile)
+		if (tmp[0] && i > 0 && line[i] == '<' && !(*shell_data)->infile)
 		{
 			tmp[i - start] = '\0';
 			if (!ft_get_infile(shell_data, tmp))
 				perror("bash");
-			infile = 1;
+			(*shell_data)->infile = 1;
 			i++;
 			start = i;
 			tmp[0] = '\0';
@@ -101,6 +101,7 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 				i++;
 			if (!ft_get_outfile(shell_data, &line[i]))
 				perror("bash");
+			(*shell_data)->outfile = 1;
 			break;
 			start = i;
 			tmp[0] = '\0';
@@ -112,7 +113,6 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			{
 				// prendre en charge les cas d'erreurs ici
 			}
-			infile = 1;
 			start = ++i;
 			tmp[0] = '\0';
 		}

@@ -55,8 +55,8 @@ typedef struct s_shell_data
 	int			pipe[2];
 	int			input_fd;
 	int			output_fd;
-	int			in_file_err;
-	int			out_file_err;
+	int			infile;
+	int			outfile;
 	int			exit_code;
 	int			exit;
 }				t_shell_data;

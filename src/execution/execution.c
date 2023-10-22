@@ -60,7 +60,7 @@
 void	ft_execution(t_shell_data *shell_data, t_cmd *cmd)
 {
 	//ft_printf("cmd: '%s' args[1]: '%s'\n", cmd->name, cmd->args[1]);
-	if (shell_data->input_fd > -1)
+	if (shell_data->infile && shell_data->input_fd > -1)
 	{
 		if (dup2(shell_data->input_fd, STDIN_FILENO) == -1)
 			return ;
@@ -73,7 +73,7 @@ void	ft_execution(t_shell_data *shell_data, t_cmd *cmd)
 		close(shell_data->input_fd);
 		shell_data->input_fd = -1;
 	}
-	if (!cmd->next && shell_data->output_fd > -1)
+	if (!cmd->next && shell_data->outfile && shell_data->output_fd > -1)
 	{
 		if (dup2(shell_data->output_fd, STDOUT_FILENO) == -1)
 			return ;
