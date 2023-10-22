@@ -89,7 +89,7 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			start = i;
 			tmp[0] = '\0';
 		}
-		else if (tmp[0] && i > 0 && line[i] == '>' && !infile)
+		else if (line[i] == '>')
 		{
 			tmp[i - start] = '\0';
 			if (!ft_extract_command(&lexer_list, tmp))

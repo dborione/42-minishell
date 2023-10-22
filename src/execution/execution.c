@@ -59,7 +59,7 @@
 
 void	ft_execution(t_shell_data *shell_data, t_cmd *cmd)
 {
-	ft_printf("cmd: '%s' args[1]: '%s'\n", cmd->name, cmd->args[1]);
+	//ft_printf("cmd: '%s' args[1]: '%s'\n", cmd->name, cmd->args[1]);
 	if (shell_data->input_fd > -1)
 	{
 		if (dup2(shell_data->input_fd, STDIN_FILENO) == -1)

@@ -69,8 +69,8 @@ static int	ft_set_shell_path(
 static
 int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 {
-	if (pipe((*shell_data)->pipe) == -1)
-		perror("bash");
+	// if (pipe((*shell_data)->pipe) == -1)
+	// 	perror("bash");
 	*shell_data = malloc(sizeof(t_shell_data));
 	if (!shell_data)
 		return (0);
