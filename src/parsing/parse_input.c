@@ -13,58 +13,6 @@
 #include "../minishell.h"
 
 static
-void	ft_print_lst(t_lexer_tokens **head_lexer_lst)
-{
-    t_lexer_tokens *current;
-
-    current = *head_lexer_lst;
-    while (current)
-    {
-        printf("%s - %d\n", current->input, current->token);
-        current = current->next;
-    }
-}
-
-// static
-// char	*ft_cut_between_quotes(char *str, size_t len)
-// {
-// 	char	*res;
-// 	size_t	i;
-
-// 	res = malloc(sizeof(char) * (len + 1));
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		/* code */
-// 	}
-	
-// }
-
-// static
-// char	*ft_get_between_quotes(char *str)
-// {
-// 	char	quote;
-// 	int		close_quote;
-// 	size_t	i;
-
-// 	quote = str[0];
-// 	close_quote = 0;
-// 	i = 1;
-// 	while (str[i])
-// 	{
-// 		if (!str[i] == quote)
-// 		{
-// 			close_quote = 1;
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	if (close_quote)
-// 		return (i);
-// 	return (0);
-// }
-
-static
 int	ft_add_token_to_list(t_lexer_tokens **lexer_list, char **input, int token)
 {
     t_lexer_tokens *newnode;
