@@ -32,7 +32,6 @@ void ft_get_input(t_shell_data **shell_data)
 	t_lexer_tokens 	*lexer_list;
 
 	hist_file = ft_strjoin(ft_envp_get_value((*shell_data)->envp, "HOME"), "/.history");
-	ft_printf("%s\n", hist_file);
 	while (!(*shell_data)->exit)
 	{
 		using_history();
