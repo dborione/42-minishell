@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 01:28:09 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 01:38:55 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 	}
 	(*shell_data)->input_fd = -1;
 	(*shell_data)->output_fd = -1;
-	(*shell_data)->out_file_err = 0;
 	(*shell_data)->exit_code = 0;
 	(*shell_data)->exit = 0;
 	return (1);
