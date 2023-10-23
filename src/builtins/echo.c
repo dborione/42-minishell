@@ -101,5 +101,20 @@ int ft_echo(t_lexer_tokens *target)
 
     // free(split_input)
     // free (printed_input)
+
+
+	// 	i = 1;
+	// while(cmd->args[i])
+	// {
+	// 	if (i > 1)
+	// 		ft_putchar_fd(' ', 1);
+	// 	ft_printf(cmd->args[i]);
+	// 	i++;
+	// }
+	// ft_putendl_fd("", 1);
+	// if (cmd && envp)
+    // 	return (1);
+	// return (1);
+
 	return (1);
 }

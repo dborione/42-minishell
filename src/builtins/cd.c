@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 15:00:37 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:08:41 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd_home(t_shell_data **shell_data)
 	exit_code = chdir(home);
 	if (exit_code)
 	{
-		perror("cd");
+		perror("bash: cd");
 		return (exit_code);
 	}
 	exit_code = ft_change_oldpwd(shell_data);
@@ -87,23 +87,15 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	return (0);
 }
 
-int	ft_cd(t_shell_data **shell_data, char *input)
+int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 {
-	char	**args;
-
-	args = ft_split_args(input);
-	if (!args)
-		return (127);
-	if (!args[1])
-	{
-		ft_free_split(args);
+	if (!cmd->args[1])
 		return (ft_cd_home(shell_data));
-	}
-	if (args[2])
+	if (cmd->args[2])
 	{
 		ft_putendl_fd("bash: cd: too many arguments.", 2);
 		return (1);
 	}
-	ft_cd_path(shell_data, args[1]);
+	ft_cd_path(shell_data, cmd->args[1]);
 	return (0);
 }

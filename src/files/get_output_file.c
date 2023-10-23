@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 12:48:52 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:15:30 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_get_outfile(t_shell_data **shell_data, char *tmp)
 	char	*outfile_path;
 
 	outfile_path = ft_strtrim(tmp, " ");
+	ft_printf("outfile: %s\n", outfile_path);
 	if (!outfile_path)
 		return (0);
 	(*shell_data)->output_fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
