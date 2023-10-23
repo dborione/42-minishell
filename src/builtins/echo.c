@@ -13,7 +13,7 @@ int ft_echo(char **envp, t_cmd *cmd)
 		new_line = 1;
 	while (cmd->args[i])
 	{
-		if (new_line && i > 1 || !new_line && i > 2)
+		if ((new_line && i > 1) || (!new_line && i > 2))
 			ft_putchar_fd(' ', 1);
 		ft_printf(cmd->args[i]);
 		i++;

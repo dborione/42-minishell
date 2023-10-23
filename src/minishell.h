@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:24:36 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:56:05 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void			ft_get_input(t_shell_data	**shell_data);
 /*	Parsing */
 
 t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line);
-int				ft_get_token_from_input(char *input);
+int				ft_add_token_to_list(t_lexer_tokens **lexer_list, char **input, int token);
+void			ft_free_lexer_list(t_lexer_tokens **lexer_list);
 void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
 
 /* Commands */

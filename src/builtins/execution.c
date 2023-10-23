@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 02:29:28 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:01:07 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:54:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 {
-	ft_printf("lets builtin\n");
 	if (ft_isequal(cmd->name, "echo"))
 		return (ft_echo((*shell_data)->envp, cmd));
 	if (ft_isequal(cmd->name, "pwd"))
@@ -25,4 +24,5 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 		return (ft_env((*shell_data)->envp));
 	if (ft_isequal(cmd->name, "exit"))
 		return (ft_exit(shell_data, cmd));	
+	return (1);
 }

@@ -3,34 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:22:45 by dborione          #+#    #+#             */
-/*   Updated: 2023/10/03 16:04:27 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:45:28 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_get_token_from_input(char *input)
+int	ft_add_token_to_list(t_lexer_tokens **lexer_list, char **input, int token)
 {
-    int i;
-    size_t len;
+    t_lexer_tokens *newnode;
+    t_lexer_tokens *tmp_lexer_list;
 
-    len = ft_strlen(input);
-    if ((input[0] == '|' || input[0] == '<' || input[0] == '>') && len == 1)
-        return (SYMBOL);
-    i = -1;
-    while (input[++i])
+    tmp_lexer_list = *lexer_list;
+    newnode = malloc(sizeof(t_lexer_tokens));
+    if (!newnode)
+        return (0);
+   	newnode->input = *input;
+    newnode->token = token;
+    newnode->next = NULL;
+    if (!*lexer_list)
     {
-        if (input[i] == '$' && len > 1)
-            return (ENV_VAR);
+        *lexer_list = newnode;
+        return (1);
     }
-    i = -1;
-    while (input[++i])
+    while (tmp_lexer_list)
     {
-        if (ft_isalpha(input[i]))
-            return (CMD); // pas bon, les commandes peuvent contenir des caracters non alphabetiques
+        if (!tmp_lexer_list->next)
+            break;
+        tmp_lexer_list = tmp_lexer_list->next;
     }
-    return (CMD);
+    tmp_lexer_list->next = newnode;
+    return (1);
 }
