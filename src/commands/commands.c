@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 11:59:43 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:54:36 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,13 @@ t_cmd	*ft_get_command(char *cmd, char **paths, int builtin)
 	t_cmd	*new_cmd;
 	char	**tmp;
 
-	if (builtin)
-		ft_printf("builtin: %s\n", cmd);
-	else
-		ft_printf("not builtin: %s\n", cmd);
-	tmp = ft_split_args(cmd);//ft_get_command_args(cmd);
+	tmp = ft_split_args(cmd);
 	if (!tmp)
 		return (NULL);
 	new_cmd = ft_new_command(tmp[0], builtin);
 	if (!new_cmd)
 	{
 		ft_free_split(tmp);
-		ft_printf("0\n");
 		return (NULL);
 	}
 	if (!builtin && !new_cmd->path && !ft_set_path(&new_cmd, paths))
@@ -100,12 +95,11 @@ t_cmd	*ft_get_command(char *cmd, char **paths, int builtin)
 		if (new_cmd->path)
 			free(new_cmd->path);
 		ft_cmd_not_found(new_cmd->name); // free car leak en ce moment
-		ft_printf("1\n");
 		return (NULL);
 	}
 	else
 		new_cmd->args = tmp;
-	ft_printf("no error: %s\n", new_cmd->name);
+	//ft_printf("no error: %s\n", new_cmd->name);
 	return (new_cmd);
 }
 

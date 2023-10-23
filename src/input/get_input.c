@@ -12,19 +12,6 @@
 
 #include "../minishell.h"
 
-void ft_free_lst(t_lexer_tokens *lexer_lst)
-{
-	t_lexer_tokens *tmp_lexer_lst;
-
-	tmp_lexer_lst = lexer_lst;
-	while (lexer_lst)
-	{
-		tmp_lexer_lst = lexer_lst;
-		lexer_lst = lexer_lst->next;
-		free(tmp_lexer_lst);
-	}
-}
-
 void ft_get_input(t_shell_data **shell_data)
 {
 	char    *hist_file;
@@ -42,14 +29,11 @@ void ft_get_input(t_shell_data **shell_data)
 			continue;
 
 		lexer_list = ft_parse_input(shell_data, line);
-		if (!lexer_list)
-		{
-			perror("bash");
-			break;
-		}
-		ft_parse_elements(shell_data, &lexer_list);
 		free(line);
+		if (!lexer_list)
+			continue;
+		ft_parse_elements(shell_data, &lexer_list);
+		ft_free_lexer_list(&lexer_list);
 	}
-	// free(line); pour le break
 	unlink(hist_file);
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:17:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:55:19 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_cmd	*ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 
 void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 {
-	ft_printf("parse_elements\n");
 	t_lexer_tokens	*target;
 	t_cmd			*cmds;
 	t_cmd			*new_cmd;
@@ -78,6 +77,5 @@ void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 		}
 		ft_add_command(&cmds, new_cmd);
 	}
-	ft_printf("cmd: %s\n", cmds->name);
 	ft_parse_execution(shell_data, &cmds);
 }
