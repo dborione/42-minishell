@@ -21,6 +21,6 @@ int	ft_get_outfile(t_shell_data **shell_data, char *tmp)
 		return (0);
 	(*shell_data)->output_fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if ((*shell_data)->output_fd == -1)
-		return (EXIT_FAILURE);
+		return (EXIT_FAILURE); // normal?
 	return (1);
 }
