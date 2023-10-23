@@ -6,20 +6,22 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 14:54:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:59:43 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_cmd_not_found(char *cmd_name)
+static
+void	ft_cmd_not_found(char *cmd_name)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_name, 2);
 	ft_putendl_fd(": command not found", 2);
 }
 
-static t_cmd	*ft_new_command(char *cmd_name)
+static
+t_cmd	*ft_new_command(char *cmd_name, int builtin)
 {
 	t_cmd	*new_cmd;
 
@@ -32,9 +34,10 @@ static t_cmd	*ft_new_command(char *cmd_name)
 		free(new_cmd);
 		return (NULL);
 	}
+	new_cmd->builtin = builtin;
 	new_cmd->next = NULL;
 	new_cmd->path = NULL;
-	if (access(new_cmd->name, F_OK) == 0)
+	if (!builtin && access(new_cmd->name, F_OK) == 0)
 	{
 		new_cmd->path = ft_strdup(new_cmd->name);
 		if (!new_cmd->path)
@@ -47,7 +50,8 @@ static t_cmd	*ft_new_command(char *cmd_name)
 	return (new_cmd);
 }
 
-static int	ft_set_path(t_cmd **new_cmd, char **paths)
+static
+int	ft_set_path(t_cmd **new_cmd, char **paths)
 {
 	int		i;
 	char	*tmp_path;
@@ -71,30 +75,53 @@ static int	ft_set_path(t_cmd **new_cmd, char **paths)
 	return (0);
 }
 
-t_cmd	*ft_get_command(char *cmd, char **paths)
+t_cmd	*ft_get_command(char *cmd, char **paths, int builtin)
 {
 	t_cmd	*new_cmd;
 	char	**tmp;
 
-	//ft_printf("cmd_name: %s\n", cmd);
+	if (builtin)
+		ft_printf("builtin: %s\n", cmd);
+	else
+		ft_printf("not builtin: %s\n", cmd);
 	tmp = ft_split_args(cmd);//ft_get_command_args(cmd);
 	if (!tmp)
 		return (NULL);
-	new_cmd = ft_new_command(tmp[0]);
+	new_cmd = ft_new_command(tmp[0], builtin);
 	if (!new_cmd)
 	{
 		ft_free_split(tmp);
+		ft_printf("0\n");
 		return (NULL);
 	}
-	if (!new_cmd->path && !ft_set_path(&new_cmd, paths))
+	if (!builtin && !new_cmd->path && !ft_set_path(&new_cmd, paths))
 	{
 		ft_free_split(tmp);
 		if (new_cmd->path)
 			free(new_cmd->path);
 		ft_cmd_not_found(new_cmd->name); // free car leak en ce moment
-		return (NULL); // a retirer quand on fera la loop sur toutes les cmds
+		ft_printf("1\n");
+		return (NULL);
 	}
 	else
 		new_cmd->args = tmp;
+	ft_printf("no error: %s\n", new_cmd->name);
 	return (new_cmd);
+}
+
+void		ft_add_command(t_cmd **cmds, t_cmd *new_cmd)
+{
+	t_cmd	*target;
+
+	if (!cmds)
+		return ;
+	if (!*cmds)
+		*cmds = new_cmd;
+	else
+	{
+		target = (*cmds);
+		while (target->next)
+			target = target->next;
+		target->next = new_cmd;
+	}
 }

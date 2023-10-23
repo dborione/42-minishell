@@ -43,7 +43,6 @@ void ft_get_input(t_shell_data **shell_data)
 		lexer_list = ft_parse_input(shell_data, line);
 		if (!lexer_list)
 		{
-			ft_printf("No lexer\n");
 			perror("bash");
 			break;
 		}

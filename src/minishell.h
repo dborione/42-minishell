@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 15:04:29 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:24:36 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,23 @@ typedef struct s_env_var
 	char		*value;
 }				t_env_var;
 
+
+typedef struct s_cmd
+{
+	char			*name;
+	char			**args;
+	int				builtin;
+	char			*path;
+	struct s_cmd	*next;
+}					t_cmd;
+
+typedef	struct s_args_split
+{
+	char				*arg;
+	struct s_args_split	*next;
+}						t_args_list;
+
+
 typedef struct s_shell_data
 {
 	char 		**envp;
@@ -90,25 +107,8 @@ void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 
 /* Commands */
 
-typedef struct s_cmd
-{
-	char			*name;
-	char			**args;
-	char			*full;
-	char			*path;
-	struct s_cmd	*next;
-}					t_cmd;
-
-typedef	struct s_args_split
-{
-	char				*arg;
-	struct s_args_split	*next;
-}						t_args_list;
-
-t_cmd			*ft_get_command(char *cmd, char **paths);
-char			**ft_get_command_args(char *full_cmd);
-t_args_list		*ft_new_command_arg(char *tmp);
-int				ft_add_command_arg(t_args_list **cmd_split, char *tmp);
+t_cmd			*ft_get_command(char *cmd, char **paths, int builtin);
+void			ft_add_command(t_cmd **cmds, t_cmd *new_cmd);
 
 /* Args */
 
@@ -118,12 +118,13 @@ void        	ft_free_args_list(t_args_list **cmd_split);
 
 /* Builtins */
 
+int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_is_builtin(char *input);
-int				ft_cd(t_shell_data **shell_data, char *input);
+int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
 int				ft_pwd(char **envp);
-int				ft_echo(t_lexer_tokens *target);
-int				ft_exit(t_shell_data **shell_data, char *input);
+int				ft_echo(char **envp, t_cmd *cmd);
+int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 
 /* Quotes */
 
@@ -132,7 +133,7 @@ char			*ft_get_with_quotes(char *str);
 
 /* Execution */
 
-void			ft_execution(t_shell_data *t_shell_data, t_cmd *cmd);
+void			ft_execution(t_shell_data **t_shell_data, t_cmd *cmd);
 
 /* History */
 

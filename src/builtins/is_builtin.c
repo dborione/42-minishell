@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:28:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 01:09:50 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:03:23 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_is_builtin(char *input)
 		return (1);
 	if (ft_startswith(input, "env ") || ft_isequal(input, "env"))
 		return (1);
-	if (ft_isequal(input, "echo") || ft_startswith(input, "cd "))
+	if (ft_isequal(input, "echo") || ft_startswith(input, "echo "))
 		return (1);
 	if (ft_startswith(input, "export") || ft_isequal(input, "pwd"))
 		return (1);
