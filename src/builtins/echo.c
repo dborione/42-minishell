@@ -5,7 +5,6 @@ int ft_echo(char **envp, t_cmd *cmd)
 	int i;
 	int	new_line;
 
-	// retirer la newline avec l'option -n 
 	i = 1;
 	new_line = 1;
 	if (ft_isequal("-n", cmd->args[i]))
