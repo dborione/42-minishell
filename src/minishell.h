@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <signal.h>
 
 //# include <linux/limits.h> 
 # include <sys/syslimits.h>
@@ -76,6 +77,7 @@ typedef struct s_shell_data
 	int			outfile;
 	int			exit_code;
 	int			exit;
+	struct 		sigaction	sa;
 }				t_shell_data;
 
 /* Init */
@@ -143,5 +145,10 @@ void    		ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, cha
 
 int				ft_get_infile(t_shell_data **shell_data, char *tmp);
 int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
+
+
+/* Signals */
+
+void    ft_init_shell_sigaction(t_shell_data *shell_data);
 
 #endif

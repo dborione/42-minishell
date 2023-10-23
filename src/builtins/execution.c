@@ -24,5 +24,6 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	if (ft_isequal(cmd->name, "env"))
 		return (ft_env((*shell_data)->envp));
 	if (ft_isequal(cmd->name, "exit"))
-		return (ft_exit(shell_data, cmd));	
+		return (ft_exit(shell_data, cmd));
+	return (0);
 }
