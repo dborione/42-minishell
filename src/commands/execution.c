@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 13:43:51 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 00:03:22 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd)
 static
 void	ft_next_commands(t_shell_data **shell_data, t_cmd *cmds)
 {
-	int				parent;
+	pid_t	parent;
 	//int				status;
 
 	if (cmds->next)
@@ -84,8 +84,10 @@ void	ft_next_commands(t_shell_data **shell_data, t_cmd *cmds)
 static
 void	ft_multi_execution(t_shell_data **shell_data, t_cmd *cmds)
 {
-	int				parent;
+	pid_t	parent;
 	//int				status;
+	if (pipe((*shell_data)->pipe) == -1)
+		perror("bash");
 
 	parent = fork();
 	if (parent < 0)

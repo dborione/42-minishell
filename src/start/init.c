@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:33:38 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 00:02:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ static int	ft_set_shell_path(
 static
 int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 {
-	if (pipe((*shell_data)->pipe) == -1)
-		perror("bash");
 	*shell_data = malloc(sizeof(t_shell_data));
 	if (!shell_data)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 15:55:19 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:09:26 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static
 void	ft_parse_execution(t_shell_data **shell_data, t_cmd **cmds)
 {
-	int	parent;
+	pid_t	parent;
 
 	if (!(*cmds)->next && (*cmds)->builtin)
 		(*shell_data)->exit_code = ft_execute_builtin(shell_data, *cmds);
