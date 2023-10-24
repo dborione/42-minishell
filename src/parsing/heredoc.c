@@ -20,6 +20,10 @@ int ft_heredoc(char *line)
     input = readline("> ");
     eof = line;
 	while (!ft_isequal(eof, input))
+    {
+        free(input);
 		input = readline("> ");
+    }
+    free(input);
     return (1);
 }
