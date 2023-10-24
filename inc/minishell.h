@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:57:59 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:36:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "ft_limits.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
 # include <signal.h>
-
-//# include <linux/limits.h> 
-# include <sys/syslimits.h>
 
 /* Parsing Tokens */
 # define CMD 1
