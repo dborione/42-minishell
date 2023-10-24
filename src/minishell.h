@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 02:12:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:13:23 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_is_builtin(char *input);
 int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
-int				ft_pwd(char **envp);
+int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:08:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:02:52 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int	ft_cd_home(t_shell_data **shell_data)
 	char	*home;
 
 	home = ft_envp_get_value((*shell_data)->envp, "HOME"); // voir que faire si la var home n'existe pas
+	if (!home[0])
+	{
+		ft_putendl_fd("bash: cd: « HOME » is not defined", 2);
+		return (1);
+	}
 	exit_code = chdir(home);
 	if (exit_code)
 	{
