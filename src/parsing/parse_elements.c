@@ -41,7 +41,7 @@ t_cmd	*ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
 	tmp_path = ft_split(ft_envp_get_value(shell_data->envp, "PATH"), ':');
 	cmd = ft_get_command(target->input, tmp_path, target->token == BUILTIN);
 	ft_free_split(tmp_path);
-	cmd->id = 0;
+	//cmd->id = 0; //segfault here -> je l'ai mis dans ft_new_command
 	if (!cmd)
 		return (NULL);
 	return (cmd);

@@ -37,6 +37,7 @@ t_cmd	*ft_new_command(char *cmd_name, int builtin)
 	new_cmd->builtin = builtin;
 	new_cmd->next = NULL;
 	new_cmd->path = NULL;
+	new_cmd->id = 0;
 	if (!builtin && access(new_cmd->name, F_OK) == 0)
 	{
 		new_cmd->path = ft_strdup(new_cmd->name);
