@@ -14,6 +14,8 @@ void    ft_handle_sig_act(int sig, siginfo_t *info, void *shell_data)
     //printf("aaaaaa");
     //ft_putstr_fd("\n", STDOUT_FILENO);
     //ft_get_input(&tmp_shell_data);
+	if (sig || info || tmp_shell_data)
+		return ;
 }
 
 void    ft_init_shell_sigaction(t_shell_data *shell_data)

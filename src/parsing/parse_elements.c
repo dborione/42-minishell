@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 01:31:38 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:14:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,7 @@ void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 			return ;
 		}
 		ft_add_command(&cmds, new_cmd);
-		// t_cmd	*target2;
-
-		// target2 = cmds;
-		// while (target2)
-		// {
-		// 	ft_printf("%d\n", target2->id);
-		// 	target2 = target2->next;
-		// }
 	}
 	ft_parse_execution(shell_data, &cmds);
+	ft_free_commands(&cmds);
 }

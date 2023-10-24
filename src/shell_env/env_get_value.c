@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_get_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:17:18 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/04 14:23:25 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:51:55 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_envp_get_value(char **envp, char *key)
 		{
 			start = ft_strlen(tmp);
 			free(tmp);
+			// ajouter ft_strdup si erreur de lecture ci-dessous
 			return (&envp[i][start]);
 		}
 		i++;

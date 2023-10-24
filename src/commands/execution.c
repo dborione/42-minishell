@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 02:14:27 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:15:31 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static
 void	ft_first_command(t_shell_data **shell_data, t_cmd *cmd)
 {
-	close((*shell_data)->swap[1]);
-	close((*shell_data)->swap[0]);
 	if ((*shell_data)->infile && (*shell_data)->input_fd > -1)
 	{
 		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 02:12:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:14:00 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 
 t_cmd			*ft_get_command(char *cmd, char **paths, int builtin);
 void			ft_add_command(t_cmd **cmds, t_cmd *new_cmd);
+void			ft_free_commands(t_cmd **cmds);
 
 /* Args */
 
@@ -128,7 +129,7 @@ int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_is_builtin(char *input);
 int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
-int				ft_pwd(char **envp);
+int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 

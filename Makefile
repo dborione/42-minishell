@@ -49,6 +49,6 @@ fclean:
 re: fclean all
 
 leaks: 	${NAME}
-		valgrind --leak-check=full --suppressions=ignore_readline.supp -s ./$(NAME)
+		valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./$(NAME)
 
 .PHONY: all clean fclean re
