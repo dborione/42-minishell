@@ -155,4 +155,7 @@ int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
 
 void    ft_init_shell_sigaction(t_shell_data *shell_data);
 
+/* Heredoc */
+int		ft_heredoc(char *line);
+
 #endif

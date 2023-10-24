@@ -57,6 +57,13 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 	tmp[0] = '\0';
     while (line[i])
 	{
+		if (line[i] == '<' && line[i + 1] == '<')
+		{
+			i += 2;
+			while (ft_isspace(line[i]))
+				i++;
+			ft_heredoc(&line[i]);
+		}
 		if (tmp[0] && i > 0 && line[i] == '<' && !(*shell_data)->infile)
 		{
 			tmp[i - start] = '\0';

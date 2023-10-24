@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   user_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 12:17:51 by rbarbiot         ###   ########.fr       */
+/*   Created: 2023/09/25 09:52:52 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/10/18 15:59:55 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	main(int argc, char *argv[], char *envp[])
+int ft_heredoc(char *line)
 {
-	t_shell_data	*shell_data;
+	char *eof;
+    char *input;
 
-	if (argc == 1)
-	{
-		if (!ft_init_shell(&shell_data, argv[0], envp))
-		{
-			perror("bash");
-			//system("leaks minishell");
-			return (EXIT_FAILURE);
-		}
-		//ft_init_shell_sigaction(shell_data);
-		ft_get_input(&shell_data);
-		ft_free_split(shell_data->envp);
-		free(shell_data);
-	}
-	else
-		ft_putendl_fd("Error: just ./minishell", 2);
-	return (0);
+    input = readline("> ");
+    eof = line;
+	while (!ft_isequal(eof, input))
+		input = readline("> ");
+    return (1);
 }
