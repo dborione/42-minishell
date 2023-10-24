@@ -1,18 +1,10 @@
 NAME	= minishell
 
+# Compilation 
+
 CC 		= clang
-
-CFLAGS	= -Wall -Wextra -Werror
-
+CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR}
 RM		= rm -f
-
-FTS_DIR = src/
-
-FTS		= $(wildcard src/*/*.c)
-
-OBJ_DIR	= obj/
-
-LIB		= ./src/minishell.h
 
 # Colors
 YELLOW	= \033[1;33m
@@ -20,16 +12,26 @@ GREEN	= \033[1;32m
 BLUE	= \033[0;36m
 DEFAULT	= \033[0;0m
 
-${OBJ_DIR}%.o:	${FTS_DIR}%.c
-				@mkdir -p ${@D}
-				@${CC} ${CFLAGS} -c $< -o $@
+# Dependencies
 
+FTS_DIR = src/
+OBJ_DIR	= obj/
+LIB_DIR = inc/
+FTS		= $(wildcard src/*/*.c)
 OBJS	= $(patsubst ${FTS_DIR}%.c, ${OBJ_DIR}%.o, ${FTS})
+DEPENDS	:= $(OBJS:.o=.d)
+
+${OBJ_DIR}%.o:	${FTS_DIR}%.c
+		@mkdir -p ${@D}
+		@${CC} ${CFLAGS} -MMD -MP -c $< -o $@
+
+# Rules
 
 ${NAME}:	${OBJS}
 		@echo "${BLUE} [Make] ${YELLOW} Building !"
 		@make -C ./libft/
-		@$(CC) ${CFLAGS} -o $@ -I ${LIB} $^ -L libft/ -lft -lreadline
+		
+		$(CC) ${CFLAGS} -o $@ $^ -L libft/ -lft -lreadline
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 all:	${NAME}
@@ -50,5 +52,7 @@ re: fclean all
 
 leaks: 	${NAME}
 		valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./$(NAME)
+
+-include $(DEPENDS)
 
 .PHONY: all clean fclean re

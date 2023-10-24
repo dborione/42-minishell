@@ -6,11 +6,11 @@
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:37:37 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/04 14:30:47 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 static
 int	ft_init(size_t *i, size_t *skip, char **envp_copy, char **envp)

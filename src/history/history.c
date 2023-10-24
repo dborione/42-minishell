@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 void    ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char *line)
 {
