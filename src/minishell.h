@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/23 16:49:11 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 00:58:16 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_cmd
 	char			**args;
 	int				builtin;
 	char			*path;
+	int				id;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -71,6 +72,7 @@ typedef struct s_shell_data
 {
 	char 		**envp;
 	int			pipe[2];
+	int			swap[2];
 	int			input_fd;
 	int			output_fd;
 	int			infile;
