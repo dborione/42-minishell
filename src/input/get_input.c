@@ -23,7 +23,8 @@ void ft_get_input(t_shell_data **shell_data)
 	{
 		using_history();
 		stifle_history(1000);
-		line = readline(ft_show_user_path((*shell_data)->envp));
+		(*shell_data)->prompt = ft_show_user_path((*shell_data)->envp);
+		line = readline((*shell_data)->prompt);
 		ft_add_to_history_file(*shell_data, &hist_file, line);
 		if (!line || !line[0])
 			continue;
@@ -35,4 +36,6 @@ void ft_get_input(t_shell_data **shell_data)
 		ft_free_lexer_list(&lexer_list);
 	}
 	unlink(hist_file);
+	free(hist_file);
+	free((*shell_data)->prompt);
 }

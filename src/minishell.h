@@ -79,6 +79,7 @@ typedef struct s_shell_data
 	int			outfile;
 	int			exit_code;
 	int			exit;
+	char		*prompt;
 	struct 		sigaction	sa;
 }				t_shell_data;
 

@@ -42,8 +42,6 @@ static char *ft_change_user_colour(char *user, char *colour)
 	return (tmp_user);
 }
 
-
-
 static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 {
 	char *tmp_path;
@@ -61,12 +59,13 @@ static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 		tmp_prompt = ft_join_and_free(tmp_user_path, tmp_path, tmp_path);
 	else
 		tmp_prompt = ft_join_and_free(tmp_user_path, path, tmp_path);
-	free (tmp_path);
-	free (tmp_user_path);
+	free(tmp_path);
+	free(tmp_user_path);
 	prompt = ft_strjoin(tmp_prompt, "\x1b[37m$ ");
 	free (tmp_prompt);
 	if (!prompt)
 		exit (1); //a voir
+	free(user);
 	return (prompt);
 
 }

@@ -82,6 +82,7 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 	(*shell_data)->output_fd = -1;
 	(*shell_data)->exit_code = 0;
 	(*shell_data)->exit = 0;
+	(*shell_data)->prompt = NULL;
 	return (1);
 }
 
