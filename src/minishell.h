@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 00:58:16 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 02:11:59 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <fcntl.h>
 # include <signal.h>
 
-# include <linux/limits.h> 
-//# include <sys/syslimits.h>
+//# include <linux/limits.h> 
+# include <sys/syslimits.h>
 
 /* Parsing Tokens */
 # define CMD 1
@@ -79,7 +79,7 @@ typedef struct s_shell_data
 	int			outfile;
 	int			exit_code;
 	int			exit;
-	struct 		sigaction	sa;
+	struct 		sigaction;
 }				t_shell_data;
 
 /* Init */
