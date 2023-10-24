@@ -132,6 +132,7 @@ int				ft_env(char **envp);
 int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
+int				ft_export(char **envp, t_cmd *cmd);
 
 /* Quotes */
 
@@ -154,9 +155,9 @@ int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
 
 /* Signals */
 
-void    ft_init_shell_sigaction(t_shell_data *shell_data);
+void    		ft_init_shell_sigaction(t_shell_data *shell_data);
 
 /* Heredoc */
-int		ft_heredoc(char *line);
+int				ft_heredoc(char *line);
 
 #endif

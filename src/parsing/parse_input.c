@@ -103,6 +103,12 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			start = ++i;
 			tmp[0] = '\0';
 		}
+		// else if (line[i] == '$')
+		// {
+		// 	i++;
+		// 	if (line[i] == '?')
+		// 		printf("%d\n", (*shell_data)->exit_code);
+		// }
 		tmp[i - start] = line[i];
 		i++;
 	}

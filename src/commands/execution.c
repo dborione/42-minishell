@@ -38,7 +38,7 @@ void	ft_first_command(t_shell_data **shell_data, t_cmd *cmd)
 	if (cmd->builtin)
 		exit(ft_execute_builtin(shell_data, cmd));
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
-	ft_printf("command failed : %s\n", (cmd)->args[0]);
+	ft_printf("command failed : %s\n", (cmd)->args[0]); //recuperer error code
 	exit(EXIT_FAILURE);
 }
 
