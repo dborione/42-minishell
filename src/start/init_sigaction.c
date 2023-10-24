@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 void    ft_handle_sig_act(int sig, siginfo_t *info, void *shell_data)
 {

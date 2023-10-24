@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_input_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/22 13:10:19 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int	ft_get_infile(t_shell_data **shell_data, char *tmp)
 {

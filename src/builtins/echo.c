@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int ft_echo(char **envp, t_cmd *cmd)
 {

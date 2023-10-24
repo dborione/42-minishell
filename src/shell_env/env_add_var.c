@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_add_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:29:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/20 10:57:31 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../inc/minishell.h"
 
 int	ft_envp_add(t_shell_data **shell_data, char **input) // le seg fault vient d'ici 
 {
