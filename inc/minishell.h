@@ -16,6 +16,8 @@
 # include "../libft/libft.h"
 # include "ft_limits.h"
 # include <stdio.h>
+# include "../readline/include/readline/readline.h"
+# include "../readline/include/readline/history.h"
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
