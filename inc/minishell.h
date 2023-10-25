@@ -144,7 +144,7 @@ void			ft_execution(t_shell_data **t_shell_data, t_cmd *cmd);
 
 /* History */
 
-void    		ft_add_to_history_file(t_shell_data *shell_data, char **hist_file, char *line);
+void    		ft_add_to_history_file(char **hist_file, char *line);
 
 /* Files */
 
