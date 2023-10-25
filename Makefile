@@ -40,7 +40,7 @@ all:	${NAME}
 
 clean:
 		@echo "${BLUE} [Make] ${YELLOW} Cleaning !"
-		@make -C ./lib/libft/ clean
+		@make -C ./libft/ clean
 		@${RM} ${OBJS} ${DEPENDS}
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
