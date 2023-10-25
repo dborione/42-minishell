@@ -17,8 +17,9 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <signal.h>
-# include "../lib/libft/libft.h"
+# include <termios.h> // pour ne pas afficher ^C
 # include "ft_limits.h"
+# include "../lib/libft/libft.h"
 # include "../readline/include/readline/readline.h"
 # include "../readline/include/readline/history.h"
 
