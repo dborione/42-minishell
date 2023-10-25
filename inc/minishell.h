@@ -19,7 +19,7 @@
 # include <signal.h>
 # include <termios.h> // pour ne pas afficher ^C
 # include "ft_limits.h"
-# include "../lib/libft/libft.h"
+# include "../libft/libft.h"
 # include "../readline/include/readline/readline.h"
 # include "../readline/include/readline/history.h"
 

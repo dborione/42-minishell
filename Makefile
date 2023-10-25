@@ -3,7 +3,7 @@ NAME	= minishell
 # Compilation 
 
 CC 		= clang
-CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR}
+CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR} -Ireadline/include
 RM		= rm -f
 
 # Colors
@@ -30,10 +30,10 @@ ${OBJ_DIR}%.o:	${FTS_DIR}%.c
 
 ${NAME}:	${OBJS}
 		@echo "${BLUE} [Make] ${YELLOW} Building ${DEFAULT}LIBFT${YELLOW} !${DEFAULT}"
-		@make -C ./lib/libft/
+		@make -C ./libft/
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 		@echo "${BLUE} [Make] ${YELLOW} Building ${DEFAULT}MINISHELL${YELLOW} !${DEFAULT}"
-		$(CC) ${CFLAGS} -o $@ $^ -Llib/libft -lft -Lreadline/lib -lreadline -Ireadline/include
+		$(CC) ${CFLAGS} -o $@ $^ -Llibft -lft -Lreadline/lib -lreadline 
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 all:	${NAME}
@@ -46,7 +46,7 @@ clean:
 
 fclean:
 		@echo "${BLUE} [Make] ${YELLOW} Full Cleaning !"
-		@make -C ./lib/libft/ fclean
+		@make -C ./libft/ fclean
 		@${RM} ${NAME} ${OBJS} ${DEPENDS}
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
