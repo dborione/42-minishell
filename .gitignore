@@ -2,6 +2,6 @@ minishell
 obj/*
 */*/*.o
 */*/*/*.o
-libft/libft.a
+lib/libft/libft.a
 .history
 minishell.dSYM

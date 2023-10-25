@@ -30,23 +30,23 @@ ${OBJ_DIR}%.o:	${FTS_DIR}%.c
 
 ${NAME}:	${OBJS}
 		@echo "${BLUE} [Make] ${YELLOW} Building ${DEFAULT}LIBFT${YELLOW} !${DEFAULT}"
-		@make -C ./libft/
+		@make -C ./lib/libft/
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 		@echo "${BLUE} [Make] ${YELLOW} Building ${DEFAULT}MINISHELL${YELLOW} !${DEFAULT}"
-		$(CC) ${CFLAGS} -o $@ $^ -L libft/ -lft -Lreadline/lib/ -lreadline -I/readline/include
+		$(CC) ${CFLAGS} -o $@ $^ -Llib/libft -lft -Lreadline/lib -lreadline -Ireadline/include
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 all:	${NAME}
 
 clean:
 		@echo "${BLUE} [Make] ${YELLOW} Cleaning !"
-		@make -C ./libft/ clean
+		@make -C ./lib/libft/ clean
 		@${RM} ${OBJS} ${DEPENDS}
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 fclean:
 		@echo "${BLUE} [Make] ${YELLOW} Full Cleaning !"
-		@make -C ./libft/ fclean
+		@make -C ./lib/libft/ fclean
 		@${RM} ${NAME} ${OBJS} ${DEPENDS}
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
