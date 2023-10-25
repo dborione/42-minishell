@@ -7,6 +7,8 @@ void    ft_handle_sig_act(int sig)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, 0, &term);
+	if (sig == SIGQUIT)
+		rl_redisplay();
 	if (sig == SIGINT)
 	{
     	ft_putstr_fd("\n", STDOUT_FILENO);
@@ -23,6 +25,7 @@ void    ft_init_shell_sigaction(t_shell_data *shell_data)
 	// rl_catch_signals = 0; // peut etre necessaire pour le heredoc je vais voir
     shell_data->sa.sa_handler = &ft_handle_sig_act; // envoyer pid
     sigemptyset(&shell_data->sa.sa_mask);
-    shell_data->sa.sa_flags = SA_RESTART;
+    //shell_data->sa.sa_flags = SA_RESTART;
+    sigaction(SIGQUIT, &(shell_data->sa), NULL);
     sigaction(SIGINT, &(shell_data->sa), NULL);
 }
