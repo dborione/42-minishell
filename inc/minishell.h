@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 16:36:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:19:30 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <termios.h> // pour ne pas afficher ^C
 # include "ft_limits.h"
 # include "../libft/libft.h"
-# include "../readline/include/readline/readline.h"
-# include "../readline/include/readline/history.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /* Parsing Tokens */
 # define CMD 1
