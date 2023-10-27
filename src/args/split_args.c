@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:57:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int			ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
 {
 	t_args_list	*target_arg;
 
-	if (!tmp)
-		return (0);
 	if (!*cmd_split)
 	{
 		*cmd_split = ft_new_args_list(tmp);
@@ -44,10 +42,36 @@ size_t	ft_split_from_quotes(t_args_list **cmd_split, char *str_before, char *str
 	if (str_before[0] && !ft_add_arg_to_list(cmd_split, str_before))
 		return (0);
 	tmp = ft_get_with_quotes(str_after);
-	//ft_putendl_fd(tmp, 1);
+	ft_printf("res btw q |%s|\n", tmp);
 	if (!tmp)
 		return (0);
 	if (!ft_add_arg_to_list(cmd_split, tmp))
+	{
+		free(tmp);
+		return (0);
+	}
+	len = ft_strlen(tmp);
+	free(tmp);
+	return (len + 2);
+}
+
+static
+size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
+{
+	char	*tmp;
+	char	*res;
+	size_t	len;
+
+	tmp = ft_get_with_quotes(str_after);
+	if (!tmp)
+		return (0);
+	res = ft_strjoin(str_before, tmp);
+	if (!res)
+	{
+		free(tmp);
+		return (0);
+	}
+	if (!ft_add_arg_to_list(cmd_split, res))
 	{
 		free(tmp);
 		return (0);
@@ -78,6 +102,7 @@ char		**ft_args_list_to_str_split(t_args_list **cmd_split)
 	target = *cmd_split;
 	while (target)
 	{
+		ft_printf("args[%d]: [%s]\n", i, target->arg);
 		res[i] = target->arg;
 		target = target->next;
 		i++;
@@ -108,6 +133,7 @@ t_args_list	*ft_pre_split_args(char *input, size_t len)
 		if (ft_isspace(input[i]))
 		{
 			tmp[i - start] = '\0';
+			//ft_printf("i - space = %d\n", i - start);
 			if (!ft_add_arg_to_list(&args_list, tmp))
 			{
 				ft_free_args_list(&args_list);
@@ -118,10 +144,17 @@ t_args_list	*ft_pre_split_args(char *input, size_t len)
 				i++;
 			start = i;
 		}
-		if ((input[i] == '\'' || input[i] == '"') && ft_has_endof_quotes(&input[i], input[i]))
+		else if ((input[i] == '\'' || input[i] == '"') && ft_has_endof_quotes(&input[i], input[i]))
 		{
 			tmp[i - start] = '\0';
-			start = ft_split_from_quotes(&args_list, tmp, &input[i]);
+			ft_printf("i - space = %d\n", i - start);
+			ft_printf("tmp |%s|\n", tmp);
+			ft_printf("rest |%s|\n", &input[i]); 
+			if (start && ft_isspace(input[i - 1]))
+				start = ft_split_from_quotes(&args_list, tmp, &input[i]);
+			else
+				start = ft_join_from_quotes(&args_list, tmp, &input[i]);
+			ft_printf("after |%s|\n", &input[i + start]); 
 			if (!start)
 			{
 				ft_free_args_list(&args_list);
@@ -129,12 +162,16 @@ t_args_list	*ft_pre_split_args(char *input, size_t len)
 				return (NULL);
 			}
 			i += start;
-			while (ft_isspace(input[i]))
+			while (input[i] && ft_isspace(input[i]))
 				i++;
+			ft_printf("after quotes |%s|\n", &input[i]); // echo "test" test2 test3 " 'test4' test5
 			start = i;
 		}
-		tmp[i - start] = input[i];
-		i++;
+		else
+		{
+			tmp[i - start] = input[i];
+			i++;
+		}
 	}
 	tmp[i - start] = '\0';
 	if (tmp[0])

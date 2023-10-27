@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 23:48:49 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:40:03 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ char	*ft_get_with_quotes(char *str)
 	char	*res;
 
 	quote = str[0];
-	i = 0;
+	i = 1;
 	res = malloc(sizeof(char) * (ft_quoteslen(str, quote) + 1));
 	if (!res)
 		return (NULL);
-	while (str[i + 1])
+	while (str[i])
 	{
-		if (i > 0 && str[i + 1] == quote)
+		if (str[i] == quote)
 			break ;
-		res[i] = str[i + 1];
-		//ft_putchar_fd(res[i], 1);
+		res[i - 1] = str[i];
+		//ft_putchar_fd(res[i - 1], 1);
 		i++;
 	}
 	//ft_putchar_fd('\n', 1);
-	res[i] = '\0';
+	res[i - 1] = '\0';
 	return (res);
 }
 
