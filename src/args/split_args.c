@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/27 17:57:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:31:11 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ size_t	ft_split_from_quotes(t_args_list **cmd_split, char *str_before, char *str
 	if (str_before[0] && !ft_add_arg_to_list(cmd_split, str_before))
 		return (0);
 	tmp = ft_get_with_quotes(str_after);
-	ft_printf("res btw q |%s|\n", tmp);
+	//ft_printf("res btw q |%s|\n", tmp);
 	if (!tmp)
 		return (0);
 	if (!ft_add_arg_to_list(cmd_split, tmp))
@@ -102,7 +102,7 @@ char		**ft_args_list_to_str_split(t_args_list **cmd_split)
 	target = *cmd_split;
 	while (target)
 	{
-		ft_printf("args[%d]: [%s]\n", i, target->arg);
+		//ft_printf("args[%d]: [%s]\n", i, target->arg);
 		res[i] = target->arg;
 		target = target->next;
 		i++;
@@ -147,14 +147,14 @@ t_args_list	*ft_pre_split_args(char *input, size_t len)
 		else if ((input[i] == '\'' || input[i] == '"') && ft_has_endof_quotes(&input[i], input[i]))
 		{
 			tmp[i - start] = '\0';
-			ft_printf("i - space = %d\n", i - start);
-			ft_printf("tmp |%s|\n", tmp);
-			ft_printf("rest |%s|\n", &input[i]); 
+			// ft_printf("i - space = %d\n", i - start);
+			// ft_printf("tmp |%s|\n", tmp);
+			// ft_printf("rest |%s|\n", &input[i]); 
 			if (start && ft_isspace(input[i - 1]))
 				start = ft_split_from_quotes(&args_list, tmp, &input[i]);
 			else
 				start = ft_join_from_quotes(&args_list, tmp, &input[i]);
-			ft_printf("after |%s|\n", &input[i + start]); 
+			//ft_printf("after |%s|\n", &input[i + start]); 
 			if (!start)
 			{
 				ft_free_args_list(&args_list);
@@ -164,7 +164,7 @@ t_args_list	*ft_pre_split_args(char *input, size_t len)
 			i += start;
 			while (input[i] && ft_isspace(input[i]))
 				i++;
-			ft_printf("after quotes |%s|\n", &input[i]); // echo "test" test2 test3 " 'test4' test5
+			//ft_printf("after quotes |%s|\n", &input[i]); // echo "test" test2 test3 " 'test4' test5
 			start = i;
 		}
 		else

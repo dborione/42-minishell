@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 15:39:54 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:32:58 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 	cmds = ft_parse_command(*shell_data, target);
 	if (!cmds)
 	{
-		ft_printf("cmd failed\n");
+		ft_printf("cmd importation failed\n");
 		return ;
 	}
-	ft_printf("target: %s\n", target->input);
+	//ft_printf("target: %s\n", target->input);
 	new_cmd = cmds->next;
 	while (target->next)
 	{
 		target = target->next;
-		ft_printf("target: %s\n", target->input);
+		//ft_printf("target: %s\n", target->input);
 		new_cmd = ft_parse_command(*shell_data, target);
 		if (!new_cmd)
 			return ;
