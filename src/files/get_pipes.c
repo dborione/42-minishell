@@ -1,0 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_pipes.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/29 15:55:01 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/10/29 15:58:01 by rbarbiot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../inc/minishell.h"
+
+int	ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
+{
+	if ((*shell_data)->input_fd != STDIN_FILENO)
+	{
+		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)
+			return (0);
+	}
+	if (cmd->next)
+	{
+		if (dup2(pipe_fd[WRITE_PIPE], STDOUT_FILENO) == -1)
+			return (0);
+	}
+	return (1);
+}

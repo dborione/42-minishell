@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 02:29:28 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:21:09 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 		return (ft_echo((*shell_data)->envp, cmd));
 	if (ft_isequal(cmd->name, "pwd"))
 		return (ft_pwd());
-		// return (ft_pwd((*shell_data)->envp));
 	if (ft_isequal(cmd->name, "cd"))
 		return (ft_cd(shell_data, cmd));
 	if (ft_isequal(cmd->name, "env"))

@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:20:45 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 15:39:54 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static
-void	ft_parse_execution(t_shell_data **shell_data, t_cmd **cmds)
-{
-	pid_t	parent;
-
-	if (!(*cmds)->next && (*cmds)->builtin)
-		(*shell_data)->exit_code = ft_execute_builtin(shell_data, *cmds);
-	else
-	{
-		parent = fork();
-		if (parent < 0)
-			perror("bash");
-		if (parent == 0)
-			ft_execution(shell_data, *cmds);
-		else
-			waitpid(parent, &(*shell_data)->exit_code, 0);
-		// free cmds
-	}
-}
 
 static
 t_cmd	*ft_parse_command(t_shell_data *shell_data, t_lexer_tokens *target)
@@ -78,6 +58,6 @@ void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 		}
 		ft_add_command(&cmds, new_cmd);
 	}
-	ft_parse_execution(shell_data, &cmds);
+	ft_execution(shell_data, &cmds);
 	ft_free_commands(&cmds);
 }

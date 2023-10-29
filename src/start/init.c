@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 15:49:59 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 		free(*shell_data);
 		return (0);
 	}
-	(*shell_data)->input_fd = -1;
-	(*shell_data)->output_fd = -1;
+	(*shell_data)->input_fd = STDIN_FILENO;
+	(*shell_data)->output_fd = STDOUT_FILENO;
 	(*shell_data)->exit_code = 0;
 	(*shell_data)->exit = 0;
 	(*shell_data)->prompt = NULL;

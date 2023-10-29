@@ -20,6 +20,8 @@ void    ft_handle_sig_act(int sig)
 
 void    ft_init_shell_sigaction(t_shell_data *shell_data)
 {
+	if (shell_data)
+		return ;
 	// int	rl_catch_signals;
 
 	// rl_catch_signals = 0; // peut etre necessaire pour le heredoc je vais voir
