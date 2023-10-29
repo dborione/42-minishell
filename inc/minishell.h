@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 16:13:07 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:41:11 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ void			ft_free_commands(t_cmd **cmds);
 
 t_args_list		*ft_new_args_list(char *tmp);
 char			**ft_split_args(char *input);
+int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
+size_t			ft_split_from_quotes(
+	t_args_list **cmd_split, char *str_before, char *str_after);
+char			**ft_args_list_to_str_split(t_args_list **cmd_split);
 void        	ft_free_args_list(t_args_list **cmd_split);
 
 /* Builtins */
@@ -140,7 +144,7 @@ int				ft_export(char **envp, t_cmd *cmd);
 /* Quotes */
 
 int				ft_has_endof_quotes(char *input, char quote);
-char			*ft_get_with_quotes(char *str);
+char			*ft_between_quotes(char *str);
 
 /* Execution */
 

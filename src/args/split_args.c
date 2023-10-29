@@ -6,54 +6,11 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 16:31:11 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:40:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static
-int			ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
-{
-	t_args_list	*target_arg;
-
-	if (!*cmd_split)
-	{
-		*cmd_split = ft_new_args_list(tmp);
-		if (!*cmd_split)
-			return (0);
-		return (1);
-	}
-	target_arg = *cmd_split;
-	while (target_arg->next)
-		target_arg = target_arg->next;
-	target_arg->next = ft_new_args_list(tmp);
-	if (!target_arg->next)
-		return (0);
-	return (1);
-}
-
-static
-size_t	ft_split_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
-{
-	char	*tmp;
-	size_t	len;
-
-	if (str_before[0] && !ft_add_arg_to_list(cmd_split, str_before))
-		return (0);
-	tmp = ft_get_with_quotes(str_after);
-	//ft_printf("res btw q |%s|\n", tmp);
-	if (!tmp)
-		return (0);
-	if (!ft_add_arg_to_list(cmd_split, tmp))
-	{
-		free(tmp);
-		return (0);
-	}
-	len = ft_strlen(tmp);
-	free(tmp);
-	return (len + 2);
-}
 
 static
 size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
@@ -62,7 +19,7 @@ size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_
 	char	*res;
 	size_t	len;
 
-	tmp = ft_get_with_quotes(str_after);
+	tmp = ft_between_quotes(str_after);
 	if (!tmp)
 		return (0);
 	res = ft_strjoin(str_before, tmp);
@@ -79,37 +36,6 @@ size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_
 	len = ft_strlen(tmp);
 	free(tmp);
 	return (len + 2);
-}
-
-static
-char		**ft_args_list_to_str_split(t_args_list **cmd_split)
-{
-	t_args_list	*target;
-	size_t		i;
-	char		**res;
-
-	target = *cmd_split;
-	i = 0;
-	while (target)
-	{
-		target = target->next;
-		i++;
-	}
-	res = malloc(sizeof(char *) * (i + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	target = *cmd_split;
-	while (target)
-	{
-		//ft_printf("args[%d]: [%s]\n", i, target->arg);
-		res[i] = target->arg;
-		target = target->next;
-		i++;
-	}
-	res[i] = NULL;
-	i = 0;
-	return (res);
 }
 
 static
