@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/26 16:19:30 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:13:07 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@
 # define GREEN [0;32m
 # define BLUE [0;34m
 # define DEFAULT [0;37m
+
+/* PIPES */
+
+# define READ_PIPE 0
+# define WRITE_PIPE 1
 
 typedef	struct s_lexer_tokens
 {
@@ -71,7 +76,6 @@ typedef struct s_shell_data
 {
 	char 		**envp;
 	int			pipe[2];
-	int			swap[2];
 	int			input_fd;
 	int			output_fd;
 	int			infile;
@@ -140,7 +144,7 @@ char			*ft_get_with_quotes(char *str);
 
 /* Execution */
 
-void			ft_execution(t_shell_data **t_shell_data, t_cmd *cmd);
+void			ft_execution(t_shell_data **t_shell_data, t_cmd **cmd);
 
 /* History */
 
@@ -150,7 +154,7 @@ void    		ft_add_to_history_file(char **hist_file, char *line);
 
 int				ft_get_infile(t_shell_data **shell_data, char *tmp);
 int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
-
+int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 
 /* Signals */
 
