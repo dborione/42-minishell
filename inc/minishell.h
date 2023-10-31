@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 17:41:11 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:58:13 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define READ_PIPE 0
 # define WRITE_PIPE 1
 
-typedef	struct s_lexer_tokens
+typedef struct s_lexer_tokens
 {
 	char					*input;
 	int						token;
@@ -54,7 +54,6 @@ typedef struct s_env_var
 	char		*value;
 }				t_env_var;
 
-
 typedef struct s_cmd
 {
 	char			*name;
@@ -65,16 +64,15 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef	struct s_args_split
+typedef struct s_args_split
 {
 	char				*arg;
 	struct s_args_split	*next;
 }						t_args_list;
 
-
 typedef struct s_shell_data
 {
-	char 		**envp;
+	char		**envp;
 	int			pipe[2];
 	int			input_fd;
 	int			output_fd;
@@ -83,7 +81,7 @@ typedef struct s_shell_data
 	int			exit_code;
 	int			exit;
 	char		*prompt;
-	struct 		sigaction	sa;
+	struct		sigaction	sa;
 }				t_shell_data;
 
 /* Init */
@@ -124,6 +122,7 @@ void			ft_free_commands(t_cmd **cmds);
 
 t_args_list		*ft_new_args_list(char *tmp);
 char			**ft_split_args(char *input);
+t_args_list		*ft_input_to_args_list(char *input, size_t len);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
 size_t			ft_split_from_quotes(
 	t_args_list **cmd_split, char *str_before, char *str_after);
