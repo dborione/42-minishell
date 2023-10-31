@@ -62,7 +62,11 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			i += 2;
 			while (ft_isspace(line[i]))
 				i++;
-			ft_heredoc(&line[i]);
+			if (!ft_heredoc(*shell_data, &line[i]))
+			{
+				//free(tmp);
+    			//return (lexer_list);
+			}
 		}
 		if (tmp[0] && i > 0 && line[i] == '<' && !(*shell_data)->infile)
 		{

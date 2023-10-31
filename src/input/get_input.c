@@ -29,7 +29,7 @@ void ft_get_input(t_shell_data **shell_data)
 		{
 			ft_putstr_fd("exit", STDIN_FILENO);
 			free(line);
-			break;
+			break ;
 		};
 		ft_add_to_history_file(&hist_file, line);
 		lexer_list = ft_parse_input(shell_data, line);

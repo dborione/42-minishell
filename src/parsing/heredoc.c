@@ -12,18 +12,56 @@
 
 #include "../../inc/minishell.h"
 
-int ft_heredoc(char *line)
-{
-	char *eof;
-    char *input;
 
-    input = readline("> ");
-    eof = line;
-	while (!ft_isequal(eof, input))
+
+int ft_heredoc(t_shell_data *shell_data, char *line)
+{
+    pid_t	parent;
+	char    *eof;
+    char    *input;
+    // int     pipe_fd[2];
+
+    // if (pipe(pipe_fd) == -1)
+	// 	perror("bash");
+    //ft_init_shell_sigaction(shell_data);
+    ft_init_shell_sigaction(shell_data, HEREDOC_PARENT);
+    parent = fork();
+    if (parent < 0)
     {
-        free(input);
-		input = readline("> ");
+        // close(pipe_fd[READ_PIPE]);
+		// close(pipe_fd[WRITE_PIPE]);
+        perror("bash");
     }
-    free(input);
-    return (1);
+    if (parent == 0)
+    {
+        // kill(parent, SIGINT);
+        ft_init_shell_sigaction(shell_data, HEREDOC_CHILD);                                                                    
+        //signal(SIGINT, SIG_DFL);
+        //signal(SIGQUIT, SIG_DFL);
+        // close(pipe_fd[READ_PIPE]);
+        input = readline("> ");
+        if (!input)
+        {
+	        // close(pipe_fd[WRITE_PIPE]);
+            return (0);
+        }
+        eof = line;
+        while (!ft_isequal(eof, input))
+        {
+            free(input);
+            input = readline("> ");
+            if (!input)
+            {
+	            // close(pipe_fd[WRITE_PIPE]);
+                return (0);
+            }
+        }
+        free(input);
+    }
+    waitpid(parent, NULL, 0);
+	// close(pipe_fd[WRITE_PIPE]);
+    if (!shell_data){
+
+    }
+    return (0);
 }

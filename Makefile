@@ -3,7 +3,8 @@ NAME	= minishell
 # Compilation 
 
 CC 		= clang
-CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR} -I ~/homebrew/opt/readline/include
+#CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR} -I ~/homebrew/opt/readline/include
+CFLAGS	= -Wall -Wextra -Werror -I${LIB_DIR} -I ~/.brew/opt/readline/include
 RM		= rm -f
 
 # Colors
@@ -33,7 +34,8 @@ ${NAME}:	${OBJS}
 		@make -C ./libft/
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 		@echo "${BLUE} [Make] ${YELLOW} Building ${DEFAULT}MINISHELL${YELLOW} !${DEFAULT}"
-		$(CC) ${CFLAGS} -o $@ $^ -Llibft -lft -lreadline -L ~/homebrew/opt/readline/lib
+#		$(CC) ${CFLAGS} -o $@ $^ -Llibft -lft -lreadline -L ~/homebrew/opt/readline/lib
+		$(CC) ${CFLAGS} -o $@ $^ -Llibft -lft -lreadline -L ~/.brew/opt/readline/lib
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 all:	${NAME}

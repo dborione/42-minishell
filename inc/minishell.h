@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/30 13:58:13 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:07:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@
 
 # define READ_PIPE 0
 # define WRITE_PIPE 1
+
+/* SIGNAL PROCESSES */
+# define MAIN 0
+# define HEREDOC_CHILD 1
+# define HEREDOC_PARENT 2
+
+/* SIGNAL PROCESSES */
+# define MAIN 0
+# define HEREDOC_CHILD 1
+# define HEREDOC_PARENT 2
 
 typedef struct s_lexer_tokens
 {
@@ -161,9 +171,9 @@ int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 
 /* Signals */
 
-void    		ft_init_shell_sigaction(t_shell_data *shell_data);
+void    		ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Heredoc */
-int				ft_heredoc(char *line);
+int				ft_heredoc(t_shell_data *shell_data, char *line);
 
 #endif
