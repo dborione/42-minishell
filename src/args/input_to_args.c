@@ -6,11 +6,20 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/31 18:01:36 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:19:16 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
+static
+void		*ft_exit_split_args(t_args_list **args_list, char **tmp)
+{
+	ft_free_args_list(args_list);
+	free(*tmp);
+	return (NULL);
+}
 
 static
 size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
@@ -39,14 +48,16 @@ size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_
 }
 
 static
-int			ft_split_from_space(t_args_list **args_list, char *input, char *tmp)
+int			ft_split_from_space(t_args_list **args_list, char *input, char **tmp, size_t *i)
 {
-	tmp[i - start] = '\0';
-	if (!ft_add_arg_to_list(&args_list, tmp))
-		return (ft_exit_split_args(&args_list, &tmp));
-	while (ft_isspace(input[i]))
-		i++;
-	start = i;
+	if (!ft_add_arg_to_list(args_list, *tmp))
+	{
+		ft_exit_split_args(args_list, tmp);
+		return (0);
+	}
+	while (ft_isspace(input[*i]))
+		(*i)++;
+	return (*i);
 }
 
 static
@@ -58,14 +69,6 @@ int			ft_init_split_args(t_args_list **args_list, char **tmp, size_t len, size_t
 		return (0);
 	*i = 0;
 	return (1);
-}
-
-static
-void		*ft_exit_split_args(t_args_list **args_list, char **tmp)
-{
-	ft_free_args_list(args_list);
-	free(*tmp);
-	return (NULL);
 }
 
 static
@@ -100,11 +103,9 @@ t_args_list	*ft_input_to_args_list(char *input, size_t len)
 		if (ft_isspace(input[i]))
 		{
 			tmp[i - start] = '\0';
-			if (!ft_add_arg_to_list(&args_list, tmp))
-				return (ft_exit_split_args(&args_list, &tmp));
-			while (ft_isspace(input[i]))
-				i++;
-			start = i;
+			start = ft_split_from_space(&args_list, input, &tmp, &i);
+			if (!start)
+				return (NULL);
 		}
 		else if ((input[i] == '\'' || input[i] == '"') && ft_has_endof_quotes(&input[i], input[i]))
 		{
