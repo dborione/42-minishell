@@ -41,6 +41,11 @@
 # define READ_PIPE 0
 # define WRITE_PIPE 1
 
+/* SIGNAL PROCESSES */
+# define MAIN 0
+# define HEREDOC_CHILD 1
+# define HEREDOC_PARENT 2
+
 typedef	struct s_lexer_tokens
 {
 	char					*input;
@@ -162,9 +167,9 @@ int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 
 /* Signals */
 
-void    		ft_init_shell_sigaction(t_shell_data *shell_data);
+void    		ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Heredoc */
-int				ft_heredoc(char *line);
+int				ft_heredoc(t_shell_data *shell_data, char *line);
 
 #endif
