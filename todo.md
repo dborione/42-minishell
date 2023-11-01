@@ -1,0 +1,4 @@
+- signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
+- double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
+- variables env
+- checker si on a les bons exit codes ($?)

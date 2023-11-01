@@ -45,6 +45,7 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 	size_t	start;
 	size_t	i;
     t_lexer_tokens  *lexer_list;
+	char 	*env_var;
 
 	tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
 	if (!tmp)
@@ -120,6 +121,8 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 				ft_putnbr_fd((*shell_data)->exit_code, 2);
 				ft_putendl_fd(": command not found", 2);
 			}
+			env_var = ft_envp_get_value((*shell_data)->envp, &line[i]);
+			*line = *env_var;
 		}
 		tmp[i - start] = line[i];
 		i++;
