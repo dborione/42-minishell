@@ -27,7 +27,7 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
         input = readline("> ");
         if (!input)
             exit(0);
-        printf("%s\n", line);
+        // printf("%s\n", line);
         while (!ft_isequal(line, input))
         {
             free(input);

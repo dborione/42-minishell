@@ -32,15 +32,15 @@ static char	*ft_join_and_free(char *tmp_user_path, char *str2, char *tmp_path)
 	return (joined_str);
 }
 
-// static char *ft_change_user_colour(char *user, char *colour)
-// {
-// 	char *tmp_user;
+static char *ft_change_user_colour(char *user, char *colour)
+{
+	char *tmp_user;
 
-// 	tmp_user = ft_strjoin(colour, user);
-// 	if (!tmp_user)
-// 		exit (1); //protect
-// 	return (tmp_user);
-// }
+	tmp_user = ft_strjoin(colour, user);
+	if (!tmp_user)
+		exit (1); //protect
+	return (tmp_user);
+}
 
 static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 {
@@ -61,11 +61,11 @@ static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 		tmp_prompt = ft_join_and_free(tmp_user_path, path, tmp_path);
 	free(tmp_path);
 	free(tmp_user_path);
-	prompt = ft_strjoin(tmp_prompt, "$ ");
+	prompt = ft_strjoin(tmp_prompt, "\x1b[37m$ ");
 	free (tmp_prompt);
 	if (!prompt)
 		exit (1); //a voir
-	//free(user);
+	free(user);
 	return (prompt);
 
 }
@@ -82,13 +82,13 @@ char	*ft_show_user_path(char **envp)
 	home = ft_envp_get_value(envp, "HOME");
 	if (ft_startswith(path, home))
 	{
-		//user = ft_change_user_colour(user, "\x1b[32m");
+		user = ft_change_user_colour(user, "\x1b[32m");
 		len = ft_strlen(home);
 		if (!path[len])
-			return (ft_print_user_path(user, "@student.s19.be:", "", 1));
+			return (ft_print_user_path(user, "\x1b[32m@student.s19.be\x1b[37m:\x1b[34m", "", 1));
 		else if (path[len] == '/')
-			return (ft_print_user_path(user, "@student.s19.be:", &path[len], 1));
+			return (ft_print_user_path(user, "\x1b[32m@student.s19.be\x1b[37m:\x1b[34m", &path[len], 1));
 	}
-	return (ft_print_user_path(user, "@student.s19.be:", path, 0));
+	return (ft_print_user_path(user, "\x1b[32m@student.s19.be\x1b[37m:\x1b[34m", path, 0));
 }
 
