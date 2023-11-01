@@ -70,6 +70,7 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 				free(tmp);
     			return (lexer_list);
 			}
+			ft_init_shell_sigaction(*shell_data, MAIN);
 		}
 		if (tmp[0] && i > 0 && line[i] == '<' && !(*shell_data)->infile)
 		{
