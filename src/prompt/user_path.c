@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 09:52:52 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:27:34 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ char	*ft_show_user_path(char **envp)
 	user = ft_envp_get_value(envp, "USER");
 	path = ft_envp_get_value(envp, "PWD");
 	home = ft_envp_get_value(envp, "HOME");
+	user = ft_change_user_colour(user, "\x1b[32m");
 	if (ft_startswith(path, home))
 	{
-		user = ft_change_user_colour(user, "\x1b[32m");
 		len = ft_strlen(home);
 		if (!path[len])
 			return (ft_print_user_path(user, "\x1b[32m@student.s19.be\x1b[37m:\x1b[34m", "", 1));
