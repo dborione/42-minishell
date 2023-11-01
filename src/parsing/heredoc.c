@@ -12,38 +12,35 @@
 
 #include "../../inc/minishell.h"
 
-
-
 int ft_heredoc(t_shell_data *shell_data, char *line)
 {
-    pid_t	parent;
+    pid_t	pid;
 	char    *eof;
     char    *input;
-    // int     pipe_fd[2];
+    int     status;
 
-    // if (pipe(pipe_fd) == -1)
+    // if (pipe(shell_data->pipe) == -1)
 	// 	perror("bash");
-    //ft_init_shell_sigaction(shell_data);
-    ft_init_shell_sigaction(shell_data, HEREDOC_PARENT);
-    parent = fork();
-    if (parent < 0)
+    shell_data->quit = 1;
+    pid = fork();
+    if (pid < 0)
     {
-        // close(pipe_fd[READ_PIPE]);
-		// close(pipe_fd[WRITE_PIPE]);
+        // close(shell_data->pipe[READ_PIPE]);
+		// close(shell_data->pipe[WRITE_PIPE]);
         perror("bash");
     }
-    if (parent == 0)
+    if (pid == 0)
     {
-        // kill(parent, SIGINT);
-        ft_init_shell_sigaction(shell_data, HEREDOC_CHILD);                                                                    
-        //signal(SIGINT, SIG_DFL);
-        //signal(SIGQUIT, SIG_DFL);
-        // close(pipe_fd[READ_PIPE]);
+        // close(shell_data->pipe[READ_PIPE]);
+		shell_data->rl_catch_signals = 0;
+        ft_init_shell_sigaction(shell_data, HEREDOC_CHILD);
         input = readline("> ");
         if (!input)
         {
-	        // close(pipe_fd[WRITE_PIPE]);
-            return (0);
+            //shell_data->quit = 1;
+            // write(shell_data->pipe[WRITE_PIPE],&(shell_data->quit), sizeof(shell_data->quit));
+	        // close(shell_data->pipe[WRITE_PIPE]);
+            exit(0);
         }
         eof = line;
         while (!ft_isequal(eof, input))
@@ -52,16 +49,22 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
             input = readline("> ");
             if (!input)
             {
-	            // close(pipe_fd[WRITE_PIPE]);
-                return (0);
+                //kill(pid, SIGTERM);
+                //shell_data->quit = 1;
+                // write(shell_data->pipe[WRITE_PIPE],&(shell_data->quit), sizeof(shell_data->quit));
+	            // close(shell_data->pipe[WRITE_PIPE]);
+                exit(0);
             }
         }
+	    //close(shell_data->pipe[WRITE_PIPE]);
         free(input);
     }
-    waitpid(parent, NULL, 0);
-	// close(pipe_fd[WRITE_PIPE]);
-    if (!shell_data){
-
-    }
-    return (0);
+    // read(shell_data->pipe[READ_PIPE], &(shell_data->quit), sizeof(shell_data->quit));
+	// close(shell_data->pipe[WRITE_PIPE]);
+    // close(shell_data->pipe[READ_PIPE]);
+    // return (waitpid(pid, NULL, WNOHANG));
+	//signal(SIGINT, SIG_IGN);
+    waitpid(pid, &status, 0);
+    shell_data->exit_code = WEXITSTATUS(status);
+    return (1);
 }

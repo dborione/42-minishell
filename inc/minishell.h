@@ -22,6 +22,7 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/ioctl.h>
 
 /* Parsing Tokens */
 # define CMD 1
@@ -44,12 +45,7 @@
 /* SIGNAL PROCESSES */
 # define MAIN 0
 # define HEREDOC_CHILD 1
-# define HEREDOC_PARENT 2
-
-/* SIGNAL PROCESSES */
-# define MAIN 0
-# define HEREDOC_CHILD 1
-# define HEREDOC_PARENT 2
+# define CTL_C_EXIT 1
 
 typedef struct s_lexer_tokens
 {
@@ -82,6 +78,9 @@ typedef struct s_args_split
 
 typedef struct s_shell_data
 {
+	int	quit;
+	int	pid;
+	int	rl_catch_signals;
 	char		**envp;
 	int			pipe[2];
 	int			input_fd;
