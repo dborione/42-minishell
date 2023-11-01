@@ -78,8 +78,6 @@ typedef struct s_args_split
 
 typedef struct s_shell_data
 {
-	int	quit;
-	int	pid;
 	int	rl_catch_signals;
 	char		**envp;
 	int			pipe[2];
