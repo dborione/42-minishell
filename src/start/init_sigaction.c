@@ -9,10 +9,7 @@ void    ft_handle_sig_act_heredoc_child(int sig)
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, 0, &term);
 	if (sig == SIGINT)
-	{
-		//ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		exit(CTL_C_EXIT);
-	}
 }
 
 static
@@ -34,10 +31,13 @@ void    ft_handle_sig_act_main(int sig)
 
 void    ft_init_shell_sigaction(t_shell_data *shell_data, int process)
 {
-	if (process == MAIN)
-    	shell_data->sa.sa_handler = &ft_handle_sig_act_main;
 	if (process == HEREDOC_CHILD)
+	{
+		shell_data->rl_catch_signals = 0;
     	shell_data->sa.sa_handler = &ft_handle_sig_act_heredoc_child;
+	}
+	else if (process == MAIN)
+    	shell_data->sa.sa_handler = &ft_handle_sig_act_main;
     sigemptyset(&shell_data->sa.sa_mask);
 	shell_data->sa.sa_flags = SA_RESTART;
     sigaction(SIGINT, &(shell_data->sa), NULL);

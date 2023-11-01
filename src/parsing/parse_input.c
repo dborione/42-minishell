@@ -65,6 +65,7 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			ft_heredoc(*shell_data, &line[i]);
 			if ((*shell_data)->exit_code == CTL_C_EXIT)
 			{
+				printf("> \n");
 				ft_init_shell_sigaction(*shell_data, MAIN);
 				free(tmp);
     			return (lexer_list);

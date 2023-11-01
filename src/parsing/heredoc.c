@@ -27,6 +27,7 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
         input = readline("> ");
         if (!input)
             exit(0);
+        printf("%s\n", line);
         while (!ft_isequal(line, input))
         {
             free(input);
@@ -37,7 +38,7 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
         free(input);
         exit(0);
     }
-	//signal(SIGINT, SIG_IGN);
+    signal(SIGINT, SIG_IGN);
     waitpid(pid, &status, 0);
     shell_data->exit_code = WEXITSTATUS(status);
     return (1);
