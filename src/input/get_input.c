@@ -25,6 +25,7 @@ void ft_get_input(t_shell_data **shell_data)
 		stifle_history(1000);
 		(*shell_data)->prompt = ft_show_user_path((*shell_data)->envp);
 		line = readline((*shell_data)->prompt);
+		free((*shell_data)->prompt);
 		if (!line)
 		{
 			ft_putstr_fd("exit", STDIN_FILENO);
@@ -41,5 +42,4 @@ void ft_get_input(t_shell_data **shell_data)
 	}
 	unlink(hist_file);
 	free(hist_file);
-	free((*shell_data)->prompt);
 }

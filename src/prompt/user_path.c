@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 09:52:52 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/01 20:27:34 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:58:05 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 		exit (1); //a voir
 	free(user);
 	return (prompt);
-
 }
 
 char	*ft_show_user_path(char **envp)
