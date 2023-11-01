@@ -111,12 +111,16 @@ t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
 			start = ++i;
 			tmp[0] = '\0';
 		}
-		// else if (line[i] == '$')
-		// {
-		// 	i++;
-		// 	if (line[i] == '?')
-		// 		printf("%d\n", (*shell_data)->exit_code);
-		// }
+		else if (line[i] == '$')
+		{
+			i++;
+			if (line[i] == '?')
+			{
+				ft_putstr_fd("bash: ", 2);
+				ft_putnbr_fd((*shell_data)->exit_code, 2);
+				ft_putendl_fd(": command not found", 2);
+			}
+		}
 		tmp[i - start] = line[i];
 		i++;
 	}
