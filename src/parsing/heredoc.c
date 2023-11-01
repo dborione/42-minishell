@@ -15,7 +15,6 @@
 int ft_heredoc(t_shell_data *shell_data, char *line)
 {
     pid_t	pid;
-	char    *eof;
     char    *input;
     int     status;
 
@@ -28,8 +27,7 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
         input = readline("> ");
         if (!input)
             exit(0);
-        eof = line;
-        while (!ft_isequal(eof, input))
+        while (!ft_isequal(line, input))
         {
             free(input);
             input = readline("> ");
@@ -37,6 +35,7 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
                 exit(0);
         }
         free(input);
+        exit(0);
     }
 	//signal(SIGINT, SIG_IGN);
     waitpid(pid, &status, 0);
