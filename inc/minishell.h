@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 15:21:53 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:05:25 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_cmd
 	char			**args;
 	int				builtin;
 	char			*path;
-	int				id;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -123,38 +122,47 @@ void			ft_get_input(t_shell_data	**shell_data);
 
 /*	Parsing */
 
-t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char **input);
+t_cmd			*ft_parse_input(t_shell_data **shell_data, char **input);
 int				ft_add_token_to_list(t_lexer_tokens **lexer_list, char **input, int token);
 void			ft_free_lexer_list(t_lexer_tokens **lexer_list);
 void			ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list);
 
 /* Commands */
 
-t_cmd			*ft_get_command(char *cmd, char **paths, int builtin);
-void			ft_add_command(t_cmd **cmds, t_cmd *new_cmd);
+t_cmd			*ft_get_command(char **cmd_args, char **paths, size_t end);
+int				ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end);
 void			ft_free_commands(t_cmd **cmds);
 
 /* Args */
 
 t_args_list		*ft_new_args_list(char *tmp);
-char			**ft_split_args(char *input);
-t_args_list		*ft_input_to_args_list(char *input, size_t len);
+char			**ft_split_args(t_shell_data **shell_data, char *input);
+t_args_list		*ft_input_to_args_list(t_shell_data **shell_data, char *input, size_t len);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
 int				ft_join_args(t_args_list **cmd_split, char *tmp);
 int				ft_one_split(t_data_split **data, t_args_list **args_list, char *input);
-size_t			ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after);
-size_t			ft_split_from_quotes(
-	t_data_split *data, t_args_list **cmd_split, char *input);
 char			**ft_args_list_to_str_split(t_args_list **cmd_split);
-int				ft_space_split(t_data_split **data, t_args_list **args_list, char *input);
-int				ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input);
 void        	ft_free_args_list(t_args_list **cmd_split);
 void			*ft_exit_split_args(t_data_split **data, t_args_list **args_list);
-int				ft_is_invalid_args_separator(char *input);
+int				ft_is_invalid_args_separator(t_shell_data **shell_data, char *input);
 int				ft_split_char_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char separator);
 int				ft_split_string_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char *separator);
+char			**ft_extract_args(char **args, size_t end);
+
+/* Args Spaces */
+
+int				ft_space_split(t_data_split **data, t_args_list **args_list, char *input);
+
+/* Args Quotes */
+
+int				ft_has_endof_quotes(char *input, char quote);
+char			*ft_between_quotes(char *str);
+int				ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input);
+size_t			ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after);
+size_t			ft_split_from_quotes(
+	t_data_split *data, t_args_list **cmd_split, char *input);
 
 /* Builtins */
 
@@ -166,11 +174,6 @@ int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_export(char **envp, t_cmd *cmd);
-
-/* Quotes */
-
-int				ft_has_endof_quotes(char *input, char quote);
-char			*ft_between_quotes(char *str);
 
 /* Execution */
 
@@ -191,6 +194,14 @@ int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 void    		ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Heredoc */
+
 int				ft_heredoc(t_shell_data *shell_data, char *line);
+
+/* Errors */
+
+int				ft_perror(char *message);
+void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char token);
+void			ft_wrong_redirection_syntax(t_shell_data **shell_data);
+void			ft_command_not_found(char *cmd_name);
 
 #endif
