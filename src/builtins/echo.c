@@ -1,5 +1,22 @@
 #include "../../inc/minishell.h"
 
+static
+int	ft_is_n_option(char *input)
+{
+	size_t	i;
+
+	if (!ft_startswith("-n", input))
+		return (0);
+	i = 2;
+	while (input[i])
+	{
+		if (input[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int ft_echo(char **envp, t_cmd *cmd)
 {
 	int i;
@@ -7,7 +24,7 @@ int ft_echo(char **envp, t_cmd *cmd)
 
 	i = 1;
 	new_line = 0;
-	if (ft_isequal("-n", cmd->args[i]))
+	if (ft_is_n_option(cmd->args[i]))
 		i++;
 	else
 		new_line = 1;
@@ -21,6 +38,6 @@ int ft_echo(char **envp, t_cmd *cmd)
 	if (new_line)
 		ft_putendl_fd("", 1);
 	if (cmd && envp)
-    	return (1);
-	return (1);
+    	return (0);
+	return (0);
 }
