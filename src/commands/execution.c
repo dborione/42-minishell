@@ -83,8 +83,8 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 			waitpid(-1, &(*shell_data)->exit_code, 0);
 			target = target->next;
 		}
-		if ((*shell_data)->exit_code != 0)
-			printf("\n");
+		if ((*shell_data)->exit_code == 2) // pour cat SIGINT
+			ft_putstr_fd("\n", STDOUT_FILENO);
 		ft_init_shell_sigaction(*shell_data, MAIN);
 		ft_free_commands(cmds);
 	}
