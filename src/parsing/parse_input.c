@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 16:12:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:38:57 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,100 +39,79 @@ int	ft_extract_command(t_lexer_tokens **lexer_list, char *tmp)
 	return (0);
 }
 
-t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char *line)
+t_lexer_tokens *ft_parse_input(t_shell_data **shell_data, char **input)
 {
-	char	*tmp;
 	size_t	start;
 	size_t	i;
-    t_lexer_tokens  *lexer_list;
+    //t_lexer_tokens  *lexer_list;
 	char 	*env_var;
 
-	tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	if (!tmp)
-		return (NULL);
+	// tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	// if (!tmp)
+	// 	return (NULL);
 	start = 0;
 	i = 0;
 	(*shell_data)->infile = 0;
 	(*shell_data)->outfile = 0;
-	lexer_list = NULL;
-	tmp[0] = '\0';
-    while (line[i])
+	//lexer_list = NULL;
+    while (input[i])
 	{
-		if (line[i] == '<' && line[i + 1] == '<')
+		// if (ft_isequal(input[i], "<<"))
+		// {
+		// 	i += 2;
+		// 	while (ft_isspace(line[i]))
+		// 		i++;
+		// 	ft_heredoc(*shell_data, &line[i]);
+		// 	if ((*shell_data)->exit_code == CTL_C_EXIT)
+		// 	{
+		// 		printf("> \n");
+		// 		ft_init_shell_sigaction(*shell_data, MAIN);
+		// 		free(tmp);
+    	// 		return (lexer_list);
+		// 	}
+		// 	ft_init_shell_sigaction(*shell_data, MAIN);
+		// }
+		if (ft_isequal(input[i], "<")) //&& !(*shell_data)->infile)
 		{
-			i += 2;
-			while (ft_isspace(line[i]))
-				i++;
-			ft_heredoc(*shell_data, &line[i]);
-			if ((*shell_data)->exit_code == CTL_C_EXIT)
-			{
-				printf("> \n");
-				ft_init_shell_sigaction(*shell_data, MAIN);
-				free(tmp);
-    			return (lexer_list);
-			}
-			ft_init_shell_sigaction(*shell_data, MAIN);
-		}
-		if (tmp[0] && i > 0 && line[i] == '<' && !(*shell_data)->infile)
-		{
-			tmp[i - start] = '\0';
-			if (!ft_get_infile(shell_data, tmp))
+			if (!ft_get_infile(shell_data, input[i]))
 				perror("bash");
 			(*shell_data)->infile = 1;
 			i++;
 			start = i;
-			tmp[0] = '\0';
 		}
-		else if (line[i] == '>')
+		//else if (ft_isequal(input[i], ">>"))
+		else if (ft_isequal(input[i], ">"))
 		{
-			tmp[i - start] = '\0';
-			if (!ft_extract_command(&lexer_list, tmp))
-			{
-				(*shell_data)->exit = 1;
-				//ajouter le clear des lexe
-			}
-			i++;
-			while (ft_isspace(line[i]))
-				i++;
-			if (!ft_get_outfile(shell_data, &line[i]))
+			if (!ft_get_outfile(shell_data, input[i]))
 				perror("bash");
 			(*shell_data)->outfile = 1;
 			break;
 			start = i;
-			tmp[0] = '\0';
 		}
-		else if (line[i] == '|')
+		else if (ft_isequal(input[i], "|"))
 		{
-			tmp[i - start] = '\0';
-			if (!ft_extract_command(&lexer_list, tmp))
-			{
-				(*shell_data)->exit = 1;
-				//ajouter le clear des lexe
-			}
+			// NEW CMD
 			start = ++i;
-			tmp[0] = '\0';
 		}
-		else if (line[i] == '$')
-		{
-			i++;
-			if (line[i] == '?')
-			{
-				ft_putstr_fd("bash: ", 2);
-				ft_putnbr_fd((*shell_data)->exit_code, 2);
-				ft_putendl_fd(": command not found", 2);
-			}
-			env_var = ft_envp_get_value((*shell_data)->envp, &line[i]);
-			*line = *env_var;
-		}
-		tmp[i - start] = line[i];
+		// else if (line[i] == '$')
+		// {
+		// 	i++;
+		// 	if (line[i] == '?')
+		// 	{
+		// 		ft_putstr_fd("bash: ", 2);
+		// 		ft_putnbr_fd((*shell_data)->exit_code, 2);
+		// 		ft_putendl_fd(": command not found", 2);
+		// 	}
+		// 	env_var = ft_envp_get_value((*shell_data)->envp, &line[i]);
+		// 	*line = *env_var;
+		// }
 		i++;
 	}
-	tmp[i - start] = '\0';
-    if (tmp[0] && !ft_extract_command(&lexer_list, tmp))
-	{
-		(*shell_data)->exit = 1;
-		//ajouter le clear des lexe
-	}
-	free(tmp);
+    // if (tmp[0] && !ft_extract_command(&lexer_list, tmp))
+	// {
+	// 	(*shell_data)->exit = 1;
+	// 	//ajouter le clear des lexe
+	// }
+	// free(tmp);
     return (lexer_list);
 }

@@ -50,7 +50,7 @@ void ft_get_input(t_shell_data **shell_data)
 		ft_printf("---\n");
 		add_history(line);
 		//ft_add_to_history_file(&hist_file, line);
-		lexer_list = ft_parse_input(shell_data, line);
+		lexer_list = ft_parse_input(shell_data, input);
 		free(line);
 		if (!lexer_list)
 			continue;
