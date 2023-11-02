@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 23:48:49 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 01:48:13 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:08:35 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ char	*ft_between_quotes(char *str)
 		if (str[i] == quote)
 			break ;
 		res[i - 1] = str[i];
-		//ft_putchar_fd(res[i - 1], 1);
 		i++;
 	}
-	//ft_putchar_fd('\n', 1);
 	res[i - 1] = '\0';
 	return (res);
 }
@@ -61,47 +59,46 @@ int		ft_has_endof_quotes(char *input, char quote)
 	return (0);
 }
 
-size_t	ft_split_from_quotes(t_data_split *data, t_args_list **cmd_split, char *input)//, char *str_before, char *str_after)
+size_t	ft_split_from_quotes(t_data_split *data, t_args_list **cmd_split, char *input)
 {
 	char	*tmp;
-	//char	*tmp2;
 	size_t	len;
-	//size_t	i;
 
 	tmp = ft_between_quotes(&input[data->i]);
-	//ft_printf("res btw q |%s|\n", tmp);
 	if (!tmp)
 		return (0);
 	len = ft_strlen(tmp);
-	// i = 0;
-	// while (input[data->i + i] && i < (len + 2))
-	// 	i++;
-	// if (i == (len + 2) )
-	// {
-	// 	if ((input[data->i + i] == '\'' || input[data->i + i] == '"')
-	// 		&& ft_has_endof_quotes(&input[data->i + i], input[data->i + i]))
-	// 	{
-			
-	// 	}
-	// }
 
 	if (!ft_join_args(cmd_split, tmp))
 	{
 		free(tmp);
 		return (0);
 	}
-
-	// if (!ft_add_arg_to_list(cmd_split, tmp))
-	// {
-	// 	free(tmp);
-	// 	return (0);
-	// }
-
 	free(tmp);
-	// data->space = 1;
-	// data->i += data->start;
-	// while (ft_isspace(input[data->i]))
-	// 	data->i++;
-	// data->start = data->i;
+	return (len + 2);
+}
+
+size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
+{
+	char	*tmp;
+	char	*res;
+	size_t	len;
+
+	tmp = ft_between_quotes(str_after);
+	if (!tmp)
+		return (0);
+	res = ft_strjoin(str_before, tmp);
+	if (!res)
+	{
+		free(tmp);
+		return (0);
+	}
+	if (!ft_add_arg_to_list(cmd_split, res))
+	{
+		free(tmp);
+		return (0);
+	}
+	len = ft_strlen(tmp);
+	free(tmp);
 	return (len + 2);
 }
