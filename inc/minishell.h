@@ -44,8 +44,8 @@
 
 /* SIGNAL PROCESSES */
 # define MAIN 0
-# define HEREDOC_CHILD 1
-# define CTL_C_EXIT 1
+# define HEREDOC_CHILD 2
+# define CTL_C_EXIT 99
 
 typedef struct s_lexer_tokens
 {
@@ -86,6 +86,7 @@ typedef struct s_data_split
 
 typedef struct s_shell_data
 {
+	int exec;
 	int	rl_catch_signals;
 	char		**envp;
 	int			pipe[2];

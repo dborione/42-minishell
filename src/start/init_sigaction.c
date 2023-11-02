@@ -1,6 +1,22 @@
 #include "../../inc/minishell.h"
 
 static
+void    ft_handle_sig_act_cmd(int sig)
+{
+	struct termios term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, 0, &term);
+	if (sig == SIGINT)
+	{
+		printf("jfkdls\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "dfsfdsfsd\n");
+		exit(CTL_C_EXIT);
+	}
+}
+
+static
 void    ft_handle_sig_act_heredoc_child(int sig)
 {
 	struct termios term;
@@ -31,11 +47,10 @@ void    ft_handle_sig_act_main(int sig)
 
 void    ft_init_shell_sigaction(t_shell_data *shell_data, int process)
 {
-	if (process == HEREDOC_CHILD)
-	{
-		shell_data->rl_catch_signals = 0;
+	if (process == CMD)
+    	shell_data->sa.sa_handler = &ft_handle_sig_act_cmd;
+	else if (process == HEREDOC_CHILD)
     	shell_data->sa.sa_handler = &ft_handle_sig_act_heredoc_child;
-	}
 	else if (process == MAIN)
     	shell_data->sa.sa_handler = &ft_handle_sig_act_main;
     sigemptyset(&shell_data->sa.sa_mask);
