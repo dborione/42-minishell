@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 14:47:16 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:15:45 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_is_invalid_args_separator(char *input)
 		|| ft_startswith(input, ">>>")
 		)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token «", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token « ", 2);
 		ft_putchar_fd(input[0], 2);
 		ft_putendl_fd(" »", 2);
 		return (1);
@@ -30,7 +30,6 @@ int	ft_is_invalid_args_separator(char *input)
 int	ft_split_char_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char separator)
 {
-	ft_printf("%c++\n", input[(*data)->i]);
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
 	if (!(*data)->space && (*data)->tmp[0])
 	{
@@ -45,7 +44,6 @@ int	ft_split_char_separator(
 	if (!ft_one_split(data, args_list, input))
 		return (0);
 	(*data)->i++;
-	ft_printf("%c--\n", input[(*data)->i]);
 	while (ft_isspace(input[(*data)->i]))
 		(*data)->i++;
 	(*data)->space = 1;
@@ -56,7 +54,6 @@ int	ft_split_char_separator(
 int	ft_split_string_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char *separator)
 {
-	ft_printf("%c++\n", input[(*data)->i]);
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
 	if (!(*data)->space && (*data)->tmp[0])
 	{
@@ -72,7 +69,6 @@ int	ft_split_string_separator(
 	if (!ft_one_split(data, args_list, input))
 		return (0);
 	(*data)->i++;
-	ft_printf("%c--\n", input[(*data)->i]);
 	while (ft_isspace(input[(*data)->i]))
 		(*data)->i++;
 	(*data)->space = 1;

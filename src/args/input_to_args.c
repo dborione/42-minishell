@@ -6,37 +6,12 @@
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 14:52:05 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:13:00 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static
-size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
-{
-	char	*tmp;
-	char	*res;
-	size_t	len;
-
-	tmp = ft_between_quotes(str_after);
-	if (!tmp)
-		return (0);
-	res = ft_strjoin(str_before, tmp);
-	if (!res)
-	{
-		free(tmp);
-		return (0);
-	}
-	if (!ft_add_arg_to_list(cmd_split, res))
-	{
-		free(tmp);
-		return (0);
-	}
-	len = ft_strlen(tmp);
-	free(tmp);
-	return (len + 2);
-}
 static
 int			ft_init_data_split(t_data_split **data, t_args_list **args_list, size_t len)
 {
@@ -84,7 +59,6 @@ t_args_list	*ft_input_to_args_list(char *input, size_t len)
 	t_data_split	*data;
 	t_args_list	*args_list;
 
-	ft_printf("split\n");
 	if (!ft_init_data_split(&data, &args_list, len))
 		return (NULL);
 	while (ft_isspace(input[data->i]))
@@ -107,22 +81,7 @@ t_args_list	*ft_input_to_args_list(char *input, size_t len)
 		else if (ft_isspace(input[data->i]))
 			ft_space_split(&data, &args_list, input);
 		else if ((input[data->i] == '\'' || input[data->i] == '"') && ft_has_endof_quotes(&input[data->i], input[data->i]))
-		{
-			data->tmp[data->i - data->start] = '\0';
-			if (!data->space) // retirer la verif de l'espace
-				data->start = ft_split_from_quotes(data, &args_list, input);
-			else
-				data->start = ft_join_from_quotes(&args_list, data->tmp, &input[data->i]);
-			if (!data->start)
-				return (ft_exit_split_args(&data, &args_list));
-			data->i += data->start;
-			if (!ft_isspace(input[data->i]))
-				data->space = 0;
-			while (ft_isspace(input[data->i]))
-				data->i++;
-			data->start = data->i;
-			data->tmp[0] = '\0';
-		}
+			ft_quotes_split(&data, &args_list, input);
 		else
 		{
 			data->tmp[data->i - data->start] = input[data->i];
