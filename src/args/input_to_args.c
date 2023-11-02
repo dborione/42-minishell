@@ -6,20 +6,11 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/31 17:19:16 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 02:08:03 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
-static
-void		*ft_exit_split_args(t_args_list **args_list, char **tmp)
-{
-	ft_free_args_list(args_list);
-	free(*tmp);
-	return (NULL);
-}
 
 static
 size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_after)
@@ -48,85 +39,110 @@ size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_
 }
 
 static
-int			ft_split_from_space(t_args_list **args_list, char *input, char **tmp, size_t *i)
+int			ft_split_from_space(t_data_split **data, t_args_list **args_list, char *input)
 {
-	if (!ft_add_arg_to_list(args_list, *tmp))
+	if (!ft_add_arg_to_list(args_list, (*data)->tmp))
 	{
-		ft_exit_split_args(args_list, tmp);
+		ft_exit_split_args(data, args_list);
 		return (0);
 	}
-	while (ft_isspace(input[*i]))
-		(*i)++;
-	return (*i);
-}
-
-static
-int			ft_init_split_args(t_args_list **args_list, char **tmp, size_t len, size_t *i)
-{
-	*args_list = NULL;
-	*tmp = malloc(sizeof(char) * (len + 1));
-	if (!(*tmp))
-		return (0);
-	*i = 0;
+	while (ft_isspace(input[(*data)->i]))
+		(*data)->i++;
+	(*data)->start = (*data)->i;
+	(*data)->space = 1;
+	(*data)->tmp[0] = '\0';
 	return (1);
 }
 
 static
-void		ft_finish_split_args(t_args_list **args_list, char *tmp, size_t i, size_t start)
+int			ft_init_data_split(t_data_split **data, t_args_list **args_list, size_t len)
 {
-	tmp[i - start] = '\0';
-	if (tmp[0])
+	*data = malloc(sizeof(t_data_split));
+	if (!(*data))
+		return (0);
+	*args_list = NULL;
+	(*data)->tmp = malloc(sizeof(char) * (len + 1));
+	if (!(*data)->tmp)
 	{
-		if (!ft_add_arg_to_list(args_list, tmp))
+		free(data);
+		return (0);
+	}
+	(*data)->i = 0;
+	(*data)->space = 1;
+	return (1);
+}
+
+static
+void		ft_finish_split_args(t_data_split **data, t_args_list **args_list)
+{
+	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
+	if ((*data)->tmp[0])
+	{
+		if (!(*data)->space)
+		{
+			if (!ft_join_args(args_list, (*data)->tmp))
+			{
+				ft_free_args_list(args_list);
+				*args_list = NULL;
+			}
+		}
+		else if (!ft_add_arg_to_list(args_list, (*data)->tmp))
 		{
 			ft_free_args_list(args_list);
 			*args_list = NULL;
 		}
 	}
-	free(tmp);
+	free((*data)->tmp);
+	free(*data);
 }
 
 t_args_list	*ft_input_to_args_list(char *input, size_t len)
 {
-	char		*tmp;
-	size_t		i;
-	size_t		start;
+	t_data_split	*data;
 	t_args_list	*args_list;
 
-	if (!ft_init_split_args(&args_list, &tmp, len, &i))
+	if (!ft_init_data_split(&data, &args_list, len))
 		return (NULL);
-	while (ft_isspace(input[i]))
-			i++;
-	start = i;
-	while (input[i])
+	while (ft_isspace(input[data->i]))
+			data->i++;
+	data->start = data->i;
+	while (input[data->i])
 	{
-		if (ft_isspace(input[i]))
+		if (ft_isspace(input[data->i]))
 		{
-			tmp[i - start] = '\0';
-			start = ft_split_from_space(&args_list, input, &tmp, &i);
-			if (!start)
+			data->tmp[data->i - data->start] = '\0';
+			if (!data->space)
+			{
+				if (!ft_join_args(&args_list, data->tmp))
+					return (NULL);
+			}
+			else if (!ft_split_from_space(&data, &args_list, input))
 				return (NULL);
+			data->space = 1;
 		}
-		else if ((input[i] == '\'' || input[i] == '"') && ft_has_endof_quotes(&input[i], input[i]))
+		else if ((input[data->i] == '\'' || input[data->i] == '"') && ft_has_endof_quotes(&input[data->i], input[data->i]))
 		{
-			tmp[i - start] = '\0';
-			if (start && ft_isspace(input[i - 1]))
-				start = ft_split_from_quotes(&args_list, tmp, &input[i]);
+			data->tmp[data->i - data->start] = '\0';
+			if (!data->space) // retirer la verif de l'espace
+				data->start = ft_split_from_quotes(data, &args_list, input);
 			else
-				start = ft_join_from_quotes(&args_list, tmp, &input[i]);
-			if (!start)
-				return (ft_exit_split_args(&args_list, &tmp));
-			i += start;
-			while (ft_isspace(input[i]))
-				i++;
-			start = i;
+				data->start = ft_join_from_quotes(&args_list, data->tmp, &input[data->i]);
+			if (!data->start)
+				return (ft_exit_split_args(&data, &args_list));
+			data->i += data->start;
+			if (!ft_isspace(input[data->i]))
+				data->space = 0;
+			while (ft_isspace(input[data->i]))
+				data->i++;
+			data->start = data->i;
+			data->tmp[0] = '\0';
 		}
 		else
 		{
-			tmp[i - start] = input[i];
-			i++;
+			data->tmp[data->i - data->start] = input[data->i];
+			data->i++;
 		}
 	}
-	ft_finish_split_args(&args_list, tmp, i, start);
+	ft_finish_split_args(&data, &args_list);
 	return (args_list);
 }

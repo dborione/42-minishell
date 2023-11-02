@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:19:18 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:58:51 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,15 @@ void	ft_free_args_list(t_args_list **cmd_split)
         free(target);
         target = *cmd_split;
     }
+}
+
+void		*ft_exit_split_args(t_data_split **data, t_args_list **args_list)
+{
+	ft_free_args_list(args_list);
+	if (data && *data)
+	{
+		free((*data)->tmp);
+		free(*data);
+	}
+	return (NULL);
 }

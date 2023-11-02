@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 15:01:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 17:40:59 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:50:22 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@ int			ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
 		target_arg = target_arg->next;
 	target_arg->next = ft_new_args_list(tmp);
 	if (!target_arg->next)
+		return (0);
+	return (1);
+}
+
+int			ft_join_args(t_args_list **cmd_split, char *tmp)
+{
+	t_args_list	*target_arg;
+
+	if (!*cmd_split)
+		return (0);
+	target_arg = *cmd_split;
+	while (target_arg->next)
+		target_arg = target_arg->next;
+	target_arg->arg = ft_cleanjoin(target_arg->arg, tmp);
+	if (!target_arg)
 		return (0);
 	return (1);
 }
