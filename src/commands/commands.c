@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:30:11 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_cmd	*ft_new_command(char *cmd_name, int builtin)
 	new_cmd->builtin = builtin;
 	new_cmd->next = NULL;
 	new_cmd->path = NULL;
-	new_cmd->id = 0;
 	if (!builtin && access(new_cmd->name, F_OK) == 0)
 	{
 		new_cmd->path = ft_strdup(new_cmd->name);
@@ -76,51 +75,84 @@ int	ft_set_path(t_cmd **new_cmd, char **paths)
 	return (0);
 }
 
-t_cmd	*ft_get_command(char *cmd, char **paths, int builtin)
+t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
 {
 	t_cmd	*new_cmd;
-	char	**tmp;
+	char	**new_cmd_args;
+	int		builtin;
 
-	tmp = ft_split_args(cmd);
-	if (!tmp)
+	ft_printf("lets: %s\n", cmd_args[0]);
+	new_cmd_args = ft_extract_args(cmd_args, end);
+	if (!new_cmd_args)
 		return (NULL);
-	new_cmd = ft_new_command(tmp[0], builtin);
+	builtin = ft_is_builtin(new_cmd_args[0]);
+	//tmp = ft_split_args(cmd);
+	new_cmd = ft_new_command(new_cmd_args[0], builtin);
 	if (!new_cmd)
 	{
-		ft_free_split(tmp);
+		//ft_free_split(tmp);
 		return (NULL);
 	}
 	if (!builtin && !new_cmd->path && !ft_set_path(&new_cmd, paths))
 	{
-		ft_free_split(tmp);
+		//ft_free_split(tmp);
 		if (new_cmd->path)
 			free(new_cmd->path);
 		ft_cmd_not_found(new_cmd->name); // free car leak en ce moment
 		return (NULL);
 	}
 	else
-		new_cmd->args = tmp;
-	//ft_printf("no error: %s\n", new_cmd->name);
+		new_cmd->args = new_cmd_args;
+	ft_printf("no error: %s\n", new_cmd->name);
 	return (new_cmd);
 }
 
-void		ft_add_command(t_cmd **cmds, t_cmd *new_cmd)
+// void		ft_add_command(t_cmd **cmds, t_cmd *new_cmd)
+// {
+// 	t_cmd	*target;
+
+// 	if (!cmds)
+// 		return ;
+// 	if (!*cmds)
+// 	{
+// 		new_cmd->id = 0;
+// 		*cmds = new_cmd;
+// 	}
+// 	else
+// 	{
+// 		target = (*cmds);
+// 		while (target->next)
+// 			target = target->next;
+// 		new_cmd->id = target->id + 1;
+// 		target->next = new_cmd;
+// 	}
+// }
+
+int		ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end)
 {
 	t_cmd	*target;
 
 	if (!cmds)
-		return ;
+		return (0);
 	if (!*cmds)
 	{
-		new_cmd->id = 0;
-		*cmds = new_cmd;
+		*cmds = ft_get_command(cmd_args, paths, end);
+		// erreurs de création de commande à prendre en compte
+		ft_printf("first cmd = %s\n", cmd_args[0]);
+		if (!*cmds)
+			return (0);
 	}
 	else
 	{
+		ft_printf("next cmd = %s\n", cmd_args[0]);
 		target = (*cmds);
 		while (target->next)
 			target = target->next;
-		new_cmd->id = target->id + 1;
-		target->next = new_cmd;
+		target->next = ft_get_command(cmd_args, paths, end);
+		if (!target->next)
+			return (0);
+		// exit 127 : erreurs de création de commande à prendre en compte
+		return (1);
 	}
+	return (1);
 }

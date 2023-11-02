@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   args_separators.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 15:15:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 20:49:59 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_is_invalid_args_separator(char *input)
+int	ft_is_invalid_args_separator(t_shell_data **shell_data, char *input)
 {
 	if (ft_startswith(input, "||")
 		|| ft_startswith(input, "<<<")
 		|| ft_startswith(input, ">>>")
 		)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token « ", 2);
-		ft_putchar_fd(input[0], 2);
-		ft_putendl_fd(" »", 2);
+		ft_wrong_tokens_syntax(shell_data, input[0]);
 		return (1);
 	}
 	return (0);

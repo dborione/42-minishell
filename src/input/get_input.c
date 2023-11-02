@@ -15,9 +15,9 @@
 void ft_get_input(t_shell_data **shell_data)
 {
 	// char    *hist_file;
-	char *line;
-	t_lexer_tokens *lexer_list;
-	char **input;
+	char	*line;
+	char	**input;
+	t_cmd	*cmds;
 
 	// hist_file = ft_strjoin(ft_envp_get_value((*shell_data)->envp, "HOME"), "/.history");
 	using_history();
@@ -34,13 +34,20 @@ void ft_get_input(t_shell_data **shell_data)
 			free(line);
 			break;
 		};
-		input = ft_split_args(line);
+		input = ft_split_args(shell_data, line);
 		if (!input)
 		{
 			perror("bash");
 			free(line);
 			break;
 		};
+		add_history(line);
+		if (ft_isequal(input[0], "|"))
+		{
+			ft_wrong_tokens_syntax(shell_data, '|');
+			free(line);
+			continue ;
+		}
 		ft_printf("---\n");
 		int y = 0;
 		while (input[y])
@@ -49,14 +56,34 @@ void ft_get_input(t_shell_data **shell_data)
 			y++;
 		}
 		ft_printf("---\n");
-		add_history(line);
 		// ft_add_to_history_file(&hist_file, line);
-		lexer_list = ft_parse_input(shell_data, line);
+		cmds = ft_parse_input(shell_data, input);
 		free(line);
-		if (!lexer_list)
-			continue;
-		ft_parse_elements(shell_data, &lexer_list);
-		ft_free_lexer_list(&lexer_list);
+		if (!cmds)
+		{
+			ft_printf("!cmds\n");
+			(*shell_data)->exit = 127;
+			ft_free_split(input);
+			break ;
+		}
+		t_cmd *target;
+		target = cmds;
+		ft_printf("¨¨¨\n");
+		while (target)
+		{
+			y = 0;
+			while (target->args[y])
+			{
+				ft_printf("(%s)\n", target->args[y]);
+				y++;
+			}
+			target = target->next;
+		}
+		ft_printf("¨¨¨\n");
+		ft_execution(shell_data, &cmds);
+		ft_free_commands(&cmds);
+		//ft_parse_elements(shell_data, &lexer_list);
+		//ft_free_lexer_list(&lexer_list);
 	}
 	clear_history();
 	// unlink(hist_file);

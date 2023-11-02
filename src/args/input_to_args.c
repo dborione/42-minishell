@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_to_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 15:13:00 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 20:52:07 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		ft_finish_split_args(t_data_split **data, t_args_list **args_list)
 	free(*data);
 }
 
-t_args_list	*ft_input_to_args_list(char *input, size_t len)
+t_args_list	*ft_input_to_args_list(t_shell_data **shell_data, char *input, size_t len)
 {
 	t_data_split	*data;
 	t_args_list	*args_list;
@@ -67,7 +67,7 @@ t_args_list	*ft_input_to_args_list(char *input, size_t len)
 	while (input[data->i])
 	{
 		// ajouter data->error et check a chaque boucle
-		if (ft_is_invalid_args_separator(&input[data->i]))
+		if (ft_is_invalid_args_separator(shell_data, &input[data->i]))
 		{
 			ft_free_args_list(&args_list);
 			return (NULL);
