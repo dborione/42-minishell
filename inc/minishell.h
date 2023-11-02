@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/31 17:07:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 01:22:20 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ typedef struct s_args_split
 	struct s_args_split	*next;
 }						t_args_list;
 
+typedef struct s_data_split
+{
+	char	*tmp;
+	size_t	i;
+	size_t	start;
+	int		space;
+}			t_data_split;
+
 typedef struct s_shell_data
 {
 	int	rl_catch_signals;
@@ -131,10 +139,12 @@ t_args_list		*ft_new_args_list(char *tmp);
 char			**ft_split_args(char *input);
 t_args_list		*ft_input_to_args_list(char *input, size_t len);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
+int				ft_join_args(t_args_list **cmd_split, char *tmp);
 size_t			ft_split_from_quotes(
-	t_args_list **cmd_split, char *str_before, char *str_after);
+	t_data_split *data, t_args_list **cmd_split, char *input);
 char			**ft_args_list_to_str_split(t_args_list **cmd_split);
 void        	ft_free_args_list(t_args_list **cmd_split);
+void			*ft_exit_split_args(t_data_split **data, t_args_list **args_list);
 
 /* Builtins */
 
