@@ -15,7 +15,9 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_shell_data	*shell_data;
+	int	error_code;
 
+	error_code = 0;
 	if (argc == 1)
 	{
 		if (!ft_init_shell(&shell_data, argv[0], envp))
@@ -24,13 +26,13 @@ int	main(int argc, char *argv[], char *envp[])
 			//system("leaks minishell");
 			return (EXIT_FAILURE);
 		}
-		shell_data->rl_catch_signals = 0;
 		ft_init_shell_sigaction(shell_data, MAIN);
 		ft_get_input(&shell_data);
 		ft_free_split(shell_data->envp);
+		error_code = shell_data->exit_code;
 		free(shell_data);
 	}
 	else
 		ft_putendl_fd("Error: just ./minishell", 2);
-	return (0);
+	return (error_code);
 }

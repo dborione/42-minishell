@@ -37,7 +37,7 @@ void	ft_parse_elements(t_shell_data **shell_data, t_lexer_tokens **lexer_list)
 	cmds = ft_parse_command(*shell_data, target);
 	if (!cmds)
 	{
-		ft_printf("cmd importation failed\n");
+		//ft_printf("cmd importation failed\n");
 		return ;
 	}
 	//ft_printf("target: %s\n", target->input);

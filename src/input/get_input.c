@@ -28,7 +28,8 @@ void ft_get_input(t_shell_data **shell_data)
 		free((*shell_data)->prompt);
 		if (!line)
 		{
-			ft_putstr_fd("exit\n", STDIN_FILENO);
+			if (isatty(STDIN_FILENO))
+				ft_putstr_fd("exit\n", STDOUT_FILENO);
 			free(line);
 			break ;
 		};

@@ -7,7 +7,7 @@ int ft_echo(char **envp, t_cmd *cmd)
 
 	i = 1;
 	new_line = 0;
-	if (ft_isequal("-n", cmd->args[i]))
+	if (ft_startswith("-n", cmd->args[i]))
 		i++;
 	else
 		new_line = 1;
