@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 22:30:11 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:54:24 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	ft_set_path(t_cmd **new_cmd, char **paths)
 		(*new_cmd)->path = NULL;
 		i++;
 	}
-	return (0);
+	free((*new_cmd)->path);
+	(*new_cmd)->path = NULL;
+	return (1);
 }
 
 t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
@@ -81,21 +83,15 @@ t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
 	char	**new_cmd_args;
 	int		builtin;
 
-	ft_printf("lets: %s\n", cmd_args[0]);
 	new_cmd_args = ft_extract_args(cmd_args, end);
 	if (!new_cmd_args)
 		return (NULL);
 	builtin = ft_is_builtin(new_cmd_args[0]);
-	//tmp = ft_split_args(cmd);
 	new_cmd = ft_new_command(new_cmd_args[0], builtin);
 	if (!new_cmd)
-	{
-		//ft_free_split(tmp);
 		return (NULL);
-	}
 	if (!builtin && !new_cmd->path && !ft_set_path(&new_cmd, paths))
 	{
-		//ft_free_split(tmp);
 		if (new_cmd->path)
 			free(new_cmd->path);
 		ft_cmd_not_found(new_cmd->name); // free car leak en ce moment
@@ -103,7 +99,6 @@ t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
 	}
 	else
 		new_cmd->args = new_cmd_args;
-	ft_printf("no error: %s\n", new_cmd->name);
 	return (new_cmd);
 }
 
@@ -138,7 +133,7 @@ int		ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end)
 	{
 		*cmds = ft_get_command(cmd_args, paths, end);
 		// erreurs de création de commande à prendre en compte
-		ft_printf("first cmd = %s\n", cmd_args[0]);
+		//ft_printf("first cmd = %s\n", cmd_args[0]);
 		if (!*cmds)
 			return (0);
 	}

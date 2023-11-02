@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extract_args.c                                     :+:      :+:    :+:   */
+/*   not_found.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 21:00:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 23:14:37 by rbarbiot         ###   ########.fr       */
+/*   Created: 2023/11/02 22:56:43 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/11/02 23:04:35 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**ft_extract_args(char **args, size_t end)
+void	ft_command_not_found(char *cmd_name)
 {
-	size_t	i;
-	char	**new_args;
+	char	*message;
 
-	new_args = malloc(sizeof(char *) * end + 2);
-	if (!new_args)
-		return (NULL);
-	i = 0;
-	while (i < end)
+	message = ft_strjoin(cmd_name, ": command not found\n");
+	if (message)
 	{
-		//ft_printf("this: %s\n", args[i]);
-		new_args[i] = ft_strdup(args[i]);
-		if (!new_args[i])
-		{
-			ft_free_split(new_args);
-			return (NULL);
-		}
-		i++;
+		ft_perror(message);
+		free(message);
 	}
-	new_args[i] = NULL;
-	//ft_printf("first arg = %s\n", args[0]);
-	return (new_args);
 }

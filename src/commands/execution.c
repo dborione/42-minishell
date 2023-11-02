@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 16:29:05 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 23:06:05 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 {
 	ft_use_pipe(shell_data, cmd, pipe_fd);
 	close(pipe_fd[READ_PIPE]);
-	if (cmd->builtin)
+	if (cmd->builtin)	// s'occuper des frees ?
 		exit(ft_execute_builtin(shell_data, cmd));
+	if (!cmd->path)
+	{
+		ft_command_not_found(cmd->name);
+		exit(127);
+	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	//ft_printf("command failed : %s\n", (cmd)->args[0]);
 	exit(EXIT_FAILURE);
