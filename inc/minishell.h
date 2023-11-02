@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 01:22:20 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:51:21 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,18 @@ char			**ft_split_args(char *input);
 t_args_list		*ft_input_to_args_list(char *input, size_t len);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
 int				ft_join_args(t_args_list **cmd_split, char *tmp);
+int				ft_one_split(t_data_split **data, t_args_list **args_list, char *input);
 size_t			ft_split_from_quotes(
 	t_data_split *data, t_args_list **cmd_split, char *input);
 char			**ft_args_list_to_str_split(t_args_list **cmd_split);
+int				ft_space_split(t_data_split **data, t_args_list **args_list, char *input);
 void        	ft_free_args_list(t_args_list **cmd_split);
 void			*ft_exit_split_args(t_data_split **data, t_args_list **args_list);
+int				ft_is_invalid_args_separator(char *input);
+int				ft_split_char_separator(
+	t_data_split **data, t_args_list **args_list, char *input, char separator);
+int				ft_split_string_separator(
+	t_data_split **data, t_args_list **args_list, char *input, char *separator);
 
 /* Builtins */
 
