@@ -29,3 +29,8 @@ et alors que :
 - '>>': redirections en append mode
 - exit code si cat sans input + ctl C
 - exit avec arguments
+
+[Exit]
+- Changer le atoi: pour l'instant ne prends en charge que les ints
+- Prendre en charge 'exit ""': dans bash, 'numeric argument required'
+- Prendre en charge exit + commande
