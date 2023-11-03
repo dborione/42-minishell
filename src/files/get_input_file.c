@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/03 11:06:38 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:24:33 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_get_infile(t_shell_data **shell_data, char *infile_path)
 {
-	ft_printf("infile: %s\n", infile_path);
+	//ft_printf("infile: %s\n", infile_path);
 	if ((*shell_data)->infile)
 		close((*shell_data)->input_fd);
 	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)

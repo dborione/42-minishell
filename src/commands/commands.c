@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 22:54:24 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:24:21 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,6 @@ t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
 	return (new_cmd);
 }
 
-// void		ft_add_command(t_cmd **cmds, t_cmd *new_cmd)
-// {
-// 	t_cmd	*target;
-
-// 	if (!cmds)
-// 		return ;
-// 	if (!*cmds)
-// 	{
-// 		new_cmd->id = 0;
-// 		*cmds = new_cmd;
-// 	}
-// 	else
-// 	{
-// 		target = (*cmds);
-// 		while (target->next)
-// 			target = target->next;
-// 		new_cmd->id = target->id + 1;
-// 		target->next = new_cmd;
-// 	}
-// }
-
 int		ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end)
 {
 	t_cmd	*target;
@@ -139,7 +118,6 @@ int		ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end)
 	}
 	else
 	{
-		ft_printf("next cmd = %s\n", cmd_args[0]);
 		target = (*cmds);
 		while (target->next)
 			target = target->next;
