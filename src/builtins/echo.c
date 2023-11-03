@@ -5,10 +5,10 @@ int	ft_is_n_option(char *input)
 {
 	size_t	i;
 
-	if (!ft_startswith("-n", input))
+	if (!ft_startswith(input, "-n"))
 		return (0);
 	i = 2;
-	while (input[i])
+	while (input[i] && !ft_isspace(input[i]))
 	{
 		if (input[i] != 'n')
 			return (0);
