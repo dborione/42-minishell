@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 22:45:26 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:01:30 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 	size_t	i;
 	t_cmd	*cmds;
 	char	**paths;
-	
+	// ajouter un type lasso et prendre en charge la suppression de <>
 	//char 	*env_var;
 
 	start = 0;
@@ -39,25 +39,37 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 				ft_wrong_redirection_syntax(shell_data);
 				break ;
 			}
+			if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
+				break ;
 			if (!ft_get_infile(shell_data, input[i + 1]))
 			{
 				perror("bash");
-				break;
+				//break; break uniquement si aucun pipe
 			}
-			(*shell_data)->infile = 1;
 			i+=2;
+			if (!input[i])
+				break;
 			start = i;
 		}
 		//else if (ft_isequal(input[i], "<<"))
 		else if (ft_isequal(input[i], ">"))
 		{
-			if (!ft_get_outfile(shell_data, input[i]))
+			if (!input[i + 1])
+			{
+				ft_wrong_redirection_syntax(shell_data);
+				break ;
+			}
+			if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
+				break ;
+			if (!ft_get_outfile(shell_data, input[i + 1]))
 			{
 				perror("bash");
-				break;
+				//break;
 			}
-			(*shell_data)->outfile = 1;
-			start = ++i;
+			i += 2;
+			if (!input[i])
+				break;
+			start = i;
 		}
 		//else if (ft_isequal(input[i], ">>"))
 		else if (ft_isequal(input[i], "|"))
@@ -72,22 +84,9 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 			//ft_printf("now = %s\n", input[i]);
 			if (!ft_add_command(&cmds, &input[start], paths, i + 1 - start))
 				break ;
-			
 			break ;
 		}
 		i++;
-		// else if (line[i] == '$')
-		// {
-		// 	i++;
-		// 	if (line[i] == '?')
-		// 	{
-		// 		ft_putstr_fd("bash: ", 2);
-		// 		ft_putnbr_fd((*shell_data)->exit_code, 2);
-		// 		ft_putendl_fd(": command not found", 2);
-		// 	}
-		// 	env_var = ft_envp_get_value((*shell_data)->envp, &line[i]);
-		// 	*line = *env_var;
-		// }
 	}
 	ft_free_split(input);
 	if (!paths)
