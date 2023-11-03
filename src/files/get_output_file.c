@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_output_file.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:35:11 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_get_outfile(t_shell_data **shell_data, char *tmp)
+int	ft_get_outfile(t_shell_data **shell_data, char *outfile_path)
 {
-	char	*outfile_path;
-
-	outfile_path = ft_strtrim(tmp, " ");
-	ft_printf("outfile: %s\n", outfile_path);
-	if (!outfile_path)
-		return (0);
+	
+	if ((*shell_data)->outfile)
+		close((*shell_data)->output_fd);
 	(*shell_data)->output_fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if ((*shell_data)->output_fd == -1)
-		return (EXIT_FAILURE); // normal?
+	{
+		ft_printf("fail outfile: %s\n", outfile_path);
+		(*shell_data)->outfile = 0;
+		(*shell_data)->exit_code = EXIT_FAILURE;
+		return (0);
+	}
+	(*shell_data)->outfile = 1;
+	ft_printf("outfile: %s\n", outfile_path);
 	return (1);
 }

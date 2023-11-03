@@ -55,30 +55,29 @@ void ft_get_input(t_shell_data **shell_data)
 			ft_printf("(%s)\n", input[y]);
 			y++;
 		}
-		//ft_printf("---\n");
-		// ft_add_to_history_file(&hist_file, line);
+		ft_printf("---\n");
+		//ft_add_to_history_file(&hist_file, line);
 		cmds = ft_parse_input(shell_data, input);
 		free(line);
 		if (!cmds)
 		{
+			//(*shell_data)->exit_code = 127;
 			ft_printf("!cmds\n");
-			(*shell_data)->exit = 127;
-			ft_free_split(input);
-			break ;
+			continue ;
 		}
-		// t_cmd *target;
-		// target = cmds;
-		// ft_printf("¨¨¨\n");
-		// while (target)
-		// {
-		// 	y = 0;
-		// 	while (target->args[y])
-		// 	{
-		// 		ft_printf("(%s)\n", target->args[y]);
-		// 		y++;
-		// 	}
-		// 	target = target->next;
-		// }
+		t_cmd *target;
+		target = cmds;
+		ft_printf("¨¨¨\n");
+		while (target)
+		{
+			y = 0;
+			while (target->args[y])
+			{
+				ft_printf("(%s)\n", target->args[y]);
+				y++;
+			}
+			target = target->next;
+		}
 		ft_printf("¨¨¨\n");
 		ft_execution(shell_data, &cmds);
 		ft_free_commands(&cmds);

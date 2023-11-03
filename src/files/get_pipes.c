@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 15:55:01 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 15:58:01 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:04:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	if (cmd->next)
 	{
 		if (dup2(pipe_fd[WRITE_PIPE], STDOUT_FILENO) == -1)
+			return (0);
+	}
+	else if ((*shell_data)->outfile)
+	{
+		if (dup2((*shell_data)->output_fd, STDOUT_FILENO) == -1)
 			return (0);
 	}
 	return (1);
