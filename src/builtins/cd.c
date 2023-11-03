@@ -70,11 +70,21 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	char	cwd[PATH_MAX];
 	int		exit_code;
 
+	exit_code = access(path, F_OK);
+	if (exit_code)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
+	}
 	exit_code = chdir(path);
 	if (exit_code)
 	{
-		perror("bash: cd");
-		return (exit_code);
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": Not a directory\n", 2);
+		return (1);
 	}
 	exit_code = ft_change_oldpwd(shell_data);
 	if (exit_code)
@@ -101,6 +111,12 @@ int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 		ft_putendl_fd("bash: cd: too many arguments.", 2);
 		return (1);
 	}
-	ft_cd_path(shell_data, cmd->args[1]);
-	return (0);
+	if (ft_strlen(cmd->args[1]) >= 256)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd(": File name too long\n", 2);
+		return (1);
+	}
+	return (ft_cd_path(shell_data, cmd->args[1]));
 }

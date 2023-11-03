@@ -49,7 +49,7 @@ int ft_parse_exit_args(t_cmd *cmd, int error)
 static
 int ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd)
 {
-	ft_putstr_fd("bash: line 1: exit: ", STDERR_FILENO);
+	ft_putstr_fd("bash: exit: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->args[1], STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	(*shell_data)->exit_code = 255;
@@ -66,7 +66,7 @@ int	ft_exit(t_shell_data **shell_data, t_cmd *cmd)
 	error = ft_parse_exit_args(cmd, error);
 	if (cmd->args[2] && error != 1)
 	{
-		ft_putendl_fd("bash: line 1: exit: too many arguments.", STDERR_FILENO);
+		ft_putendl_fd("bash: exit: too many arguments.", STDERR_FILENO);
 		(*shell_data)->exit_code = 1;
 		return ((*shell_data)->exit_code);
 	}
