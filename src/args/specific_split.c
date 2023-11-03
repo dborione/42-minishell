@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   specific_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:43:39 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 15:15:54 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:18:07 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 		if (!ft_join_args(args_list, (*data)->tmp))
 			return (0);
 		(*data)->tmp[0] = '\0';
-		// while (ft_isspace(input[(*data)->i]))
-		// 	(*data)->i++;
-		// (*data)->start = (*data)->i;
-		// (*data)->space = 1;
-		// (*data)->tmp[0] = '\0';
+		while (ft_isspace(input[(*data)->i]))
+			(*data)->i++;
+		(*data)->start = (*data)->i;
+		(*data)->space = 1;
+		(*data)->tmp[0] = '\0';
 	}
 	else if (!ft_one_split(data, args_list, input))
 		return (0);
