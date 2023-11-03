@@ -22,6 +22,8 @@ int ft_parse_exit_args(t_cmd *cmd, int error)
 	j = 0;
 	if (cmd->args[1][0] == '+' || cmd->args[1][0] == '-')
 		j++;
+	if (cmd->args[1][j] == '-' && !cmd->args[1][2])
+		return (0);
 	if (!cmd->args[1][j])
 		return (1);
 	while(cmd->args[1][j] == '0')

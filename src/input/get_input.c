@@ -62,7 +62,7 @@ void ft_get_input(t_shell_data **shell_data)
 		if (!cmds)
 		{
 			//(*shell_data)->exit_code = 127;
-			ft_printf("!cmds\n");
+			//ft_printf("!cmds\n");
 			continue ;
 		}
 		// t_cmd *target;
