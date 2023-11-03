@@ -20,12 +20,17 @@ int ft_parse_exit_args(t_cmd *cmd, int error)
 
 	i = 0;
 	j = 0;
+	if (cmd->args[1][0] == '+' || cmd->args[1][0] == '-')
+		j++;
+	if (!cmd->args[1][j])
+		return (1);
+	while(cmd->args[1][j] == '0')
+		j++;
 	while (cmd->args[++i])
 	{
 		while(cmd->args[i][j])
 		{
-			if (cmd->args[i][0] == '+' || cmd->args[i][0] == '-')
-				j++;
+			//printf("'%c' ", cmd->args[i][j]);
 			if (!ft_isdigit(cmd->args[i][j]))
 			{
 				if (i == 1)
@@ -40,7 +45,7 @@ int ft_parse_exit_args(t_cmd *cmd, int error)
 }
 
 static
-int ft_exit_msg(t_shell_data **shell_data, t_cmd *cmd)
+int ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd)
 {
 	ft_putstr_fd("bash: line 1: exit: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->args[1], STDERR_FILENO);
@@ -60,10 +65,32 @@ int	ft_exit(t_shell_data **shell_data, t_cmd *cmd)
 	if (cmd->args[2] && error != 1)
 	{
 		ft_putendl_fd("bash: line 1: exit: too many arguments.", STDERR_FILENO);
+		(*shell_data)->exit_code = 1;
 		return ((*shell_data)->exit_code);
 	}
-	if (error == 1)
-		return (ft_exit_msg(shell_data, cmd));
+	if (ft_isequal(cmd->args[1], "") || error == 1)
+		return (ft_exit_num_msg(shell_data, cmd));
+	if (ft_isequal(cmd->args[1], "-1"))
+	{
+		(*shell_data)->exit_code = -1;
+		return ((*shell_data)->exit_code);
+	}
+	if (ft_isequal(cmd->args[1], "0"))
+	{
+		(*shell_data)->exit_code = 0;
+		return ((*shell_data)->exit_code);
+	}
+	if (cmd->args[1][0] != '-' && ft_strlen(cmd->args[1]) == 19 && ft_atoi(&cmd->args[1][18]) > 7)
+		return (ft_exit_num_msg(shell_data, cmd));
+	if (cmd->args[1][0] == '-')
+	{
+		if (ft_strlen(cmd->args[1]) == 20 && ft_atoi(&cmd->args[1][19]) > 8)
+			return (ft_exit_num_msg(shell_data, cmd));
+		if (ft_strlen(cmd->args[1]) > 20)
+			return (ft_exit_num_msg(shell_data, cmd));
+	}
+	if (cmd->args[1][0] != '-' && ft_strlen(cmd->args[1]) > 19)
+		return (ft_exit_num_msg(shell_data, cmd));
 	(*shell_data)->exit_code = ft_atoi(cmd->args[1]);
 	return ((*shell_data)->exit_code);
 }

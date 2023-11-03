@@ -22,11 +22,13 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	if (!cmd->path)
 	{
 		ft_command_not_found(cmd->name);
-		exit(127);
+		(*shell_data)->exit_code = 127;
+		exit((*shell_data)->exit_code);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	//ft_printf("command failed : %s\n", (cmd)->args[0]);
 	exit(EXIT_FAILURE);
+
 }
 
 static
@@ -86,6 +88,7 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 		{
 			signal(SIGINT, SIG_IGN);
 			waitpid(-1, &(*shell_data)->exit_code, 0);
+    		(*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
 			target = target->next;
 		}
 		if ((*shell_data)->exit_code == 2) // pour cat SIGINT

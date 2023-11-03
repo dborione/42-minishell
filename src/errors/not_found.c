@@ -16,6 +16,7 @@ void	ft_command_not_found(char *cmd_name)
 {
 	char	*message;
 
+	ft_putstr_fd("bash: line 1: ", STDERR_FILENO);
 	message = ft_strjoin(cmd_name, ": command not found\n");
 	if (message)
 	{

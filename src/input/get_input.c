@@ -48,11 +48,11 @@ void ft_get_input(t_shell_data **shell_data)
 			free(line);
 			continue ;
 		}
-		ft_printf("---\n");
+		// ft_printf("---\n"); //print
 		int y = 0;
 		while (input[y])
 		{
-			ft_printf("(%s)\n", input[y]);
+			//ft_printf("(%s)\n", input[y]); //print
 			y++;
 		}
 		//ft_printf("---\n");
@@ -61,14 +61,14 @@ void ft_get_input(t_shell_data **shell_data)
 		free(line);
 		if (!cmds)
 		{
-			ft_printf("!cmds\n");
+			//ft_printf("!cmds\n");
 			(*shell_data)->exit = 127;
 			ft_free_split(input);
 			break ;
 		}
 		// t_cmd *target;
 		// target = cmds;
-		// ft_printf("¨¨¨\n");
+		// ft_printf("¨¨¨\n"); //print
 		// while (target)
 		// {
 		// 	y = 0;
@@ -79,7 +79,7 @@ void ft_get_input(t_shell_data **shell_data)
 		// 	}
 		// 	target = target->next;
 		// }
-		ft_printf("¨¨¨\n");
+		//ft_printf("¨¨¨\n");
 		ft_execution(shell_data, &cmds);
 		ft_free_commands(&cmds);
 		//ft_parse_elements(shell_data, &lexer_list);
