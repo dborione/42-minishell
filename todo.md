@@ -37,3 +37,5 @@ et alors que :
 
 [CD]
 - bash prend en charge `cd ~ pwd` alors que nous non
+- cd ~
+- cd -
