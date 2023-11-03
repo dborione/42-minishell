@@ -1,7 +1,7 @@
 [Signaux]
-OK - double prompte pour heredoc ctl-c 
-OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
-OK - quand on est dans un subshell les signaux sont pris en compte deux fois
+* OK - double prompte pour heredoc ctl-c 
+* OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
+* OK - quand on est dans un subshell les signaux sont pris en compte deux fois
 
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
@@ -31,6 +31,9 @@ et alors que :
 - exit avec arguments
 
 [Exit]
-- Changer le atoi: pour l'instant ne prends en charge que les ints
-- Prendre en charge 'exit ""': dans bash, 'numeric argument required'
+* OK Changer le atoi: pour l'instant ne prends en charge que les ints
+* OK Prendre en charge 'exit ""': dans bash, 'numeric argument required'
 - Prendre en charge exit + commande
+
+[CD]
+- bash prend en charge `cd ~ pwd` alors que nous non
