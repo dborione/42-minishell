@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 00:09:54 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 00:17:45 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ void	ft_set_cmd_infile_fd(
 		target = target->next;
 	if (!target || (*shell_data)->pipes > target->id)
 	{
-		//ft_printf("no cmd: %d\n", fd);
 		if ((*shell_data)->input_fd != -1
-			&& (*shell_data)->input_fd == STDIN_FILENO)
+			&& (*shell_data)->input_fd != STDIN_FILENO)
 			close((*shell_data)->input_fd);
 		(*shell_data)->input_fd = fd;
 	}
 	else
 	{
 		if (target->input_fd != -1
-			&& target->input_fd == STDIN_FILENO)
+			&& target->input_fd != STDIN_FILENO)
 			close(target->input_fd);
 		target->input_fd = fd;
 	}

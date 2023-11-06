@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/06 23:39:12 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 00:16:17 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	ft_set_cmd_outfile_fd(
 	if (!target || (*shell_data)->pipes > target->id)
 	{
 		if ((*shell_data)->output_fd != -1
-			&& (*shell_data)->output_fd == STDOUT_FILENO)
+			&& (*shell_data)->output_fd != STDOUT_FILENO)
 			close((*shell_data)->output_fd);
 		(*shell_data)->output_fd = fd;
 	}
 	else
 	{
 		if (target->output_fd != -1
-			&& target->output_fd == STDOUT_FILENO)
+			&& target->output_fd != STDOUT_FILENO)
 			close(target->output_fd);
 		target->output_fd = fd;
 	}
