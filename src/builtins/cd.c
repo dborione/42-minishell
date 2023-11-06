@@ -104,7 +104,7 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 
 int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 {
-	if (!cmd->args[1])
+	if (!cmd->args[1] || ft_isequal(cmd->args[1], "~"))
 		return (ft_cd_home(shell_data));
 	if (cmd->args[2])
 	{
