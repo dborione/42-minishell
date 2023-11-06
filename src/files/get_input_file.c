@@ -6,29 +6,56 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/03 11:24:33 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 00:09:54 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_get_infile(t_shell_data **shell_data, char *infile_path)
+static
+void	ft_set_cmd_infile_fd(
+	t_shell_data **shell_data, t_cmd *cmds, int fd)
 {
-	//ft_printf("infile: %s\n", infile_path);
-	if ((*shell_data)->infile)
-		close((*shell_data)->input_fd);
+	t_cmd	*target;
+
+	target = cmds;
+	while (target && target->next)
+		target = target->next;
+	if (!target || (*shell_data)->pipes > target->id)
+	{
+		//ft_printf("no cmd: %d\n", fd);
+		if ((*shell_data)->input_fd != -1
+			&& (*shell_data)->input_fd == STDIN_FILENO)
+			close((*shell_data)->input_fd);
+		(*shell_data)->input_fd = fd;
+	}
+	else
+	{
+		if (target->input_fd != -1
+			&& target->input_fd == STDIN_FILENO)
+			close(target->input_fd);
+		target->input_fd = fd;
+	}
+}
+
+int		ft_get_infile(
+	t_shell_data **shell_data, t_cmd *cmds, char *infile_path)
+{
+	int	fd;
+
+	ft_printf("infile: %s\n", infile_path);
 	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
 	{
-		(*shell_data)->input_fd = open(infile_path, O_RDONLY, 0644);
-		if ((*shell_data)->input_fd == -1)
+		fd = open(infile_path, O_RDONLY, 0644);
+		ft_set_cmd_infile_fd(shell_data, cmds, fd);
+		if (fd == -1)
 		{
-			(*shell_data)->infile = 0;
 			(*shell_data)->exit_code = EXIT_FAILURE;
 			return (0);
 		}
 		(*shell_data)->infile = 1;
 		return (1);
 	}
-	(*shell_data)->input_fd = -1;
+	ft_set_cmd_infile_fd(shell_data, cmds, -1);
 	return (0);
 }

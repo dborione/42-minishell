@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 23:05:25 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:49:05 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ typedef struct s_env_var
 typedef struct s_cmd
 {
 	char			*name;
+	size_t			id;
 	char			**args;
 	int				builtin;
+	int				input_fd;
+	int				output_fd;
 	char			*path;
 	struct s_cmd	*next;
 }					t_cmd;
@@ -89,6 +92,7 @@ typedef struct s_shell_data
 	int	rl_catch_signals;
 	char		**envp;
 	int			pipe[2];
+	size_t		pipes;
 	int			input_fd;
 	int			output_fd;
 	int			infile;
@@ -185,8 +189,8 @@ void    		ft_add_to_history_file(char **hist_file, char *line);
 
 /* Files */
 
-int				ft_get_infile(t_shell_data **shell_data, char *tmp);
-int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
+int				ft_get_infile(t_shell_data **shell_data, t_cmd *cmds, char *infile_path);
+int				ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *tmp);
 int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 
 /* Signals */
