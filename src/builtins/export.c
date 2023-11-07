@@ -5,14 +5,20 @@ int ft_print_export_env(char **envp)
 {
     int     i;
     char    *key;
+    char    *value;
 
 	i = 0;
 	while (envp[i])
 	{
         key = ft_envp_get_key(envp[i]);
 		printf("declare -x %s", key);
-		printf("=");
-		printf("\"%s\"\n", ft_envp_get_value(envp, key));
+        value = ft_envp_get_value(envp, key);
+        if (value[0])
+        {
+		    printf("=");
+		    printf("\"%s\"", value);
+        }
+		printf("\n");
 		i++;
 	}
     return (1);
@@ -71,7 +77,10 @@ int ft_check_valid_char(char *arg)
     while (arg[i])
     {
         if (!ft_isalnum(arg[i]))
-            return (0);
+        {
+            if (arg[i] != '=')
+                return (0);
+        }
         i++;
     }
     return (1);
