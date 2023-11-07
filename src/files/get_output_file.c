@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 00:16:17 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:18:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *outfile_path)
 {
 	int	fd;
 
-	// if ((*shell_data)->outfile)
 	fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	ft_set_cmd_outfile_fd(shell_data, cmds, fd);
 	if (fd == -1)

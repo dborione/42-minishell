@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/06 23:49:00 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:17:46 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	//ft_printf("command failed : %s\n", (cmd)->args[0]);
 	exit(EXIT_FAILURE);
-
 }
 
 static
@@ -50,18 +49,16 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 		perror("bash");
 	}
 	else if (parent == 0)
+	{
+		if (!ft_use_pipe(shell_data, cmd, pipe_fd))
+			exit(EXIT_FAILURE);
 		ft_next_command(shell_data, cmd, pipe_fd);
+	}
 	else
 	{
 		close(pipe_fd[WRITE_PIPE]);
 		if (cmd->next)
 			(*shell_data)->input_fd = pipe_fd[READ_PIPE];
-		// else
-		// {
-		// 	close(pipe_fd[READ_PIPE]);
-		// 	if ((*shell_data)->outfile)
-		// 		close((*shell_data)->output_fd);
-		// }
 	}
 }
 
@@ -78,12 +75,37 @@ void	ft_multi_execution(t_shell_data **shell_data, t_cmd *cmds)
 	}
 }
 
+static
+void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
+{
+	int	pipe_fd[2];
+
+	pipe_fd[0] = -1;
+	pipe_fd[1] = -1;
+	if (cmd->input_fd != STDIN_FILENO)
+		(*shell_data)->input_fd = dup(STDIN_FILENO);
+	if (cmd->output_fd != STDOUT_FILENO)
+	{
+		(*shell_data)->outfile = 1;
+		(*shell_data)->output_fd = dup(STDOUT_FILENO);
+	}
+	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
+		exit(EXIT_FAILURE);
+	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd);
+	if ((*shell_data)->outfile)
+	{
+		if (dup2((*shell_data)->output_fd, STDOUT_FILENO) == -1)
+			return ;
+		close((*shell_data)->output_fd);
+	}
+}
+
 void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 {
 	t_cmd	*target;
 
 	if (!(*cmds)->next && (*cmds)->builtin)
-		(*shell_data)->exit_code = ft_execute_builtin(shell_data, *cmds);
+		ft_unic_builtin(shell_data, *cmds);
 	else
 	{
 		ft_multi_execution(shell_data, *cmds);
@@ -95,16 +117,11 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
     		(*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
 			target = target->next;
 		}
-		// if ((*shell_data)->infile)
-		// 	close((*shell_data)->input_fd);
-		// if ((*shell_data)->outfile)
-		// 	close((*shell_data)->output_fd);
-		(*shell_data)->infile = 0;
-		(*shell_data)->outfile = 0;
 		if ((*shell_data)->exit_code == 2) // pour cat SIGINT
 			ft_putstr_fd("\n", STDOUT_FILENO);
 		ft_init_shell_sigaction(*shell_data, MAIN);
 		ft_free_commands(cmds);
 	}
+	ft_reset_fd(shell_data);
 }
 

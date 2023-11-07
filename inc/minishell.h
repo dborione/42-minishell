@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/06 23:49:05 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:14:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ void    		ft_add_to_history_file(char **hist_file, char *line);
 int				ft_get_infile(t_shell_data **shell_data, t_cmd *cmds, char *infile_path);
 int				ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *tmp);
 int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
+void			ft_reset_fd(t_shell_data **shell_data);
 
 /* Signals */
 

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 00:08:18 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:19:07 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	ft_set_cmd_fds(t_shell_data **shell_data, t_cmd *cmds)
 {
 	t_cmd	*target;
 
+	if (!target)
+		return ;
 	target = cmds;
-	while (target && target->next)
+	while (target->next)
 		target = target->next;
 	target->input_fd = (*shell_data)->input_fd;
 	(*shell_data)->input_fd = STDIN_FILENO;
@@ -75,8 +77,8 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 				break ;
 			}
 			if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
-				break ;
-			ft_set_cmd_fds(shell_data, cmds);
+			 	break ;
+			//ft_set_cmd_fds(shell_data, cmds);
 			if (!ft_get_outfile(shell_data, cmds, input[i + 1]))
 			{
 				perror("bash");
