@@ -38,8 +38,10 @@ et alors que :
 - Prendre en charge exit + commande
 
 [CD]
-- bash prend en charge `cd ~ pwd` alors que nous non
-- cd ~
-- cd -
+* OK - bash prend en charge `cd ~ pwd` alors que nous non
+* OK - cd ~
+* OK - cd -
 
+[Export]
+- erreur message supprime les ' ' par ex `export '    456asd=value '`
 
