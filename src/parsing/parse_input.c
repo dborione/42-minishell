@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 16:19:07 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:24:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_set_cmd_fds(t_shell_data **shell_data, t_cmd *cmds)
 {
 	t_cmd	*target;
 
-	if (!target)
+	if (!cmds)
 		return ;
 	target = cmds;
 	while (target->next)
