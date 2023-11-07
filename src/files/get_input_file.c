@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 00:17:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:07:57 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_get_infile(
 {
 	int	fd;
 
-	ft_printf("infile: %s\n", infile_path);
+	//ft_printf("infile: %s\n", infile_path);
 	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
 	{
 		fd = open(infile_path, O_RDONLY, 0644);
