@@ -2,6 +2,9 @@
 * OK - double prompte pour heredoc ctl-c 
 * OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
 * OK - quand on est dans un subshell les signaux sont pris en compte deux fois
+- CTl D ne marche pas quand après avoir stoppé une boucle infinie avec Ctl C
+- Ctl C ne marche pas pour stopper boucle infinie
+
 
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
@@ -34,8 +37,13 @@ et alors que :
 * OK Changer le atoi: pour l'instant ne prends en charge que les ints
 * OK Prendre en charge 'exit ""': dans bash, 'numeric argument required'
 - Prendre en charge exit + commande
+- Permission denied
 
 [CD]
-+ OK - bash prend en charge `cd ~ pwd` alors que nous non
+* OK - bash prend en charge `cd ~ pwd` alors que nous non
 * OK - cd ~
-- cd -
+* OK - cd -
+
+[Export]
+- erreur message supprime les ' ' par ex `export '    456asd=value '`
+- pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur

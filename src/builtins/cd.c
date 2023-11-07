@@ -104,8 +104,18 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 
 int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 {
+	int res;
+
+	res = 0;
 	if (!cmd->args[1] || ft_isequal(cmd->args[1], "~"))
 		return (ft_cd_home(shell_data));
+	if (ft_isequal(cmd->args[1], "-"))
+	{
+		res = ft_cd_path(shell_data, ft_envp_get_value((*shell_data)->envp, ft_envp_get_key("OLDPWD")));
+		if (!res)
+			ft_pwd();
+		return (res);
+	}
 	if (cmd->args[2])
 	{
 		ft_putendl_fd("bash: cd: too many arguments.", 2);

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 23:05:25 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:14:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ typedef struct s_env_var
 typedef struct s_cmd
 {
 	char			*name;
+	size_t			id;
 	char			**args;
 	int				builtin;
+	int				input_fd;
+	int				output_fd;
 	char			*path;
 	struct s_cmd	*next;
 }					t_cmd;
@@ -88,7 +91,9 @@ typedef struct s_shell_data
 	int exec;
 	int	rl_catch_signals;
 	char		**envp;
+	char		**export_envp;
 	int			pipe[2];
+	size_t		pipes;
 	int			input_fd;
 	int			output_fd;
 	int			infile;
@@ -173,7 +178,7 @@ int				ft_env(char **envp);
 int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
-int				ft_export(char **envp, t_cmd *cmd);
+int				ft_export(char **envp, char **export_env, t_cmd *cmd);
 
 /* Execution */
 
@@ -185,9 +190,10 @@ void    		ft_add_to_history_file(char **hist_file, char *line);
 
 /* Files */
 
-int				ft_get_infile(t_shell_data **shell_data, char *tmp);
-int				ft_get_outfile(t_shell_data **shell_data, char *tmp);
+int				ft_get_infile(t_shell_data **shell_data, t_cmd *cmds, char *infile_path);
+int				ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *tmp);
 int				ft_use_pipe(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
+void			ft_reset_fd(t_shell_data **shell_data);
 
 /* Signals */
 
@@ -203,5 +209,8 @@ int				ft_perror(char *message);
 void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char token);
 void			ft_wrong_redirection_syntax(t_shell_data **shell_data);
 void			ft_command_not_found(char *cmd_name);
+int				ft_export_error(char *arg);
+int				ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd);
+int				ft_exit_arg_msg(t_shell_data **shell_data);
 
 #endif

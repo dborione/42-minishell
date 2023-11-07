@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/03 11:24:21 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/06 23:14:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ void	ft_cmd_not_found(char *cmd_name)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd_name, 2);
 	ft_putendl_fd(": command not found", 2);
+}
+
+static
+void	ft_init_command(t_cmd *new_cmd, int builtin)
+{
+	new_cmd->id = 0;
+	new_cmd->builtin = builtin;
+	new_cmd->next = NULL;
+	new_cmd->path = NULL;
+	new_cmd->input_fd = STDIN_FILENO;
+	new_cmd->output_fd = STDOUT_FILENO;
 }
 
 static
@@ -34,9 +45,7 @@ t_cmd	*ft_new_command(char *cmd_name, int builtin)
 		free(new_cmd);
 		return (NULL);
 	}
-	new_cmd->builtin = builtin;
-	new_cmd->next = NULL;
-	new_cmd->path = NULL;
+	ft_init_command(new_cmd, builtin);
 	if (!builtin && access(new_cmd->name, F_OK) == 0)
 	{
 		new_cmd->path = ft_strdup(new_cmd->name);
@@ -100,32 +109,4 @@ t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
 	else
 		new_cmd->args = new_cmd_args;
 	return (new_cmd);
-}
-
-int		ft_add_command(t_cmd **cmds, char **cmd_args, char **paths, size_t end)
-{
-	t_cmd	*target;
-
-	if (!cmds)
-		return (0);
-	if (!*cmds)
-	{
-		*cmds = ft_get_command(cmd_args, paths, end);
-		// erreurs de création de commande à prendre en compte
-		//ft_printf("first cmd = %s\n", cmd_args[0]);
-		if (!*cmds)
-			return (0);
-	}
-	else
-	{
-		target = (*cmds);
-		while (target->next)
-			target = target->next;
-		target->next = ft_get_command(cmd_args, paths, end);
-		if (!target->next)
-			return (0);
-		// exit 127 : erreurs de création de commande à prendre en compte
-		return (1);
-	}
-	return (1);
 }
