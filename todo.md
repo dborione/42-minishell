@@ -36,6 +36,7 @@ et alors que :
 * OK Changer le atoi: pour l'instant ne prends en charge que les ints
 * OK Prendre en charge 'exit ""': dans bash, 'numeric argument required'
 - Prendre en charge exit + commande
+- Permission denied
 
 [CD]
 * OK - bash prend en charge `cd ~ pwd` alors que nous non

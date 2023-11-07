@@ -112,7 +112,8 @@ int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 	if (ft_isequal(cmd->args[1], "-"))
 	{
 		res = ft_cd_path(shell_data, ft_envp_get_value((*shell_data)->envp, ft_envp_get_key("OLDPWD")));
-		ft_pwd();
+		if (!res)
+			ft_pwd();
 		return (res);
 	}
 	if (cmd->args[2])
