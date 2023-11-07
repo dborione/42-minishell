@@ -91,7 +91,7 @@ typedef struct s_shell_data
 	int exec;
 	int	rl_catch_signals;
 	char		**envp;
-	char		**export_env;
+	char		**export_envp;
 	int			pipe[2];
 	size_t		pipes;
 	int			input_fd;

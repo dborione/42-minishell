@@ -3,8 +3,9 @@
 static
 int ft_print_export_env(char **envp)
 {
-    int	i;
-    char *key;
+    int     i;
+    char    *key;
+
 	i = 0;
 	while (envp[i])
 	{
@@ -47,42 +48,32 @@ int ft_add_to_env(char **envp, char *arg)
 }
 
 static
-int ft_add_to_export_env(char **envp, char **export_env_copy, char *arg)
+int ft_add_to_export_env(char **export_envp, char *arg)
 {
     int j;
 
     j = 0;
-    export_env_copy = ft_envp_copy(envp);
-    while (export_env_copy[j])
+    while (export_envp[j])
         j++;
-    export_env_copy[j] = ft_strdup(arg);
-    export_env_copy[j + 1] = NULL;
+    export_envp[j] = ft_strdup(arg);
+    export_envp[j + 1] = NULL;
     return (1);
 }
 
-int ft_export(char **envp, char **export_env, t_cmd *cmd)
+int ft_export(char **envp, char **export_envp, t_cmd *cmd)
 {
     int     i;
 
     i = 1;
-    if (!export_env)
-    {
-        export_env = ft_envp_copy(envp);
-        if (!export_env)
-        {
-            printf("export env copy error\n");
-            return (0);
-        }
-    }
     if (!cmd->args[1])
-        return (ft_print_export_env(export_env));
+        return (ft_print_export_env(export_envp));
     while (cmd->args[i])
     {
         if (!ft_isalpha(cmd->args[i][0]))
             return (ft_export_error(cmd->args[i]));
-        if (ft_is_in_env(envp, cmd->args[i]))
+        if (ft_is_in_env(envp, cmd->args[i]) && ft_is_in_env(export_envp, cmd->args[i]))
         {
-            ft_add_to_export_env(envp, export_env, cmd->args[i]);
+            ft_add_to_export_env(export_envp, cmd->args[i]);
             if (!ft_add_to_env(envp, cmd->args[i]))
                 i++;
             if (!cmd->args[i])
@@ -91,6 +82,5 @@ int ft_export(char **envp, char **export_env, t_cmd *cmd)
         else
             i++;
     }
-    // free export env
     return (1);
 }
