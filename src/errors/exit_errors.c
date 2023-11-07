@@ -9,7 +9,7 @@ int ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd)
 	return ((*shell_data)->exit_code);
 }
 
-int ft_exit_arg_msg(t_shell_data **shell_data, t_cmd *cmd)
+int ft_exit_arg_msg(t_shell_data **shell_data)
 {
 	ft_putendl_fd("bash: exit: too many arguments.", STDERR_FILENO);
 	(*shell_data)->exit_code = 1;
