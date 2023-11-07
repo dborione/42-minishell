@@ -26,6 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 			//system("leaks minishell");
 			return (EXIT_FAILURE);
 		}
+		shell_data->export_env = NULL;
 		ft_init_shell_sigaction(shell_data, MAIN);
 		ft_get_input(&shell_data);
 		ft_free_split(shell_data->envp);

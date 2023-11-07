@@ -28,6 +28,6 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 		return (ft_exit(shell_data, cmd));
 	}
 	if (ft_isequal(cmd->name, "export"))
-		return (ft_export((*shell_data)->envp, cmd));	
+		return (ft_export((*shell_data)->envp, (*shell_data)->export_env, cmd));	
 	return (127);
 }

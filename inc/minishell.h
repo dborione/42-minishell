@@ -91,6 +91,7 @@ typedef struct s_shell_data
 	int exec;
 	int	rl_catch_signals;
 	char		**envp;
+	char		**export_env;
 	int			pipe[2];
 	size_t		pipes;
 	int			input_fd;
@@ -177,7 +178,7 @@ int				ft_env(char **envp);
 int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
-int				ft_export(char **envp, t_cmd *cmd);
+int				ft_export(char **envp, char **export_env, t_cmd *cmd);
 
 /* Execution */
 
