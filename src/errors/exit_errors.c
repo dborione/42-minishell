@@ -2,16 +2,16 @@
 
 int ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd)
 {
-	ft_putstr_fd("bash: exit: ", STDERR_FILENO);
-	ft_putstr_fd(cmd->args[1], STDERR_FILENO);
-	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+	ft_perror("bash: exit: ");
+	ft_perror(cmd->args[1]);
+	ft_perror(": numeric argument required\n");
 	(*shell_data)->exit_code = 255;
 	return ((*shell_data)->exit_code);
 }
 
-int ft_exit_arg_msg(t_shell_data **shell_data, t_cmd *cmd)
+int ft_exit_arg_msg(t_shell_data **shell_data)
 {
-	ft_putendl_fd("bash: exit: too many arguments.", STDERR_FILENO);
+	ft_perror("bash: exit: too many arguments.");
 	(*shell_data)->exit_code = 1;
 	return ((*shell_data)->exit_code);
 }

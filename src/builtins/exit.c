@@ -57,7 +57,7 @@ int	ft_exit(t_shell_data **shell_data, t_cmd *cmd)
 		return (0);
 	error = ft_parse_exit_args(cmd, error);
 	if (cmd->args[2] && error != 1)
-		return (ft_exit_arg_msg(shell_data, cmd));
+		return (ft_exit_arg_msg(shell_data));
 	if (ft_isequal(cmd->args[1], "") || error == 1)
 		return (ft_exit_num_msg(shell_data, cmd));
 	if (ft_isequal(cmd->args[1], "-1"))
