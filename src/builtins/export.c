@@ -96,17 +96,19 @@ int ft_export(char **envp, char **export_envp, t_cmd *cmd)
     while (cmd->args[i])
     {
         if (!ft_check_valid_char(cmd->args[i]))
-            return (ft_export_error(cmd->args[i]));
+        {
+            ft_export_error(cmd->args[i]);
+            i++;
+            if (!cmd->args[i])
+                break ;
+        }
         if (ft_is_in_env(envp, cmd->args[i]) && ft_is_in_env(export_envp, cmd->args[i]))
         {
             ft_add_to_export_env(export_envp, cmd->args[i]);
             if (!ft_add_to_env(envp, cmd->args[i]))
                 i++;
-            if (!cmd->args[i])
-                break ;
         }
-        else
-            i++;
+        i++;
     }
     return (1);
 }

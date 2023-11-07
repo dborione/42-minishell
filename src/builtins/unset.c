@@ -20,7 +20,10 @@
 //     i = 1;
 //     while (cmd->args[i])
 //     {
-//         if (ft_is_in_env(cmd->args[i]))
+//         if (ft_is_in_env(envp, cmd->args[i]))
+//         {
+
+//         }
 //     }
 
 
