@@ -2,6 +2,8 @@
 * OK - double prompte pour heredoc ctl-c 
 * OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
 * OK - quand on est dans un subshell les signaux sont pris en compte deux fois
+- CTl D ne marche pas quand après avoir stoppé une boucle infinie avec Ctl C
+
 
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
@@ -39,3 +41,5 @@ et alors que :
 - bash prend en charge `cd ~ pwd` alors que nous non
 - cd ~
 - cd -
+
+
