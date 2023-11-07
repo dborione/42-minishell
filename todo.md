@@ -31,7 +31,7 @@ et alors que :
 - checker si on a les bons exit codes par rapport a bash ($?)
 - '>>': redirections en append mode
 - exit code si cat sans input + ctl C
-- exit avec arguments
+* OK - exit avec arguments
 
 [Exit]
 * OK Changer le atoi: pour l'instant ne prends en charge que les ints
