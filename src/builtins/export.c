@@ -60,6 +60,23 @@ int ft_add_to_export_env(char **export_envp, char *arg)
     return (1);
 }
 
+static
+int ft_check_valid_char(char *arg)
+{
+    int i;
+
+    i = 0;
+    if (!ft_isalpha(arg[0]))
+        return (0);
+    while (arg[i])
+    {
+        if (!ft_isalnum(arg[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int ft_export(char **envp, char **export_envp, t_cmd *cmd)
 {
     int     i;
@@ -69,7 +86,7 @@ int ft_export(char **envp, char **export_envp, t_cmd *cmd)
         return (ft_print_export_env(export_envp));
     while (cmd->args[i])
     {
-        if (!ft_isalpha(cmd->args[i][0]))
+        if (!ft_check_valid_char(cmd->args[i]))
             return (ft_export_error(cmd->args[i]));
         if (ft_is_in_env(envp, cmd->args[i]) && ft_is_in_env(export_envp, cmd->args[i]))
         {
