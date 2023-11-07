@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 17:07:57 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 21:41:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_get_infile(
 			(*shell_data)->exit_code = EXIT_FAILURE;
 			return (0);
 		}
-		(*shell_data)->infile = 1;
+		//(*shell_data)->infile = 1;
 		return (1);
 	}
 	ft_set_cmd_infile_fd(shell_data, cmds, -1);

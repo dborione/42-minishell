@@ -88,8 +88,6 @@ void ft_get_input(t_shell_data **shell_data)
 		// ft_printf("¨¨¨\n");
 		ft_execution(shell_data, &cmds);
 		ft_free_commands(&cmds);
-		//ft_parse_elements(shell_data, &lexer_list);
-		//ft_free_lexer_list(&lexer_list);
 	}
 	clear_history();
 	// unlink(hist_file);

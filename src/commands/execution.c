@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 16:17:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/07 21:51:54 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	pipe_fd[0] = -1;
 	pipe_fd[1] = -1;
 	if (cmd->input_fd != STDIN_FILENO)
+	{
+		(*shell_data)->infile = 1;
 		(*shell_data)->input_fd = dup(STDIN_FILENO);
+	}
 	if (cmd->output_fd != STDOUT_FILENO)
 	{
 		(*shell_data)->outfile = 1;
@@ -92,6 +95,12 @@ void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
 	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd);
+	if ((*shell_data)->infile)
+	{
+		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)
+			return ;
+		close((*shell_data)->input_fd);
+	}
 	if ((*shell_data)->outfile)
 	{
 		if (dup2((*shell_data)->output_fd, STDOUT_FILENO) == -1)
