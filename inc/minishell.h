@@ -208,5 +208,8 @@ int				ft_perror(char *message);
 void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char token);
 void			ft_wrong_redirection_syntax(t_shell_data **shell_data);
 void			ft_command_not_found(char *cmd_name);
+int				ft_export_error(char *arg);
+int				ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd);
+int				ft_exit_arg_msg(t_shell_data **shell_data, t_cmd *cmd);
 
 #endif

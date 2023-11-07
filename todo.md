@@ -3,6 +3,7 @@
 * OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
 * OK - quand on est dans un subshell les signaux sont pris en compte deux fois
 - CTl D ne marche pas quand après avoir stoppé une boucle infinie avec Ctl C
+- Ctl C ne marche pas pour stopper boucle infinie
 
 
 [Heredoc]
