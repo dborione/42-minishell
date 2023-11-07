@@ -28,7 +28,7 @@ et alors que :
 - checker si on a les bons exit codes par rapport a bash ($?)
 - '>>': redirections en append mode
 - exit code si cat sans input + ctl C
-- exit avec arguments
+* OK - exit avec arguments
 
 [Exit]
 * OK Changer le atoi: pour l'instant ne prends en charge que les ints
@@ -36,6 +36,6 @@ et alors que :
 - Prendre en charge exit + commande
 
 [CD]
-- bash prend en charge `cd ~ pwd` alors que nous non
-- cd ~
++ OK - bash prend en charge `cd ~ pwd` alors que nous non
+* OK - cd ~
 - cd -
