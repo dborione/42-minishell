@@ -4,12 +4,15 @@ static
 int ft_print_export_env(char **envp)
 {
     int	i;
+    char *key;
 
 	i = 0;
 	while (envp[i])
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putendl_fd(envp[i], 1);
+        key = ft_envp_get_key(envp[i]);
+		printf("declare -x %s", key);
+		printf("=");
+		printf("\"%s\"\n", ft_envp_get_value(envp, key));
 		i++;
 	}
     return (1);
@@ -47,6 +50,9 @@ int ft_add_to_env(char **envp, char *arg)
 static
 int ft_add_to_export_env(char **envp, char **export_env_copy, char *arg)
 {
+    // printf("%s\n", ft_envp_get_key(arg));
+    // if (export_env_copy){}
+    // if (envp) {}
     int j;
 
     j = 0;
@@ -55,7 +61,7 @@ int ft_add_to_export_env(char **envp, char **export_env_copy, char *arg)
         j++;
     export_env_copy[j] = ft_strdup(arg);
     export_env_copy[j + 1] = NULL;
-    //ft_print_export_env(export_env_copy);
+    ft_print_export_env(export_env_copy);
     return (1);
 }
 
