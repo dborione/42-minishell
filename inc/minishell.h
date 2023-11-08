@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 00:09:07 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 11:25:14 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_cmd
 typedef struct s_args_split
 {
 	char				*arg;
+	int					ignored;
 	struct s_args_split	*next;
 }						t_args_list;
 
@@ -85,6 +86,20 @@ typedef struct s_data_split
 	size_t	start;
 	int		space;
 }			t_data_split;
+
+typedef struct s_lasso
+{
+	size_t					index;
+	size_t					start;
+	size_t					end;
+	struct s_ignore_index	*next;
+}				t_lasso;
+
+typedef struct s_ignore_index
+{
+	size_t					index;
+	struct s_ignore_index	*next;
+}				t_ignore_index;
 
 typedef struct s_shell_data
 {
@@ -101,6 +116,8 @@ typedef struct s_shell_data
 	int					exit_code;
 	int					exit;
 	char				*prompt;
+	t_ignore_index		*ignore_index;
+	t_lasso				*lassos;
 	struct sigaction	sa;
 }				t_shell_data;
 

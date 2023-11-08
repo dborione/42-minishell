@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 22:16:54 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 00:21:33 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 			if (!input[i + 1])
 				break;
 			start = i + 1;
-			ft_printf("%d\n", start);
 		}
 		//else if (ft_isequal(input[i], "<<"))
 		else if (ft_isequal(input[i], ">"))

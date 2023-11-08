@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:43:39 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/03 11:18:07 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:24:40 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 int	ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input)
 {
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
+	//ft_printf("tmp: %s\n", (*data)->tmp);
+	//ft_printf("start > spaces: %d; start: %d; index: %d;\n", (*data)->space, (int)(*data)->start, (int)(*data)->i);
 	if (!(*data)->space) // retirer la verif de l'espace
 		(*data)->start = ft_split_from_quotes(*data, args_list, input);
 	else
@@ -47,10 +49,13 @@ int	ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input)
 	(*data)->i += (*data)->start;
 	if (!ft_isspace(input[(*data)->i]))
 		(*data)->space = 0;
+	else
+		(*data)->space = 1;
 	while (ft_isspace(input[(*data)->i]))
 		(*data)->i++;
 	(*data)->start = (*data)->i;
 	(*data)->tmp[0] = '\0';
+	//ft_printf("end > spaces: %d; start: %d; index: %d;\n", (*data)->space, (int)(*data)->start, (int)(*data)->i);
 	return (1);
 }
 

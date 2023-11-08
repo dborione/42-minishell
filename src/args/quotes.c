@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 23:48:49 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 15:08:35 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:25:42 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,27 @@ int		ft_has_endof_quotes(char *input, char quote)
 size_t	ft_split_from_quotes(t_data_split *data, t_args_list **cmd_split, char *input)
 {
 	char	*tmp;
+	char	*res;
 	size_t	len;
 
+	//ft_printf("lets split from quotes\n");
 	tmp = ft_between_quotes(&input[data->i]);
 	if (!tmp)
 		return (0);
 	len = ft_strlen(tmp);
-
-	if (!ft_join_args(cmd_split, tmp))
+	res = ft_strjoin(data->tmp, tmp);
+	free(tmp);
+	if (!res)
 	{
 		free(tmp);
 		return (0);
 	}
-	free(tmp);
+	if (!ft_join_args(cmd_split, res))
+	{
+		free(res);
+		return (0);
+	}
+	free(res);
 	return (len + 2);
 }
 
@@ -84,6 +92,7 @@ size_t	ft_join_from_quotes(t_args_list **cmd_split, char *str_before, char *str_
 	char	*res;
 	size_t	len;
 
+	//ft_printf("lets join\n");
 	tmp = ft_between_quotes(str_after);
 	if (!tmp)
 		return (0);
