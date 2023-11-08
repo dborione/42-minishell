@@ -37,15 +37,17 @@ et alors que :
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
 - ~~Prendre en charge 'exit ""': dans bash, 'numeric argument required'~~
 - Prendre en charge exit + commande
-- Permission denied
+- ~~Permission denied~~
+- ~~Nombres 0000000000001 par ex~~
 
 [CD]
 - ~~bash prend en charge `cd ~ pwd` alors que nous non~~
-- ~~cd ~ ~~
-- ~~cd - ~~
+- ~~cd ~/~~
+- ~~cd -~~
 
 [Export]
 - erreur message supprime les ' ' par ex `export '    456asd=value '`
 - ~~pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur~~
 
 [Unset]
+- ~~prise en charge non valid chars~~

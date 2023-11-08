@@ -30,9 +30,11 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_get_input(&shell_data);
 		ft_free_split(shell_data->envp);
 		error_code = shell_data->exit_code;
+		//printf("4: error code: %d\n", shell_data->exit_code);
 		free(shell_data);
 	}
 	else
 		ft_putendl_fd("Error: just ./minishell", 2);
-	return (error_code);
+	//printf("5: error code: %d\n", error_code);
+	exit (error_code);
 }

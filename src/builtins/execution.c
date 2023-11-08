@@ -24,8 +24,9 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 		return (ft_env((*shell_data)->envp));
 	if (ft_isequal(cmd->name, "exit"))
 	{
-		(*shell_data)->exit = 1;
-		return (ft_exit(shell_data, cmd));
+		int exit = ft_exit(shell_data, cmd);
+		//printf("2: exit code: %d\n", exit);
+		return (exit);
 	}
 	if (ft_isequal(cmd->name, "export"))
 		return (ft_export((*shell_data)->envp, (*shell_data)->export_envp, cmd));

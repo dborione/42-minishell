@@ -95,6 +95,7 @@ void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
 	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd);
+	//printf("3: exit code: %d\n", (*shell_data)->exit_code);
 	if ((*shell_data)->infile)
 	{
 		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)

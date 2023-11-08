@@ -1,0 +1,16 @@
+total 248
+drwxr-xr-x  15 dborione  2022_brussels    510 Nov  8 14:15 .
+drwxr-xr-x  19 dborione  2022_brussels    646 Nov  1 15:50 ..
+drwxr-xr-x  15 dborione  2022_brussels    510 Nov  8 13:43 .git
+-rw-r--r--   1 dborione  2022_brussels     77 Oct 31 09:49 .gitignore
+-rw-r--r--   1 dborione  2022_brussels      0 Nov  8 14:15 >
+-rw-r--r--   1 dborione  2022_brussels   1690 Nov  3 15:05 Makefile
+-rw-r--r--@  1 dborione  2022_brussels  18840 Oct 24 11:47 ignore_readline.supp
+drwxr-xr-x   4 dborione  2022_brussels    136 Nov  8 12:49 inc
+drwxr-xr-x   8 dborione  2022_brussels    272 Nov  8 11:53 libft
+-rwxr-xr-x   1 dborione  2022_brussels  90968 Nov  8 14:15 minishell
+drwxr-xr-x  73 dborione  2022_brussels   2482 Nov  8 12:53 mpanic
+drwxr-xr-x  15 dborione  2022_brussels    510 Nov  3 09:47 obj
+drwxr-xr-x   4 dborione  2022_brussels    136 Oct 24 16:52 os
+drwxr-xr-x  13 dborione  2022_brussels    442 Nov  3 09:45 src
+-rw-r--r--   1 dborione  2022_brussels   1528 Nov  8 12:50 todo.md
