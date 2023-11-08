@@ -68,7 +68,15 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 				break;
 			start = i + 1;
 		}
-		//else if (ft_isequal(input[i], "<<"))
+		else if (ft_isequal(input[i], "<<"))
+		{
+			if (!input[i + 1])
+			{
+				ft_wrong_redirection_syntax(shell_data);
+				break ;
+			}
+			// heredoc here
+		}
 		else if (ft_isequal(input[i], ">"))
 		{
 			if (!input[i + 1])
