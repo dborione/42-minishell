@@ -60,6 +60,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 					break ;
 				}
 				i++;
+				// printf("%s\n", input[i]);
 				ft_heredoc(*shell_data, input[i]);
 				if ((*shell_data)->exit_code == CTL_C_EXIT)
 				{
@@ -68,11 +69,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 				}
 				if (ft_isequal(input[0], "<"))
 					break ;
-				if (!ft_add_command(&cmds, &input[0], paths, i - 2))
-					break ;
-				ft_set_cmd_fds(shell_data, cmds);
-					break ;
-				start = i + 1;
+				start = 0;
 			}
 			else
 			{
@@ -91,8 +88,9 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 				i++;
 				if (!input[i + 1])
 					break;
-				start = i + 1;	
+				start = i + 1;
 			}
+			// printf("input start: %s\n", input[i + 1]);
 		}
 		else if (ft_isequal(input[i], ">"))
 		{
@@ -117,6 +115,9 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 		//else if (ft_isequal(input[i], ">>"))
 		else if (ft_isequal(input[i], "|"))
 		{
+			printf("i: %zu\n", i);
+			printf("start: %zu\n", start);
+			// if (!ft_add_command(&cmds, &input[0], paths, 2))
 			if (!ft_add_command(&cmds, &input[start], paths, i - start))
 				break ;
 			ft_set_cmd_fds(shell_data, cmds);
