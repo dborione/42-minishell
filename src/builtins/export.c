@@ -88,8 +88,9 @@ int ft_check_valid_char(char *arg)
     {
         if (!ft_isalnum(arg[i]))
         {
-            if (arg[i] != '=')
-                return (0);
+            if (arg[i] == '=')
+                return (1);
+            return (0);
         }
         i++;
     }
