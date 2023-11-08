@@ -47,3 +47,5 @@ et alors que :
 [Export]
 - erreur message supprime les ' ' par ex `export '    456asd=value '`
 - ~~pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur~~
+
+[Unset]

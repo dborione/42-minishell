@@ -7,3 +7,11 @@ int	ft_export_error(char *arg)
 	ft_perror("': not a valid identifier\n");
     return (1);
 }
+
+int	ft_unset_error(char *arg)
+{
+    ft_perror("bash: unset: `");
+	ft_perror(arg);
+	ft_perror("': not a valid identifier\n");
+    return (1);
+}
