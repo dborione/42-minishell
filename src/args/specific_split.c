@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:43:39 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 12:24:40 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:46:24 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 {
+	char	*var_tmp;
+
+	var_tmp = ft_include_var(*data,  (*data)->tmp);
+	if (!var_tmp)
+		return (0);
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
 	if (!(*data)->space)
 	{
-		if (!ft_join_args(args_list, (*data)->tmp))
+		if (!ft_join_args(args_list, var_tmp))
 			return (0);
 		(*data)->tmp[0] = '\0';
 		while (ft_isspace(input[(*data)->i]))
@@ -26,7 +31,7 @@ int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 		(*data)->space = 1;
 		(*data)->tmp[0] = '\0';
 	}
-	else if (!ft_one_split(data, args_list, input))
+	else if (!ft_one_split(data, args_list, input, var_tmp))
 		return (0);
 	(*data)->space = 1;
 	return (1);
@@ -40,7 +45,7 @@ int	ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input)
 	if (!(*data)->space) // retirer la verif de l'espace
 		(*data)->start = ft_split_from_quotes(*data, args_list, input);
 	else
-		(*data)->start = ft_join_from_quotes(args_list, (*data)->tmp, &input[(*data)->i]);
+		(*data)->start = ft_join_from_quotes(*data, args_list, (*data)->tmp, &input[(*data)->i]);
 	if (!(*data)->start)
 	{
 		ft_exit_split_args(data, args_list);

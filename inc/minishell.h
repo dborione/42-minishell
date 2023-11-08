@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 11:25:14 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:45:06 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_data_split
 	char	*tmp;
 	size_t	i;
 	size_t	start;
+	char	**envp;
+	int		exit_code;
 	int		space;
 }			t_data_split;
 
@@ -133,10 +135,10 @@ char			*ft_envp_get_key(char *input);
 char			*ft_envp_get_value(char **envp, char *key);
 int				ft_envp_set(t_shell_data **shell_data, char **input);
 int				ft_envp_add(t_shell_data **shell_data, char **input);
+char			*ft_include_var(t_data_split *data, char *input);
 
 /* Prompt */
 
-// int				ft_show_user_path(char **enpv);
 char			*ft_show_user_path(char **envp);
 
 /*	Input */
@@ -146,12 +148,6 @@ void			ft_get_input(t_shell_data	**shell_data);
 /*	Parsing */
 
 t_cmd			*ft_parse_input(t_shell_data **shell_data, char **input);
-int				ft_add_token_to_list(
-					t_lexer_tokens **lexer_list, char **input, int token);
-void			ft_free_lexer_list(
-					t_lexer_tokens **lexer_list);
-void			ft_parse_elements(
-					t_shell_data **shell_data, t_lexer_tokens **lexer_list);
 
 /* Commands */
 
@@ -169,7 +165,8 @@ t_args_list		*ft_input_to_args_list(
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
 int				ft_join_args(t_args_list **cmd_split, char *tmp);
 int				ft_one_split(
-					t_data_split **data, t_args_list **args_list, char *input);
+					t_data_split **data, t_args_list **args_list,
+					char *input, char *tmp);
 char			**ft_args_list_to_str_split(t_args_list **cmd_split);
 void			ft_free_args_list(t_args_list **cmd_split);
 void			*ft_exit_split_args(
@@ -196,7 +193,7 @@ char			*ft_between_quotes(char *str);
 int				ft_quotes_split(
 					t_data_split **data, t_args_list **args_list, char *input);
 size_t			ft_join_from_quotes(
-					t_args_list **cmd_split, char *str_before, char *str_after);
+					t_data_split *data, t_args_list **cmd_split, char *str_before, char *str_after);
 size_t			ft_split_from_quotes(
 					t_data_split *data, t_args_list **cmd_split, char *input);
 
@@ -211,6 +208,7 @@ int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_export(char **envp, char **export_env, t_cmd *cmd);
 int				ft_unset(char **envp, char **export_envp, t_cmd *cmd);
+
 /* Execution */
 
 void			ft_execution(t_shell_data **t_shell_data, t_cmd **cmd);

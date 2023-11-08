@@ -6,15 +6,15 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 20:53:08 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:39:36 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int			ft_one_split(t_data_split **data, t_args_list **args_list, char *input)
+int			ft_one_split(t_data_split **data, t_args_list **args_list, char *input, char *tmp)
 {
-	if (!ft_add_arg_to_list(args_list, (*data)->tmp))
+	if (!ft_add_arg_to_list(args_list, tmp))
 	{
 		ft_exit_split_args(data, args_list);
 		return (0);
