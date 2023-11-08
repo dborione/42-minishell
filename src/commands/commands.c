@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/06 23:14:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:02:03 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*ft_new_command(char *cmd_name, int builtin)
 		return (NULL);
 	}
 	ft_init_command(new_cmd, builtin);
-	if (!builtin && access(new_cmd->name, F_OK) == 0)
+	if (new_cmd->name[0] && !builtin && access(new_cmd->name, F_OK) == 0)
 	{
 		new_cmd->path = ft_strdup(new_cmd->name);
 		if (!new_cmd->path)
@@ -65,6 +65,8 @@ int	ft_set_path(t_cmd **new_cmd, char **paths)
 	int		i;
 	char	*tmp_path;
 
+	if (!(*new_cmd)->name[0])
+		return (0);
 	i = 0;
 	while (paths[i])
 	{
