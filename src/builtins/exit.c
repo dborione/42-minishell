@@ -12,75 +12,72 @@
 
 #include "../../inc/minishell.h"
 
-static
-int ft_parse_exit_args(t_cmd *cmd, int error)
+static 
+int	ft_check_if_long(char *arg, unsigned long long res, int i)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	if (cmd->args[1][0] == '+' || cmd->args[1][0] == '-')
-		j++;
-	if (cmd->args[1][j] == '-' && !cmd->args[1][2])
+	if (arg[0] != '-' && res > __LONG_MAX__)
 		return (0);
-	if (!cmd->args[1][j])
+	if (arg[0] == '-' && (ft_strlen(arg) == 20 && ft_atoi(&arg[i - 1]) <= 8))
 		return (1);
-	while(cmd->args[1][j] == '0')
-		j++;
-	while (cmd->args[++i])
+	if (ft_strlen(arg) >= 20)
 	{
-		while(cmd->args[i][j])
-		{
-			//printf("'%c' ", cmd->args[i][j]);
-			if (!ft_isdigit(cmd->args[i][j]))
-			{
-				if (i == 1)
-					error = 1;
-				break ;
-			}
-			j++;
-		}
-		j = 0;
+		if (arg[0] == '0')
+			return (1);
+		return (0);
 	}
-	return (error);
+	return (1);
 }
 
+static
+int	ft_check_if_digit(char *arg)
+{
+	int	i;
+	unsigned long long res;
 
+	i = -1;
+	res = 0;
+	while (arg[++i])
+	{
+		if (!ft_isdigit(arg[i]))
+		{
+			if (i == 0 && !arg[i + 1])
+				return (0);
+			if (i != 0 && (arg[i] != '-' || arg[i] != '+'))
+				return (0);
+		}
+		if (arg[i] != '-' && arg[i] != '+')
+		{
+			res *= 10;
+			res += arg[i] - '0';
+		}	
+	}
+	return (ft_check_if_long(arg, res, i));
+}
+
+static
+int	ft_set_code_and_exit(t_shell_data **shell_data, char *code)
+{
+	(*shell_data)->exit = 1;
+	(*shell_data)->exit_code = ft_atoi(code);
+	return ((*shell_data)->exit_code);
+
+}
 
 int	ft_exit(t_shell_data **shell_data, t_cmd *cmd)
 {
-	int error;
+	int	i;
 
-	error = 0;
-	if (!cmd->args[1])
-		return (0);
-	error = ft_parse_exit_args(cmd, error);
-	if (cmd->args[2] && error != 1)
+	i = 1;
+	if (ft_isequal("", cmd->args[i]))
+		return (ft_exit_num_msg(shell_data, cmd));
+	if (!cmd->args[i])
+	{
+		(*shell_data)->exit = 1;
+		return ((*shell_data)->exit_code);
+	}
+	if (!ft_check_if_digit(cmd->args[i]))
+		return (ft_exit_num_msg(shell_data, cmd));
+	if (cmd->args[2])
 		return (ft_exit_arg_msg(shell_data));
-	if (ft_isequal(cmd->args[1], "") || error == 1)
-		return (ft_exit_num_msg(shell_data, cmd));
-	if (ft_isequal(cmd->args[1], "-1"))
-	{
-		(*shell_data)->exit_code = -1;
-		return ((*shell_data)->exit_code);
-	}
-	if (ft_isequal(cmd->args[1], "0"))
-	{
-		(*shell_data)->exit_code = 0;
-		return ((*shell_data)->exit_code);
-	}
-	if (cmd->args[1][0] != '-' && ft_strlen(cmd->args[1]) == 19 && ft_atoi(&cmd->args[1][18]) > 7)
-		return (ft_exit_num_msg(shell_data, cmd));
-	if (cmd->args[1][0] == '-')
-	{
-		if (ft_strlen(cmd->args[1]) == 20 && ft_atoi(&cmd->args[1][19]) > 8)
-			return (ft_exit_num_msg(shell_data, cmd));
-		if (ft_strlen(cmd->args[1]) > 20)
-			return (ft_exit_num_msg(shell_data, cmd));
-	}
-	if (cmd->args[1][0] != '-' && ft_strlen(cmd->args[1]) > 19)
-		return (ft_exit_num_msg(shell_data, cmd));
-	(*shell_data)->exit_code = ft_atoi(cmd->args[1]);
-	return ((*shell_data)->exit_code);
+	return (ft_set_code_and_exit(shell_data, cmd->args[i]));
 }

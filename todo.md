@@ -41,11 +41,12 @@ et alors que :
 
 [CD]
 - ~~bash prend en charge `cd ~ pwd` alors que nous non~~
-- ~~cd ~ ~~
-- ~~cd - ~~
+- ~~cd ~/~~
+- ~~cd -~~
 
 [Export]
 - erreur message supprime les ' ' par ex `export '    456asd=value '`
 - ~~pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur~~
 
 [Unset]
+- ~~prise en charge non valid chars~~
