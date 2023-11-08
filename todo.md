@@ -1,7 +1,7 @@
 [Signaux]
-* OK - double prompte pour heredoc ctl-c 
-* OK - signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois
-* OK - quand on est dans un subshell les signaux sont pris en compte deux fois
+- ~~double prompte pour heredoc ctl-c~~
+- ~~signaux apres cmd bloquante comme cat sans arguments print le prompt deux fois~~
+- ~~quand on est dans un subshell les signaux sont pris en compte deux fois~~
 - CTl D ne marche pas quand après avoir stoppé une boucle infinie avec Ctl C
 - Ctl C ne marche pas pour stopper boucle infinie
 
@@ -31,19 +31,19 @@ et alors que :
 - checker si on a les bons exit codes par rapport a bash ($?)
 - '>>': redirections en append mode
 - exit code si cat sans input + ctl C
-* OK - exit avec arguments
+- ~~exit avec arguments~~
 
 [Exit]
-* OK Changer le atoi: pour l'instant ne prends en charge que les ints
-* OK Prendre en charge 'exit ""': dans bash, 'numeric argument required'
+- ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
+- ~~Prendre en charge 'exit ""': dans bash, 'numeric argument required'~~
 - Prendre en charge exit + commande
 - Permission denied
 
 [CD]
-* OK - bash prend en charge `cd ~ pwd` alors que nous non
-* OK - cd ~
-* OK - cd -
+- ~~bash prend en charge `cd ~ pwd` alors que nous non~~
+- ~~cd ~ ~~
+- ~~cd - ~~
 
 [Export]
 - erreur message supprime les ' ' par ex `export '    456asd=value '`
-- pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur
+- ~~pour l'instant pas de prise en charge pour les variables a qui on attribue une nouvelle valeur~~
