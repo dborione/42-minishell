@@ -27,11 +27,12 @@ et alors que :
 - erreur de free
 
 [Autres]
-- variables env
+- ~~variables env~~
 - checker si on a les bons exit codes par rapport a bash ($?)
 - '>>': redirections en append mode
 - exit code si cat sans input + ctl C
 - ~~exit avec arguments~~
+- erreur "is a directory" quand on entre un dossier en commande
 
 [Exit]
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
