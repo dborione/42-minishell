@@ -28,12 +28,22 @@ static
 int ft_is_in_env(char **envp, char *arg)
 {
     int i;
+    char *key_env;
+    char *key_arg;
 
     i = -1;
     while (envp[++i])
     {
         if (ft_isequal(envp[i], arg))
             return (0);
+        key_env = ft_envp_get_key(envp[i]);
+        key_arg = ft_envp_get_key(arg);
+        if (ft_isequal(key_env, key_arg))
+        {
+            free (envp[i]);
+            envp[i]= NULL;
+            return (1);
+        }
     }
     return (1);
 }
