@@ -51,31 +51,48 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 	{
 		if (ft_isequal(input[i], "<"))
 		{
-			if (!input[i + 1])
+			if (ft_isequal(input[i + 1], "<"))
 			{
-				ft_wrong_redirection_syntax(shell_data);
-				break ;
+				i++;
+				if (!input[i + 1])
+				{
+					ft_wrong_redirection_syntax(shell_data);
+					break ;
+				}
+				i++;
+				ft_heredoc(*shell_data, input[i]);
+				if ((*shell_data)->exit_code == CTL_C_EXIT)
+				{
+					ft_putstr_fd("> \n", STDOUT_FILENO);
+					break;
+				}
+				if (ft_isequal(input[0], "<"))
+					break ;
+				if (!ft_add_command(&cmds, &input[0], paths, i - 2))
+					break ;
+				ft_set_cmd_fds(shell_data, cmds);
+					break ;
+				start = i + 1;
 			}
-			if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
-				break ;
-			if (!ft_get_infile(shell_data, cmds, input[i + 1]))
+			else
 			{
-				perror("bash");
-				//break; break uniquement si aucun pipe
+				if (!input[i + 1])
+				{
+					ft_wrong_redirection_syntax(shell_data);
+					break ;
+				}
+				if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
+					break ;
+				if (!ft_get_infile(shell_data, cmds, input[i + 1]))
+				{
+					perror("bash");
+					//break; break uniquement si aucun pipe
+				}
+				i++;
+				if (!input[i + 1])
+					break;
+				start = i + 1;	
 			}
-			i++;
-			if (!input[i + 1])
-				break;
-			start = i + 1;
-		}
-		else if (ft_isequal(input[i], "<<"))
-		{
-			if (!input[i + 1])
-			{
-				ft_wrong_redirection_syntax(shell_data);
-				break ;
-			}
-			// heredoc here
 		}
 		else if (ft_isequal(input[i], ">"))
 		{
@@ -109,7 +126,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
 		}
 		else if (!input[i + 1])
 		{
-			//ft_printf("now = %s\n", input[start]);
+			// ft_printf("now = %s\n", input[start]);
 			if (!ft_add_command(&cmds, &input[start], paths, i + 1 - start))
 				break ;
 			ft_set_cmd_fds(shell_data, cmds);
