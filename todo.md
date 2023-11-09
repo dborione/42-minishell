@@ -5,7 +5,6 @@
 - CTl D ne marche pas quand après avoir stoppé une boucle infinie avec Ctl C
 - Ctl C ne marche pas pour stopper boucle infinie
 
-
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
 
@@ -43,7 +42,7 @@ et alors que :
 
 [CD]
 - ~~bash prend en charge `cd ~ pwd` alors que nous non~~
-- ~~cd ~/~~
+- ~~cd ~1~~
 - ~~cd -~~
 
 [Export]
@@ -52,3 +51,8 @@ et alors que :
 
 [Unset]
 - ~~prise en charge non valid chars~~
+
+[Echo]
+- Prise en charge `echo $? hello`
+- Prise en charge `echo ~`
+- Prise en charge `echo ~` quand $HOME est unset

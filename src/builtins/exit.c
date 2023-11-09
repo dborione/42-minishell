@@ -36,6 +36,8 @@ int	ft_check_if_digit(char *arg)
 
 	i = -1;
 	res = 0;
+	if (ft_isequal(arg, "--"))
+		return (1);
 	while (arg[++i])
 	{
 		if (!ft_isdigit(arg[i]))
