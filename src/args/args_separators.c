@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 11:10:33 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:02:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	ft_split_string_separator(
 	(*data)->tmp[2] = '\0';
 	if (!ft_one_split(data, args_list, input, (*data)->tmp))
 		return (0);
+	ft_set_type_separator(args_list);
 	(*data)->i++;
 	while (ft_isspace(input[(*data)->i]))
 		(*data)->i++;
