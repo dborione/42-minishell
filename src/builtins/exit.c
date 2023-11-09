@@ -42,10 +42,13 @@ int	ft_check_if_digit(char *arg)
 		{
 			if (i == 0 && !arg[i + 1])
 				return (0);
-			if (i != 0 && (arg[i] != '-' || arg[i] != '+'))
+			if (i == 0 && (arg[i] != '-' && arg[i] != '+'
+				&& arg[i] != ' '))
+				return (0);
+			if (i != 0 && arg[i] != ' ')
 				return (0);
 		}
-		if (arg[i] != '-' && arg[i] != '+')
+		if (arg[i] != ' ' && arg[i] != '-' && arg[i] != '+')
 		{
 			res *= 10;
 			res += arg[i] - '0';
