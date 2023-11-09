@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 14:45:06 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:14:43 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,10 @@
 # include <readline/history.h>
 # include <sys/ioctl.h>
 
-/* Parsing Tokens */
-# define CMD 1
-# define BUILTIN 2
-# define SYMBOL 3
-# define ENV_VAR 4
-# define INVALID 5
-# define CTRL_CMD 6
-
 /* Colours */
-# define GREEN [0;32m
-# define BLUE [0;34m
-# define DEFAULT [0;37m
+# define GREEN \033[0;92m
+# define BLUE \033[0;34m
+# define DEFAULT \033[0;37m
 
 /* PIPES */
 
@@ -46,13 +38,6 @@
 # define MAIN 0
 # define HEREDOC_CHILD 2
 # define CTL_C_EXIT 99
-
-typedef struct s_lexer_tokens
-{
-	char					*input;
-	int						token;
-	struct s_lexer_tokens	*next;
-}							t_lexer_tokens;
 
 typedef struct s_env_var
 {
@@ -74,8 +59,8 @@ typedef struct s_cmd
 
 typedef struct s_args_split
 {
-	char				*arg;
-	int					ignored;
+	char				*value;
+	int					separator;
 	struct s_args_split	*next;
 }						t_args_list;
 
@@ -147,19 +132,18 @@ void			ft_get_input(t_shell_data	**shell_data);
 
 /*	Parsing */
 
-t_cmd			*ft_parse_input(t_shell_data **shell_data, char **input);
+t_cmd			*ft_parse_input(t_shell_data **shell_data, t_args_list *args);
 
 /* Commands */
 
-t_cmd			*ft_get_command(char **cmd_args, char **paths, size_t end);
-int				ft_add_command(
-					t_cmd **cmds, char **cmd_args, char **paths, size_t end);
+t_cmd			*ft_get_command(t_args_list *args, char **paths);
+size_t			ft_add_command(t_cmd **cmds, t_args_list *args, char **paths);
 void			ft_free_commands(t_cmd **cmds);
 
 /* Args */
 
 t_args_list		*ft_new_args_list(char *tmp);
-char			**ft_split_args(t_shell_data **shell_data, char *input);
+t_args_list		*ft_split_args(t_shell_data **shell_data, char *input);
 t_args_list		*ft_input_to_args_list(
 					t_shell_data **shell_data, char *input, size_t len);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
@@ -179,7 +163,7 @@ int				ft_split_char_separator(
 int				ft_split_string_separator(
 					t_data_split **data, t_args_list **args_list,
 					char *input, char *separator);
-char			**ft_extract_args(char **args, size_t end);
+char			**ft_extract_args(t_args_list *args);
 
 /* Args Spaces */
 
