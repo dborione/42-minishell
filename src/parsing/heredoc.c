@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int ft_heredoc(t_shell_data *shell_data, char *line)
+int ft_heredoc(t_shell_data *shell_data, t_args_list *target)
 {
     pid_t	pid;
     char    *input;
@@ -27,8 +27,14 @@ int ft_heredoc(t_shell_data *shell_data, char *line)
         input = readline("> ");
         if (!input)
             exit(0);
-        // printf("%s\n", line);
-        while (!ft_isequal(line, input))
+        if (ft_isequal(target->next->next->value, input))
+        {
+            printf("eof:'%s'\n", target->next->next->value);
+            printf("input:'%s'\n", input);
+            free(input);
+            exit(1);
+        }
+        while (!ft_isequal(target->next->next->value, input))
         {
             free(input);
             input = readline("> ");

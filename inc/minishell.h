@@ -217,7 +217,8 @@ void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Heredoc */
 
-int				ft_heredoc(t_shell_data *shell_data, char *line);
+int	ft_heredoc(t_shell_data *shell_data, t_args_list *target);
+
 
 /* Errors */
 
