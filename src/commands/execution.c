@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 21:51:54 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:26:08 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static
 void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 {
-	if (cmd->input_fd == -1)
-		exit(1);
+	if (cmd->input_fd == -1 || cmd->output_fd == -1)
+		exit((*shell_data)->exit_code); // peut-etre créer un exitcode par cmd ?
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
 	close(pipe_fd[READ_PIPE]);
@@ -25,8 +25,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	if (!cmd->path)
 	{
 		ft_command_not_found(cmd->name);
-		(*shell_data)->exit_code = 127;
-		exit((*shell_data)->exit_code);
+		exit(127);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	//ft_printf("command failed : %s\n", (cmd)->args[0]);

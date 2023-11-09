@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 16:18:53 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:22:59 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,24 @@ void	ft_set_cmd_outfile_fd(
 int	ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *outfile_path)
 {
 	int	fd;
+	int	exit_code;
 
-	fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	exit_code = 0;
+	if (outfile_path)
+		fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else
+	{
+		ft_wrong_redirection_syntax(shell_data);
+		fd = -1;
+		exit_code = 258;
+	}
 	ft_set_cmd_outfile_fd(shell_data, cmds, fd);
 	if (fd == -1)
 	{
-		(*shell_data)->exit_code = EXIT_FAILURE;
+		if (exit_code)
+			(*shell_data)->exit_code = exit_code;
+		else
+			(*shell_data)->exit_code = EXIT_FAILURE;
 		return (0);
 	}
 	return (1);

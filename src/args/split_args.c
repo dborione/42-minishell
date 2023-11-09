@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 14:39:36 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:12:10 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,14 @@ int			ft_one_split(t_data_split **data, t_args_list **args_list, char *input, ch
 	return (1);
 }
 
-char		**ft_split_args(t_shell_data **shell_data, char *input)
+t_args_list		*ft_split_args(t_shell_data **shell_data, char *input)
 {
-	char		**res;
 	size_t		len;
 	t_args_list	*args_list;
 
 	len = ft_strlen(input);
 	args_list = ft_input_to_args_list(shell_data, input, len);
-	res = ft_args_list_to_str_split(&args_list);
-	ft_free_args_list(&args_list);
-	if (!res)
+	if (!args_list)
 		return (NULL);
-	return (res);
+	return (args_list);
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 16:02:03 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 10:51:25 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int	ft_set_path(t_cmd **new_cmd, char **paths)
 	return (1);
 }
 
-t_cmd	*ft_get_command(char **cmd_args, char **paths, size_t end)
+t_cmd	*ft_get_command(t_args_list *cmd_args, char **paths)
 {
 	t_cmd	*new_cmd;
 	char	**new_cmd_args;
 	int		builtin;
 
-	new_cmd_args = ft_extract_args(cmd_args, end);
+	new_cmd_args = ft_extract_args(cmd_args);
 	if (!new_cmd_args)
 		return (NULL);
 	builtin = ft_is_builtin(new_cmd_args[0]);

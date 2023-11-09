@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 00:21:33 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:20:17 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,114 +28,89 @@ void	ft_set_cmd_fds(t_shell_data **shell_data, t_cmd *cmds)
 	(*shell_data)->output_fd = STDOUT_FILENO;
 }
 
-t_cmd *ft_parse_input(t_shell_data **shell_data, char **input)
+
+t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 {
-	/*
-	---------------------------------
-		Insérer les $VAR et $? 
-	---------------------------------
-	*/
-	size_t	start;
-	size_t	i;
+	t_args_list	*target;
+	size_t	skip;
 	t_cmd	*cmds;
 	char	**paths;
-	// ajouter un type lasso et prendre en charge la suppression de <>
-	//char 	*env_var;
 
-	start = 0;
-	i = 0;
 	cmds = NULL;
 	(*shell_data)->pipes = 0;
 	paths = ft_split(ft_envp_get_value((*shell_data)->envp, "PATH"), ':'); // créer une commande get_path
-    while (paths && input[i])
+    target = args;
+	skip = 0;
+	while (paths && target)
 	{
-		if (ft_isequal(input[i], "<"))
+		if (target->separator && ft_isequal(target->value, "<"))
 		{
-			if (ft_isequal(input[i + 1], "<"))
-			{
-				i++;
-				if (!input[i + 1])
-				{
-					ft_wrong_redirection_syntax(shell_data);
-					break ;
-				}
-				i++;
-				// printf("%s\n", input[i]);
-				ft_heredoc(*shell_data, input[i]);
-				if ((*shell_data)->exit_code == CTL_C_EXIT)
-				{
-					ft_putstr_fd("> \n", STDOUT_FILENO);
-					break;
-				}
-				if (ft_isequal(input[0], "<"))
-					break ;
-				start = 0;
-			}
-			else
-			{
-				if (!input[i + 1])
-				{
-					ft_wrong_redirection_syntax(shell_data);
-					break ;
-				}
-				if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
-					break ;
-				if (!ft_get_infile(shell_data, cmds, input[i + 1]))
-				{
-					perror("bash");
-					//break; break uniquement si aucun pipe
-				}
-				i++;
-				if (!input[i + 1])
-					break;
-				start = i + 1;
-			}
-			// printf("input start: %s\n", input[i + 1]);
-		}
-		else if (ft_isequal(input[i], ">"))
-		{
-			if (!input[i + 1])
+			if (!target->next)
 			{
 				ft_wrong_redirection_syntax(shell_data);
 				break ;
 			}
-			if (i != start && !ft_add_command(&cmds, &input[start], paths, i - start))
-			 	break ;
+			if (!ft_get_infile(shell_data, cmds, target->next->value))
+			{
+				perror("bash");
+			}
+			target = target->next->next;
+			if (!target)
+				break;
+		}
+		else if (target->separator && ft_isequal(target->value, "<<"))
+		 {
+			if (!target->next)
+			{
+				ft_wrong_redirection_syntax(shell_data);
+				break ;
+			}
+			//ft_heredoc(*shell_data, target); à remettre
+			if ((*shell_data)->exit_code == CTL_C_EXIT)
+			{
+				ft_putstr_fd("> \n", STDOUT_FILENO);
+				break;
+			}
+		}
+		else if (target->separator && ft_isequal(target->value, ">"))
+		{
+			ft_printf("inside job\n");
+			if (!target->next)
+			{
+				ft_get_outfile(shell_data, cmds, NULL);
+				break ;
+			}
+			// if (i != start && !ft_add_command(&cmds, target->value, paths, i - start))
+			//  	break ;
 			//ft_set_cmd_fds(shell_data, cmds);
-			if (!ft_get_outfile(shell_data, cmds, input[i + 1]))
+			if (!ft_get_outfile(shell_data, cmds, target->next->value))
 			{
 				perror("bash");
 				//break;
 			}
-			i += 2;
-			if (!input[i])
+			target = target->next->next;
+			if (!target)
 				break;
-			start = i;
 		}
-		//else if (ft_isequal(input[i], ">>"))
-		else if (ft_isequal(input[i], "|"))
+		//else if (ft_isequal(target->value, ">>"))
+		else if (target->separator && ft_isequal(target->value, "|"))
 		{
-			printf("i: %zu\n", i);
-			printf("start: %zu\n", start);
-			// if (!ft_add_command(&cmds, &input[0], paths, 2))
-			if (!ft_add_command(&cmds, &input[start], paths, i - start))
-				break ;
-			ft_set_cmd_fds(shell_data, cmds);
-			start = i + 1;
+			//ft_set_cmd_fds(shell_data, cmds);
 			(*shell_data)->pipes++;
-			//ft_printf("now = %s\n", input[i + 1]);
+			target = target->next;
+			skip = 0;
+			//ft_printf("now = %s\n", target->next);
 		}
-		else if (!input[i + 1])
+		else if (!skip)
 		{
-			// ft_printf("now = %s\n", input[start]);
-			if (!ft_add_command(&cmds, &input[start], paths, i + 1 - start))
+			skip = ft_add_command(&cmds, target, paths);
+			if (!skip)
 				break ;
 			ft_set_cmd_fds(shell_data, cmds);
-			break ;
 		}
-		i++;
+		else
+			target = target->next;
 	}
-	ft_free_split(input);
 	if (!paths)
 		return (NULL);
 	ft_free_split(paths);

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 15:01:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 12:25:36 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:09:06 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ t_args_list	*ft_new_args_list(char *tmp)
 	new_arg = malloc(sizeof(t_args_list));
 	if (!new_arg)
 		return (NULL);
-	new_arg->arg = ft_strdup(tmp);
-	if (!new_arg->arg)
+	new_arg->value = ft_strdup(tmp);
+	if (!new_arg->value)
 	{
 		free(new_arg);
 		return (NULL);
 	}
+	new_arg->separator = 0;
 	new_arg->next = NULL;
 	return (new_arg);
 }
@@ -57,8 +58,8 @@ int			ft_join_args(t_args_list **cmd_split, char *tmp)
 	target_arg = *cmd_split;
 	while (target_arg->next)
 		target_arg = target_arg->next;
-	//ft_printf("cleanjoin %s && %s\n", target_arg->arg, tmp);
-	target_arg->arg = ft_cleanjoin(target_arg->arg, tmp);
+	//ft_printf("cleanjoin %s && %s\n", target_arg->value, tmp);
+	target_arg->value = ft_cleanjoin(target_arg->value, tmp);
 	if (!target_arg)
 		return (0);
 	return (1);
@@ -84,7 +85,7 @@ char		**ft_args_list_to_str_split(t_args_list **cmd_split)
 	target = *cmd_split;
 	while (target)
 	{
-		res[i] = target->arg;
+		res[i] = target->value;
 		target = target->next;
 		i++;
 	}

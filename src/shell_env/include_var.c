@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:32:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 14:47:20 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:04:52 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_new_include(char *str, size_t len)
 	if (!res)
 		return (NULL);
 	i = 0;
-	while(i < len && str[i])
+	while (i < len && str[i])
 	{
 		res[i] = str[i];
 		i++;
@@ -95,7 +95,7 @@ char	*ft_include_var(t_data_split *data, char *input)
 			if (!res)
 				return (0);
 			start = i;
-			while(input[i] && input[i]!= '?' &&  !ft_isspace(input[i]))
+			while (input[i] && input[i]!= '?' &&  !ft_isspace(input[i]))
 				i++;
 			tmp = ft_get_value(data, &input[start], i);
 			if (!tmp)
@@ -104,6 +104,8 @@ char	*ft_include_var(t_data_split *data, char *input)
 				return (NULL);
 			}
 			res = ft_var_join(res, tmp, ft_strlen(tmp));
+			if (!res)
+				return (0);
 			start = ++i;
 		}
 		else

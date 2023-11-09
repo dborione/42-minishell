@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_unset_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:37:37 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:43:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,21 @@ int	ft_init(size_t *i, size_t *skip, char **envp_copy, char **envp)
 	return (1);
 }
 
-int ft_envp_unset(char **envp, char *key)
+static
+int	ft_copy_var(char **envp, char **envp_copy, size_t i, size_t skip)
 {
-	char 	**envp_copy;
+	envp_copy[i - skip] = ft_strdup(envp[i]);
+	if (!envp_copy[i - skip])
+	{
+		ft_free_split(envp_copy);
+		return (0);
+	}
+	return (1);
+}
+
+int	ft_envp_unset(char **envp, char *key)
+{
+	char	**envp_copy;
 	size_t	i;
 	size_t	skip;
 
@@ -36,12 +48,8 @@ int ft_envp_unset(char **envp, char *key)
 	{
 		if (!ft_startswith(envp[i], key))
 		{
-			envp_copy[i - skip] = ft_strdup(envp[i]);
-			if (!envp_copy[i - skip])
-			{
-				ft_free_split(envp_copy);
+			if (!ft_copy_var(envp, envp_copy, i, skip))
 				return (0);
-			}
 		}
 		else
 			skip = 1;
