@@ -65,12 +65,13 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				ft_wrong_redirection_syntax(shell_data);
 				break ;
 			}
-			//ft_heredoc(*shell_data, target); à remettre
+			ft_heredoc(*shell_data, target); //à remettre
 			if ((*shell_data)->exit_code == CTL_C_EXIT)
 			{
 				ft_putstr_fd("> \n", STDOUT_FILENO);
 				break;
 			}
+			target = target->next->next;
 		}
 		else if (target->separator && ft_isequal(target->value, ">"))
 		{

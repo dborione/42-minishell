@@ -27,13 +27,8 @@ int ft_heredoc(t_shell_data *shell_data, t_args_list *target)
         input = readline("> ");
         if (!input)
             exit(0);
-        if (ft_isequal(target->next->next->value, input))
-        {
-            printf("eof:'%s'\n", target->next->next->value);
-            printf("input:'%s'\n", input);
-            free(input);
-            exit(1);
-        }
+        // printf("eof:'%s'\n", target->next->next->value);
+        // printf("input:'%s'\n", input);
         while (!ft_isequal(target->next->next->value, input))
         {
             free(input);
