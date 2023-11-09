@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 12:26:08 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:58:47 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 	if (pipe(pipe_fd) == -1)
 		perror("bash");
 	parent = fork();
-	if (parent < 0)
+	if (parent < 0) // define exit_code
 	{
 		close(pipe_fd[READ_PIPE]);
 		close(pipe_fd[WRITE_PIPE]);

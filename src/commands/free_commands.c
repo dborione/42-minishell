@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:07:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 18:51:44 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:04:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	ft_free_commands(t_cmd **cmds)
 		free(*cmds);
 		*cmds = target;
 	}
+	*cmds = NULL;
 }
