@@ -27,13 +27,6 @@ void ft_get_input(t_shell_data **shell_data)
 		(*shell_data)->prompt = ft_show_user_path((*shell_data)->envp);
 		line = readline((*shell_data)->prompt);
 		free((*shell_data)->prompt);
-		//printf("%s\n", line);
-		// if (ft_isequal(line, ""))
-		// {
-		// 	ft_command_not_found(line);
-		// 	(*shell_data)->exit_code = 127;
-		// 	exit((*shell_data)->exit_code);
-		// }
 		if (!line)
 		{
 			if (isatty(STDIN_FILENO))
@@ -48,6 +41,15 @@ void ft_get_input(t_shell_data **shell_data)
 			free(line);
 			break;
 		};
+		// t_args_list *target_a;
+		// target_a = args;
+		// ft_printf("¨¨¨\n");
+		// while (target_a)
+		// {
+		// 		printf("separator: %i (%s)\n", target_a->separator, target_a->value);
+		// 	target_a = target_a->next;
+		// }
+		// ft_printf("¨¨¨\n");
 		add_history(line);
 		if (args->separator && ft_isequal(args->value, "|"))
 		{

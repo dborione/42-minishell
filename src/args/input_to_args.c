@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 12:59:10 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 13:21:09 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_args_list	*ft_input_to_args_list(t_shell_data **shell_data, char *input, size_
 		}
 		if (ft_is_speparators(input, data->i))
 			ft_split_string_separator(&data, &args_list, input, &input[data->i]);
-		if (input[data->i] == '<' || input[data->i] == '|' || input[data->i] == '>')
+		else if (input[data->i] == '<' || input[data->i] == '|' || input[data->i] == '>')
 			ft_split_char_separator(&data, &args_list, input, input[data->i]);
 		else if (ft_isspace(input[data->i]))
 			ft_space_split(&data, &args_list, input);
