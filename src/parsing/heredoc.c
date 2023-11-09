@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 09:52:52 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:09:27 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int ft_heredoc(t_shell_data *shell_data, t_args_list *target)
         input = readline("> ");
         if (!input)
             exit(0);
-        // printf("eof:'%s'\n", target->next->next->value);
-        // printf("input:'%s'\n", input);
-        while (!ft_isequal(target->next->next->value, input))
+        while (!ft_isequal(target->value, input))
         {
             free(input);
             input = readline("> ");

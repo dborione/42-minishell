@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 14:04:30 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:07:27 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				ft_wrong_redirection_syntax(shell_data);
 				break ;
 			}
-			ft_heredoc(*shell_data, target);
+			ft_heredoc(*shell_data, target->next);
 			if ((*shell_data)->exit_code == CTL_C_EXIT)
 			{
 				ft_putstr_fd("> \n", STDOUT_FILENO);
