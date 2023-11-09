@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 14:13:59 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:18:39 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,24 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 		{
 			if (!target->next)
 			{
-				ft_get_outfile(shell_data, cmds, NULL);
+				ft_get_outfile(shell_data, cmds, NULL, 0);
 				break ; // vérifier, mais je crois qu'on ne doit pas break
 			}
-			if (!ft_get_outfile(shell_data, cmds, target->next->value))
+			if (!ft_get_outfile(shell_data, cmds, target->next->value, 0))
 				perror("bash");
 			target = target->next->next;
 		}
-		//else if (ft_isequal(target->value, ">>"))
+		else if (ft_isequal(target->value, ">>"))
+		{
+			if (!target->next)
+			{
+				ft_get_outfile(shell_data, cmds, NULL, 1);
+				break ; // vérifier, mais je crois qu'on ne doit pas break
+			}
+			if (!ft_get_outfile(shell_data, cmds, target->next->value, 1))
+				perror("bash");
+			target = target->next->next;
+		}
 		else if (target->separator && ft_isequal(target->value, "|"))
 		{
 			(*shell_data)->pipes++;
