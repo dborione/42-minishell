@@ -65,6 +65,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 			ft_heredoc(*shell_data, target->next->value);
 			if ((*shell_data)->exit_code == CTL_C_EXIT)
 			{
+				ft_init_shell_sigaction(*shell_data, MAIN);
 				ft_putstr_fd("> \n", STDOUT_FILENO);
 				ft_free_commands(&cmds);
 				break;
