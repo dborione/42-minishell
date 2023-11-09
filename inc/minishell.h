@@ -37,7 +37,7 @@
 /* SIGNAL PROCESSES */
 # define MAIN 0
 # define HEREDOC_CHILD 2
-# define CTL_C_EXIT 99
+# define CTL_C_EXIT 1
 
 typedef struct s_env_var
 {
