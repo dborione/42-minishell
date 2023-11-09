@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 12:57:58 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:13:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Heredoc */
 
-int	ft_heredoc(t_shell_data *shell_data, t_args_list *target);
+int	ft_heredoc(t_shell_data *shell_data, char *eof);
 
 
 /* Errors */

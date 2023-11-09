@@ -6,13 +6,13 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 09:52:52 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 14:10:30 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:13:22 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_heredoc(t_shell_data *shell_data, t_args_list *target)
+int ft_heredoc(t_shell_data *shell_data, char *eof)
 {
     pid_t	pid;
     char    *input;
@@ -27,7 +27,7 @@ int ft_heredoc(t_shell_data *shell_data, t_args_list *target)
         input = readline("> ");
         if (!input)
             exit(0);
-        while (!ft_isequal(target->value, input))
+        while (!ft_isequal(eof, input))
         {
             free(input);
             input = readline("> ");
