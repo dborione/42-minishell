@@ -22,5 +22,5 @@ int ft_env(char **envp)
 		ft_putendl_fd(envp[i], 1);
 		i++;
 	}
-    return (1);
+    return (0);
 }
