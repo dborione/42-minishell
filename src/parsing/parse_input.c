@@ -51,7 +51,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				break ; // vérifier, mais je crois qu'on ne doit pas break
 			}
 			if (!ft_get_infile(shell_data, cmds, target->next->value))
-				perror("bash");
+				ft_no_such_file(target->next->value);
 			target = target->next->next;
 		}
 		else if (target->separator && ft_isequal(target->value, "<<"))

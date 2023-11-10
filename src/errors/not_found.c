@@ -16,8 +16,21 @@ void	ft_command_not_found(char *cmd_name)
 {
 	char	*message;
 
-	ft_putstr_fd("bash: line 1: ", STDERR_FILENO);
+	ft_putstr_fd("bash: ", STDERR_FILENO);
 	message = ft_strjoin(cmd_name, ": command not found\n");
+	if (message)
+	{
+		ft_perror(message);
+		free(message);
+	}
+}
+
+void	ft_no_such_file(char *cmd_name)
+{
+	char	*message;
+
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	message = ft_strjoin(cmd_name, ": No such file or directory\n");
 	if (message)
 	{
 		ft_perror(message);
