@@ -36,7 +36,7 @@ et alors que :
 [Exit]
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
 - ~~Prendre en charge 'exit ""': dans bash, 'numeric argument required'~~
-- Prendre en charge exit + commande
+- ~~Prendre en charge exit + commande~~
 - ~~Permission denied~~
 - ~~Nombres 0000000000001 par ex~~
 
