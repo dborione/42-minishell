@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 00:08:29 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:40:56 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ typedef struct s_cmd
 {
 	char			*name;
 	size_t			id;
+	pid_t			pid;
 	char			**args;
 	int				builtin;
 	int				input_fd;
 	int				output_fd;
 	char			*path;
+	int				exit_code;
 	struct s_cmd	*next;
 }					t_cmd;
 

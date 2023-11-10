@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 10:51:25 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:48:30 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static
 void	ft_init_command(t_cmd *new_cmd, int builtin)
 {
 	new_cmd->id = 0;
+	new_cmd->pid = -1;
 	new_cmd->builtin = builtin;
 	new_cmd->next = NULL;
 	new_cmd->path = NULL;
 	new_cmd->input_fd = STDIN_FILENO;
 	new_cmd->output_fd = STDOUT_FILENO;
+	new_cmd->exit_code = 42;
 }
 
 static

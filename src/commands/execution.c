@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 13:58:47 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:52:16 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 	{
     	signal(SIGINT, SIG_IGN);
 		close(pipe_fd[WRITE_PIPE]);
+		cmd->pid = parent;
 		if (cmd->next)
 			(*shell_data)->input_fd = pipe_fd[READ_PIPE];
 	}
@@ -124,12 +125,11 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 	{
 		ft_multi_execution(shell_data, *cmds);
 		target = *cmds;
-		// waitpid(-1, &(*shell_data)->exit_code, 0);
-    	// (*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
 		while (target)
 		{
-			waitpid(-1, &(*shell_data)->exit_code, 0);
-    		(*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
+			waitpid(target->pid, &(target)->exit_code, 0);
+			if (!target->next)
+				(*shell_data)->exit_code = WEXITSTATUS(target->exit_code);
 			target = target->next;
 		}
 		ft_free_commands(cmds);
