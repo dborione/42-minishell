@@ -24,7 +24,10 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 		exit(ft_execute_builtin(shell_data, cmd));
 	if (!cmd->path)
 	{
-		ft_command_not_found(cmd->name);
+		if (ft_strrchr(cmd->name, '/'))
+			ft_no_such_file(cmd->name);
+		else
+			ft_command_not_found(cmd->name);
 		exit(127);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
@@ -134,4 +137,3 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 	ft_init_shell_sigaction(*shell_data, MAIN);
 	ft_reset_fd(shell_data);
 }
-

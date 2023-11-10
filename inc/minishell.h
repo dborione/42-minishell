@@ -23,6 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/ioctl.h>
+# include <dirent.h>
 
 /* Colours */
 # define GREEN \033[0;92m
