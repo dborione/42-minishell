@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:32:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 17:04:52 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:57:58 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ char	*ft_get_value(t_data_split *data, char *str, size_t end)
 	return (res);
 }
 
+static
+int		ft_is_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
+
 char	*ft_include_var(t_data_split *data, char *input)
 {
 	size_t		i;
@@ -89,7 +95,7 @@ char	*ft_include_var(t_data_split *data, char *input)
 	res = NULL;
 	while (input[i])
 	{
-		if (input[i] == '$' && input[i + 1])
+		if (input[i] == '$' && (ft_is_var_char(input[i + 1]) ||input[i + 1] == '?'))
 		{
 			res = ft_var_join(res, &input[start], i++);
 			if (!res)
