@@ -56,3 +56,66 @@ et alors que :
 - Prise en charge `echo $? hello`
 - Prise en charge `echo ~`
 - Prise en charge `echo ~` quand $HOME est unset
+- --> remplacer ~/ par le path dans echo, par ex chez nous pour `cat ~/echo` l'erreur bash `cat: /Users/dborione/echo: No such file or directory$` sort `cat: ~/echo: No such file or directory$`
+
+---- Mpanic tests checks ----
+
+Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est qu'ils sont bons et qu'il y a juste un erreur à cause du prompt ou d'un abort dans le tester
+
+[Mpanic echo]
+- test 16: remplacement du ~ par le path dans le msg d'erreur
+- test 18: unset PATH -> provoque un bug
+
+[Mpanic export]
+- test 10: export EMPTY EMPTY_TOO= NOT_EMPTY=contnent ne march epas chez nous
+- test 12: `export TEST=value` puis `export TEST+=" added value"` --> non pris en charge chez nous
+
+[Mpanic env]
+- tous les tests sont bons, juste le probleme d'abort dans mpanic
+
+[Mpanic directory]
+- test 3: `pwd -> cd "" -> pwd`: nous 'no such file'
+- test 5: cd "" "" pareil que 6
+- test 6: `cd / non_existent` : bash no output exit 0, nous: bash: cd: too many arguments.$
+- test 15 : `cd file/non_existent`: nous 'not such file or dir', bash 'not a dir'
+- test 21: cd 'fichier sans perm' -> nous on sort l'erreur not a directory alors que bash: Permissiomn denied
+
+[Mpanic parser]
+
+[Mpanic pipe]
+- all tests OK
+
+[Mpanic redirection]
+
+[Mpanic status]
+- test 4, 5, 7, 9: `cat < nonexist --> echo $?`: manque 'nonexist' dans le msd d'erreur
+- test 6: pareil + exit est 1 alors que bash 0
+- test 8: pareil + exit code + manque 1 dans stdout
+- test 12: exit code est 0 au lieu de 127
+- test 13: exit code
+- test 20, 21, 22, 23: pareil dans no such file
+- test 24, 25: cmd not found au lieu de no such file
+
+[Mpanic shlvl]
+
+[Mpanic panicm]
+- test 1: cannot access parent directories: No such file or directory
+- test 3: `echo all &> testfile < non_exist_file --> rm testfile`: nous no such file, bash pas d'erreur
+- test 7: `ecoh ~` pas pris en charge
+- test 8: unset PWD no working
+- test 10: `echo hi <> file --> ls --> rm file`
+- test 11: no passed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
