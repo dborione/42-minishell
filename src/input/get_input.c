@@ -46,7 +46,7 @@ t_args_list	*ft_get_args(t_shell_data **shell_data, char **line)
 	args = ft_split_args(shell_data, *line);
 	if (!args)
 	{
-		perror("bash");
+		//perror("bash");
 		free(*line);
 		return (NULL);
 	};
@@ -110,9 +110,11 @@ void ft_get_input(t_shell_data **shell_data)
 	while (!(*shell_data)->exit)
 	{
 		line = ft_get_line(shell_data);
+		if (!line)
+			break;
 		args = ft_get_args(shell_data, &line);
 		if (!args)
-			break;
+			continue; // a voir
 		add_history(line);
 		if (ft_invalide_start(shell_data, &args, &line))
 			continue;
