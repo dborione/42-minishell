@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 17:09:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 00:08:29 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,6 @@ typedef struct s_data_split
 	int		space;
 }			t_data_split;
 
-typedef struct s_lasso
-{
-	size_t					index;
-	size_t					start;
-	size_t					end;
-	struct s_ignore_index	*next;
-}				t_lasso;
-
-typedef struct s_ignore_index
-{
-	size_t					index;
-	struct s_ignore_index	*next;
-}				t_ignore_index;
-
 typedef struct s_shell_data
 {
 	int					exec;
@@ -103,8 +89,6 @@ typedef struct s_shell_data
 	int					exit_code;
 	int					exit;
 	char				*prompt;
-	t_ignore_index		*ignore_index;
-	t_lasso				*lassos;
 	struct sigaction	sa;
 }				t_shell_data;
 

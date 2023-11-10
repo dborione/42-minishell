@@ -6,22 +6,23 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:19:18 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/01 20:58:51 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 00:00:33 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_free_args_list(t_args_list **cmd_split)
+void	ft_free_args_list(t_args_list **args)
 {
     t_args_list	*target;
 
-    target = *cmd_split;
+    target = *args;
 	while (target)
 	{
-        *cmd_split = target->next;
+        *args = target->next;
+		free(target->value);
         free(target);
-        target = *cmd_split;
+        target = *args;
     }
 }
 
