@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 00:09:21 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!ft_init_shell(&shell_data, argv[0], envp))
 		{
 			perror("bash");
-			//system("leaks minishell");
 			return (EXIT_FAILURE);
 		}
 		ft_init_shell_sigaction(shell_data, MAIN);
 		ft_get_input(&shell_data);
 		ft_free_split(shell_data->envp);
+		ft_free_split(shell_data->export_envp);
 		error_code = shell_data->exit_code;
-		//printf("4: error code: %d\n", shell_data->exit_code);
 		free(shell_data);
 	}
 	else
 		ft_putendl_fd("Error: just ./minishell", 2);
-	//printf("5: error code: %d\n", error_code);
 	exit (error_code);
 }
