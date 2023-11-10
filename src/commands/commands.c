@@ -12,13 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-static
-void	ft_cmd_not_found(char *cmd_name)
-{
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(cmd_name, 2);
-	ft_putendl_fd(": command not found", 2);
-}
+// static
+// void	ft_cmd_not_found(char *cmd_name)
+// {
+// 	ft_putstr_fd("bash: ", 2);
+// 	ft_putstr_fd(cmd_name, 2);
+// 	ft_putendl_fd(": command not found", 2);
+// }
 
 static
 void	ft_init_command(t_cmd *new_cmd, int builtin)
@@ -105,7 +105,7 @@ t_cmd	*ft_get_command(t_args_list *cmd_args, char **paths)
 	{
 		if (new_cmd->path)
 			free(new_cmd->path);
-		ft_cmd_not_found(new_cmd->name); // free car leak en ce moment
+		ft_command_not_found(new_cmd->name); // free car leak en ce moment
 		return (NULL);
 	}
 	else

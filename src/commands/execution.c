@@ -49,12 +49,14 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 	}
 	else if (parent == 0)
 	{
+        ft_init_shell_sigaction(*shell_data, HEREDOC_CHILD);
 		if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 			exit(EXIT_FAILURE);
 		ft_next_command(shell_data, cmd, pipe_fd);
 	}
 	else
 	{
+    	signal(SIGINT, SIG_IGN);
 		close(pipe_fd[WRITE_PIPE]);
 		if (cmd->next)
 			(*shell_data)->input_fd = pipe_fd[READ_PIPE];
@@ -119,18 +121,17 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 	{
 		ft_multi_execution(shell_data, *cmds);
 		target = *cmds;
+		// waitpid(-1, &(*shell_data)->exit_code, 0);
+    	// (*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
 		while (target)
 		{
-			signal(SIGINT, SIG_IGN);
 			waitpid(-1, &(*shell_data)->exit_code, 0);
     		(*shell_data)->exit_code = WEXITSTATUS((*shell_data)->exit_code);
 			target = target->next;
 		}
-		if ((*shell_data)->exit_code == 2) // pour cat SIGINT
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		ft_init_shell_sigaction(*shell_data, MAIN);
 		ft_free_commands(cmds);
 	}
+	ft_init_shell_sigaction(*shell_data, MAIN);
 	ft_reset_fd(shell_data);
 }
 

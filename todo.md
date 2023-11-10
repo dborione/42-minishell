@@ -88,12 +88,10 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 [Mpanic redirection]
 
 [Mpanic status]
-- test 4, 5, 7, 9: `cat < nonexist --> echo $?`: manque 'nonexist' dans le msd d'erreur
-- test 6: pareil + exit est 1 alors que bash 0
-- test 8: pareil + exit code + manque 1 dans stdout
-- test 12: exit code est 0 au lieu de 127
-- test 13: exit code
-- test 20, 21, 22, 23: pareil dans no such file
+- ~~test 4, 5, 7, 9: `cat < nonexist --> echo $?`: manque 'nonexist' dans le msd d'erreur~~
+- ~~test 6, 8: pareil + exit est 1 alors que bash 0~~
+- test 12, 13: exit code est 0 au lieu de 127
+- ~~test 20, 21, 22, 23: pareil dans no such file~~
 - test 24, 25: cmd not found au lieu de no such file
 
 [Mpanic shlvl]

@@ -37,3 +37,16 @@ void	ft_no_such_file(char *cmd_name)
 		free(message);
 	}
 }
+
+void	ft_perm_denied(char *cmd_name)
+{
+	char	*message;
+
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	message = ft_strjoin(cmd_name, ": Permission denied\n");
+	if (message)
+	{
+		ft_perror(message);
+		free(message);
+	}
+}

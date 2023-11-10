@@ -56,5 +56,16 @@ int		ft_get_infile(
 		return (1);
 	}
 	ft_set_cmd_infile_fd(shell_data, cmds, -1);
+	if (access(infile_path, F_OK))
+	{
+		//(*shell_data)->exit_code = 1;
+		ft_no_such_file(infile_path);
+	}
+	else if (access(infile_path, R_OK))
+	{
+		(*shell_data)->exit_code = 1;
+		ft_perm_denied(infile_path);
+		return (2);
+	}
 	return (0);
 }

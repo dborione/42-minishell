@@ -50,8 +50,11 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				ft_wrong_redirection_syntax(shell_data);
 				break ; // vérifier, mais je crois qu'on ne doit pas break
 			}
-			if (!ft_get_infile(shell_data, cmds, target->next->value))
-				ft_no_such_file(target->next->value);
+			if (ft_get_infile(shell_data, cmds, target->next->value) == 2)
+			{
+				ft_free_commands(&cmds);
+				break ;
+			}
 			target = target->next->next;
 		}
 		else if (target->separator && ft_isequal(target->value, "<<"))
@@ -68,7 +71,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				ft_init_shell_sigaction(*shell_data, MAIN);
 				ft_putstr_fd("> \n", STDOUT_FILENO);
 				ft_free_commands(&cmds);
-				break;
+				break ;
 			}
 			target = target->next->next;
 		}
@@ -80,7 +83,10 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				break ; // vérifier, mais je crois qu'on ne doit pas break
 			}
 			if (!ft_get_outfile(shell_data, cmds, target->next->value, 0))
-				perror("bash");
+			{
+				ft_free_commands(&cmds);
+				break ;
+			}
 			target = target->next->next;
 		}
 		else if (ft_isequal(target->value, ">>"))
@@ -91,7 +97,7 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 				break ; // vérifier, mais je crois qu'on ne doit pas break
 			}
 			if (!ft_get_outfile(shell_data, cmds, target->next->value, 1))
-				perror("bash");
+				perror("2bash");
 			target = target->next->next;
 		}
 		else if (target->separator && ft_isequal(target->value, "|"))
@@ -104,7 +110,11 @@ t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 		{
 			skip = ft_add_command(&cmds, target, paths);
 			if (!skip)
+			{
+				printf("test2\n");
+				(*shell_data)->exit_code = 127;
 				break ;
+			}
 			ft_set_cmd_fds(shell_data, cmds);
 		}
 		else

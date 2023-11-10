@@ -60,6 +60,7 @@ int	ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *outfile_path, i
 			(*shell_data)->exit_code = exit_code;
 		else
 			(*shell_data)->exit_code = EXIT_FAILURE;
+		ft_perm_denied(outfile_path);
 		return (0);
 	}
 	return (1);
