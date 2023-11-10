@@ -6,7 +6,7 @@
 - Ctl C ne marche pas pour stopper boucle infinie
 
 [Heredoc]
-- double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas
+- double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas, ou `ls << EOF | wc -l <<eof` donne des resultats differents
 
 [Gestion Commandes]
 - Ne pas oublier que :
