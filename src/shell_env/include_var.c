@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:32:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 19:57:58 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:06:12 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*ft_get_value(t_data_split *data, char *str, size_t end)
 	return (res);
 }
 
-static
 int		ft_is_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');

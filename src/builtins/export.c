@@ -25,83 +25,6 @@ int ft_print_export_env(char **envp)
 }
 
 static
-int ft_is_in_env(char **envp, char *arg)
-{
-    int i;
-    int j;
-    char *key_env;
-    char *key_arg;
-    char *new_arg;
-
-    i = -1;
-    j = -1;
-    new_arg = NULL;
-    key_arg = NULL;
-    while (arg[++j])
-    {
-        if (arg[j] == '+')
-        {
-            key_arg = malloc(sizeof(char) * (j + 1));
-            ft_strlcpy(key_arg, arg, j + 1);
-            break ;
-        }
-    }
-    while (envp[++i])
-    {
-        if (ft_isequal(envp[i], arg))
-            return (0);
-        key_env = ft_envp_get_key(envp[i]);
-        if (ft_isequal(key_env, key_arg))
-        {
-            if (arg[j] == '+')
-            {
-                new_arg = ft_strjoin(envp[i], &arg[j + 2]);
-                free(envp[i]);
-                envp[i] = new_arg;
-                free (key_arg);
-                return (0);
-            }
-            free (envp[i]);
-            envp[i]= NULL;
-            return (1);
-        }
-    }
-    return (1);
-}
-
-static
-int ft_add_to_env(char **envp, char *arg)
-{
-    int j;
-
-    j = 0;
-    if (!ft_strrchr(arg, '='))
-        return (0);
-    while (envp[j])
-        j++;
-    envp[j] = ft_strdup(arg);
-    envp[j + 1] = NULL;
-    return (1);
-}
-
-static
-int ft_add_to_export_env(char **export_envp, char *arg)
-{
-    int j;
-
-    j = 0;
-    while (export_envp[j])
-    {
-        if (ft_isequal(export_envp[j], arg))
-            return (0);
-        j++;
-    }
-    export_envp[j] = ft_strdup(arg);
-    export_envp[j + 1] = NULL;
-    return (1);
-}
-
-static
 int ft_check_valid_char(char *arg)
 {
     int i;
@@ -125,13 +48,14 @@ int ft_check_valid_char(char *arg)
     return (1);
 }
 
-int ft_export(char **envp, char **export_envp, t_cmd *cmd)
+int ft_export(t_shell_data **shell_data, t_cmd *cmd)
 {
     int     i;
+	char	*tmp;
 
     i = 1;
     if (!cmd->args[1])
-        return (ft_print_export_env(export_envp));
+        return (ft_print_export_env((*shell_data)->export_envp));
     while (cmd->args[i])
     {
         if (!ft_check_valid_char(cmd->args[i]))
@@ -141,12 +65,16 @@ int ft_export(char **envp, char **export_envp, t_cmd *cmd)
             if (!cmd->args[i])
                 break ;
         }
-        if (ft_is_in_env(envp, cmd->args[i]) && ft_is_in_env(export_envp, cmd->args[i]))
-        {
-            if (!ft_add_to_export_env(export_envp, cmd->args[i]) || !ft_add_to_env(envp, cmd->args[i]))
-                i++;
-        }
+		tmp = ft_strdup(cmd->args[i]);
+		if (!tmp)
+			return (127);
+		if (!ft_envp_set(shell_data, &tmp))
+		{
+			free(tmp);
+			return (127);
+		}
+		//free(tmp);
         i++;
     }
-    return (1);
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 02:29:28 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/29 16:21:09 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:56:26 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	if (ft_isequal(cmd->name, "exit"))
 		return (ft_exit(shell_data, cmd));
 	if (ft_isequal(cmd->name, "export"))
-		return (ft_export((*shell_data)->envp, (*shell_data)->export_envp, cmd));
+		return (ft_export(shell_data, cmd));
 	if (ft_isequal(cmd->name, "unset"))
 		return (ft_unset((*shell_data)->envp, (*shell_data)->export_envp, cmd));	
 	return (127);

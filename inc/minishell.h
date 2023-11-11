@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 16:40:56 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:55:49 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char			*ft_envp_get_key(char *input);
 char			*ft_envp_get_value(char **envp, char *key);
 int				ft_envp_set(t_shell_data **shell_data, char **input);
 int				ft_envp_add(t_shell_data **shell_data, char **input);
+int				ft_is_var_char(char c);
 char			*ft_include_var(t_data_split *data, char *input);
 
 /* Prompt */
@@ -178,7 +179,7 @@ int				ft_env(char **envp);
 int				ft_pwd(void);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
-int				ft_export(char **envp, char **export_env, t_cmd *cmd);
+int				ft_export(t_shell_data **shell_env, t_cmd *cmd);
 int				ft_unset(char **envp, char **export_envp, t_cmd *cmd);
 
 /* Execution */
