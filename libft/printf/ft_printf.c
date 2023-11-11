@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 00:33:52 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/01/30 18:23:42 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/11 01:06:01 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ int	ft_printf(const char *input, ...)
 	if (args_t[0] == '\0')
 		return (ft_printf_basic(input, args_t, i[1]));
 	va_start(args, input);
-	l_args = ft_get_args(args, args_t[0]);
+	l_args = ft_get_args(&args, args_t[0]);
 	if (!l_args)
 		return (ft_clear_all(&l_args, args_t, -1));
 	while (input[0] && args_t && args_t[i[0]])
 	{
-		tmp = ft_get_args(args, args_t[i[0]]);
+		tmp = ft_get_args(&args, args_t[i[0]]);
 		if (!tmp)
 			return (ft_clear_all(&l_args, args_t, -1));
 		ft_lstadd_back(&l_args, tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.b            +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 16:50:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/01/24 17:01:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/11 01:08:39 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,28 @@ static char	*ft_get_ptr(size_t n)
 	return (res);
 }
 
-void	*ft_set_arg(va_list args, char arg_t)
+void	*ft_set_arg(va_list *args, char arg_t)
 {
 	void	*arg;
 
 	if (arg_t == '%')
 		arg = ft_ptrchar('%');
 	else if (arg_t == 'i')
-		arg = ft_itoa(va_arg(args, int));
+		arg = ft_itoa(va_arg(*args, int));
 	else if (arg_t == 'u')
-		arg = ft_u_itoa(va_arg(args, int));
+		arg = ft_u_itoa(va_arg(*args, int));
 	else if (arg_t == 'd')
-		arg = ft_itoa(va_arg(args, int));
+		arg = ft_itoa(va_arg(*args, int));
 	else if (arg_t == 'c')
-		arg = ft_ptrchar(va_arg(args, int));
+		arg = ft_ptrchar(va_arg(*args, int));
 	else if (arg_t == 's')
-		arg = ft_get_str(va_arg(args, char *));
+		arg = ft_get_str(va_arg(*args, char *));
 	else if (arg_t == 'p')
-		arg = ft_get_ptr(va_arg(args, size_t));
+		arg = ft_get_ptr(va_arg(*args, size_t));
 	else if (arg_t == 'x')
-		arg = ft_num_to_hex(va_arg(args, unsigned int), 0);
+		arg = ft_num_to_hex(va_arg(*args, unsigned int), 0);
 	else
-		arg = ft_num_to_hex(va_arg(args, unsigned int), 1);
+		arg = ft_num_to_hex(va_arg(*args, unsigned int), 1);
 	if (!arg)
 		return (NULL);
 	return (arg);

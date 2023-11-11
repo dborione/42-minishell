@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_args.c                                          :+:      :+:    :+:   */
+/*   ft_args_infos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 17:59:08 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/01/30 18:27:13 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/11 01:06:52 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_ptrchar(int c)
 	return (str);
 }
 
-t_list	*ft_get_args(va_list args, char arg_t)
+t_list	*ft_get_args(va_list *args, char arg_t)
 {
 	t_list	*tmp;
 	void	*arg;

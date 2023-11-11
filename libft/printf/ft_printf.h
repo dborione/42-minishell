@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 10:23:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/04/14 22:23:38 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/11 01:08:00 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*ft_u_itoa(unsigned int n);
 char	*ft_betterdup(const char *s, size_t len);
 char	*ft_to_pointer(size_t number);
 int		ft_clear_all(t_list **l_args, char *args_t, int len);
-t_list	*ft_get_args(va_list args, char arg_t);
+t_list	*ft_get_args(va_list *args, char arg_t);
 int		ft_print_char(char c, int *len);
 int		ft_print_arg(t_list *args, char type, int *count);
-void	*ft_set_arg(va_list args, char arg_t);
+void	*ft_set_arg(va_list *args, char arg_t);
 int		ft_init_prf(const char *input, size_t *i, size_t *len, char **args_t);
 void	ft_str_init(size_t *i, int *count, t_list **target, t_list *args);
 int		ft_init_gettype(const char *input, size_t *i, size_t *y);
