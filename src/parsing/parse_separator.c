@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:47:51 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/12 22:08:21 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:31:27 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 static
 int	ft_parse_infile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **target)
 {
-	// if (!target->next)
-	// {
-	// 	ft_wrong_redirection_syntax(shell_data);
-	// 	break ; // vérifier, mais je crois qu'on ne doit pas break
-	// }
+	if (!(*target)->next)
+	{
+		ft_wrong_redirection_syntax(shell_data);
+		return (1);
+	}
+	if ((*target)->next->separator)
+	{
+		if (!ft_isequal((*target)->next->value, ">"))
+			ft_wrong_tokens_syntax(shell_data, (*target)->next->value);
+		*target = (*target)->next->next;
+		return (1);
+	}
 	if (ft_get_infile(shell_data, *cmds, (*target)->next->value) == 2)
 	{
 		ft_free_commands(cmds);
@@ -32,12 +39,17 @@ int	ft_parse_infile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targe
 static
 int	ft_parse_heredoc(t_shell_data **shell_data, t_cmd **cmds, t_args_list **target)
 {
-	// if (!target->next)
-	// {
-	// 	ft_wrong_redirection_syntax(shell_data);
-	// 	ft_free_commands(&cmds);
-	// 	break ;
-	// }
+	if (!(*target)->next)
+	{
+		ft_wrong_redirection_syntax(shell_data);
+		return (1);
+	}
+	if ((*target)->next->separator)
+	{
+		ft_wrong_tokens_syntax(shell_data, (*target)->next->value);
+		*target = (*target)->next->next;
+		return (1);
+	}
 	ft_heredoc(*shell_data, (*target)->next->value);
 	if ((*shell_data)->exit_code == CTL_C_EXIT)
 	{
@@ -53,11 +65,17 @@ int	ft_parse_heredoc(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targ
 static
 int	ft_parse_outfile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **target, int append)
 {
-	// if (!target->next)
-	// {
-	// 	ft_get_outfile(shell_data, cmds, NULL, 0);
-	// 	break ; // vérifier, mais je crois qu'on ne doit pas break
-	// }
+	if (!(*target)->next)
+	{
+		ft_wrong_redirection_syntax(shell_data);
+		return (1);
+	}
+	if ((*target)->next->separator)
+	{
+		ft_wrong_tokens_syntax(shell_data, (*target)->next->value);
+		*target = (*target)->next->next;
+		return (1);
+	}
 	if (!ft_get_outfile(shell_data, *cmds, (*target)->next->value, append))
 	{
 		ft_free_commands(cmds);

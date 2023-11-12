@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/12 22:01:38 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:21:18 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int	ft_heredoc(t_shell_data *shell_data, char *eof);
 /* Errors */
 
 int				ft_perror(char *message);
-void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char token);
+void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token);
 void			ft_wrong_redirection_syntax(t_shell_data **shell_data);
 void			ft_command_not_found(char *cmd_name);
 int				ft_export_error(char *arg);

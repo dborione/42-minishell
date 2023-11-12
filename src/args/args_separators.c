@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 13:21:24 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:24:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	ft_is_speparators(char *input, size_t i)
 
 int	ft_is_invalid_args_separator(t_shell_data **shell_data, char *input)
 {
-	if (ft_startswith(input, "||")
-		|| ft_startswith(input, "<<<")
-		|| ft_startswith(input, ">>>")
-		)
-	{
-		ft_wrong_tokens_syntax(shell_data, input[0]);
-		return (1);
-	}
-	return (0);
+	if (ft_startswith(input, "||"))
+		ft_wrong_tokens_syntax(shell_data, "||");
+	else if (ft_startswith(input, "<<<"))
+		ft_wrong_tokens_syntax(shell_data, "<");
+	else if (ft_startswith(input, ">>>"))
+		ft_wrong_tokens_syntax(shell_data, ">");
+	else
+		return (0);
+	return (1);
 }
 
 static

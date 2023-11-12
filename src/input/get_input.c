@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/12 20:43:39 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:25:19 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			ft_invalide_start(t_shell_data **shell_data, t_args_list **args, char **li
 {
 	if ((*args)->separator && ft_isequal((*args)->value, "|"))
 	{
-		ft_wrong_tokens_syntax(shell_data, '|');
+		ft_wrong_tokens_syntax(shell_data, "|");
 		free(*line);
 		ft_free_args_list(args);
 		return (1);

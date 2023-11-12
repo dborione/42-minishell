@@ -6,25 +6,24 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 20:42:15 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 23:11:53 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:21:09 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_wrong_tokens_syntax(t_shell_data **shell_data, char token)
+void	ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token)
 {
 	char	*tmp;
 	char	*message;
 
 	(*shell_data)->exit_code = 2;
-	tmp = ft_strdup("? »\n");
+	tmp = ft_strjoin(token, " »\n");
 	if (!tmp)
 	{
 		(*shell_data)->exit_code = 127;
 		return ;
 	}
-	tmp[0] = token;
 	message = ft_strjoin("bash: syntax error near unexpected token « ", tmp);
 	free(tmp);
 	if (!message)
