@@ -15,12 +15,9 @@
 n'est pas une commande (sauf si on utilise "") mais 2 commandes,
 il faudra le prendre en charge dans le parsing
 
-- Prendre en charge les "|" (guillemets + pipe ensemble), exemples :
-	~$ echo test "|" cat -e
-	test | cat -e
-et alors que :
-	~$ echo test | cat -e
-	test$
+~~- Prendre en charge les "|" (guillemets + pipe ensemble)~~
+
+- Créer des "commandes vides" exemple : < infile | cat -e
 
 [Prompt]
 - erreur de free
