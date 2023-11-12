@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/12 16:11:23 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:01:38 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_shell_data
 	int					exit_code;
 	int					exit;
 	char				*prompt;
+	char				**paths;
 	struct sigaction	sa;
 }				t_shell_data;
 
@@ -124,11 +125,14 @@ void			ft_get_input(t_shell_data	**shell_data);
 /*	Parsing */
 
 t_cmd			*ft_parse_input(t_shell_data **shell_data, t_args_list *args);
+int	ft_parse_separator(
+	t_shell_data **shell_data, t_cmd **cmds, t_args_list **target, int *skip);
 
 /* Commands */
 
 t_cmd			*ft_get_command(t_args_list *args, char **paths);
 size_t			ft_add_command(t_cmd **cmds, t_args_list *args, char **paths);
+void			ft_set_command_fds(t_shell_data **shell_data, t_cmd *cmds);
 void			ft_free_commands(t_cmd **cmds);
 
 /* Args */

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 00:09:21 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/12 21:33:00 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_shell_data	*shell_data;
-	int	error_code;
+	int				error_code;
 
 	error_code = 0;
 	if (argc == 1)

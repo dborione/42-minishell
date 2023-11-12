@@ -6,122 +6,46 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 17:18:39 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:16:13 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static
-void	ft_set_cmd_fds(t_shell_data **shell_data, t_cmd *cmds)
+int		ft_init_parsing(t_shell_data **shell_data, t_cmd **cmds, int *skip)
 {
-	t_cmd	*target;
-
-	if (!cmds)
-		return ;
-	target = cmds;
-	while (target->next)
-		target = target->next;
-	target->input_fd = (*shell_data)->input_fd;
-	(*shell_data)->input_fd = STDIN_FILENO;
-	target->output_fd = (*shell_data)->output_fd;
-	(*shell_data)->output_fd = STDOUT_FILENO;
+	(*shell_data)->paths = ft_split(ft_envp_get_value((*shell_data)->envp, "PATH"), ':');
+	if (!(*shell_data)->paths)
+		return (0);
+	*cmds = NULL;
+	(*shell_data)->pipes = 0;
+	*skip = 0;
+	return (1);
 }
 
-
-t_cmd *ft_parse_input(t_shell_data **shell_data, t_args_list *args)
+t_cmd	*ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 {
 	t_args_list	*target;
-	size_t	skip;
-	t_cmd	*cmds;
-	char	**paths;
+	int			skip;
+	t_cmd		*cmds;
+	int			res;
 
-	cmds = NULL;
-	(*shell_data)->pipes = 0;
-	paths = ft_split(ft_envp_get_value((*shell_data)->envp, "PATH"), ':'); // créer une commande get_path
+	if (!ft_init_parsing(shell_data, &cmds, &skip))
+		return (NULL);
     target = args;
-	skip = 0;
-	while (paths && target)
+	while ((*shell_data)->paths && target)
 	{
-		if (target->separator && ft_isequal(target->value, "<"))
+		res = ft_parse_separator(shell_data, &cmds, &target, &skip);
+		if (res == -1)
 		{
-			if (!target->next)
-			{
-				ft_wrong_redirection_syntax(shell_data);
-				break ; // vérifier, mais je crois qu'on ne doit pas break
-			}
-			if (ft_get_infile(shell_data, cmds, target->next->value) == 2)
-			{
-				ft_free_commands(&cmds);
-				break ;
-			}
-			target = target->next->next;
+			ft_free_split((*shell_data)->paths);
+			return (NULL);
 		}
-		else if (target->separator && ft_isequal(target->value, "<<"))
-		 {
-			if (!target->next)
-			{
-				ft_wrong_redirection_syntax(shell_data);
-				ft_free_commands(&cmds);
-				break ;
-			}
-			ft_heredoc(*shell_data, target->next->value);
-			if ((*shell_data)->exit_code == CTL_C_EXIT)
-			{
-				ft_init_shell_sigaction(*shell_data, MAIN);
-				ft_putstr_fd("> \n", STDOUT_FILENO);
-				ft_free_commands(&cmds);
-				break ;
-			}
-			target = target->next->next;
-		}
-		else if (target->separator && ft_isequal(target->value, ">"))
-		{
-			if (!target->next)
-			{
-				ft_get_outfile(shell_data, cmds, NULL, 0);
-				break ; // vérifier, mais je crois qu'on ne doit pas break
-			}
-			if (!ft_get_outfile(shell_data, cmds, target->next->value, 0))
-			{
-				ft_free_commands(&cmds);
-				break ;
-			}
-			target = target->next->next;
-		}
-		else if (ft_isequal(target->value, ">>"))
-		{
-			if (!target->next)
-			{
-				ft_get_outfile(shell_data, cmds, NULL, 1);
-				break ; // vérifier, mais je crois qu'on ne doit pas break
-			}
-			if (!ft_get_outfile(shell_data, cmds, target->next->value, 1))
-				perror("2bash");
-			target = target->next->next;
-		}
-		else if (target->separator && ft_isequal(target->value, "|"))
-		{
-			(*shell_data)->pipes++;
-			target = target->next;
-			skip = 0;
-		}
-		else if (!skip)
-		{
-			skip = ft_add_command(&cmds, target, paths);
-			if (!skip)
-			{
-				printf("test2\n");
-				(*shell_data)->exit_code = 127;
-				break ;
-			}
-			ft_set_cmd_fds(shell_data, cmds);
-		}
-		else
+		else if (!res)
 			target = target->next;
 	}
-	if (!paths)
-		return (NULL);
-	ft_free_split(paths);
+	ft_free_split((*shell_data)->paths);
+	(*shell_data)->exit_code = 127;
 	return (cmds);
 }
