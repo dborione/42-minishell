@@ -21,38 +21,7 @@ int ft_check_valid_char(char *arg)
     return (1);
 }
 
-static
-int ft_is_in_env(char **envp, char *arg)
-{
-    int i;
-    char *key_env;
-    char *key_arg;
-
-    i = -1;
-    while (envp[++i])
-    {
-        key_env = ft_envp_get_key(envp[i]);
-        if (!key_env)
-            return (0);
-        key_arg = ft_envp_get_key(arg);
-        if (!key_arg)
-        {
-            free (key_env);
-            return (0);
-        }
-        if (ft_isequal(key_env, key_arg))
-        {
-            free (key_arg);
-            free (key_env);
-            free (envp[i]);
-            envp[i]= NULL;
-            return (1);
-        }
-    }
-    return (1);
-}
-
-int ft_unset(char **envp, char **export_envp, t_cmd *cmd)
+int ft_unset(t_shell_data **shell_data, t_cmd *cmd)
 {
     int i;
 
@@ -66,9 +35,11 @@ int ft_unset(char **envp, char **export_envp, t_cmd *cmd)
             if (!cmd->args[i])
                 break ;
         }
-        if (!ft_is_in_env(envp, cmd->args[i])
-            || ft_is_in_env(export_envp, cmd->args[i]))
-            return (1);
+		if (ft_env_has((*shell_data)->envp, cmd->args[i]))
+        {
+			if (!ft_envp_unset(shell_data, cmd->args[i]))
+				return (1);
+		}
     }
     return (0);
 }

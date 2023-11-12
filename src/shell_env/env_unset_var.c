@@ -6,19 +6,19 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:37:37 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/08 16:43:47 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:13:01 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static
-int	ft_init(size_t *i, size_t *skip, char **envp_copy, char **envp)
+int	ft_init(size_t *i, size_t *skip, char ***envp_copy, char **envp)
 {
 	*i = 0;
 	*skip = 0;
-	envp_copy = malloc(sizeof(char *) * (ft_split_len(envp)));
-	if (!envp_copy)
+	*envp_copy = malloc(sizeof(char *) * (ft_split_len(envp)));
+	if (!(*envp_copy))
 		return (0);
 	return (1);
 }
@@ -35,20 +35,20 @@ int	ft_copy_var(char **envp, char **envp_copy, size_t i, size_t skip)
 	return (1);
 }
 
-int	ft_envp_unset(char **envp, char *key)
+int	ft_envp_unset(t_shell_data **shell_data, char *key)
 {
 	char	**envp_copy;
 	size_t	i;
 	size_t	skip;
 
 	envp_copy = NULL;
-	if (!ft_init(&i, &skip, envp_copy, envp))
+	if (!ft_init(&i, &skip, &envp_copy, (*shell_data)->envp))
 		return (0);
-	while (envp[i])
+	while ((*shell_data)->envp[i])
 	{
-		if (!ft_startswith(envp[i], key))
+		if (!ft_startswith((*shell_data)->envp[i], key))
 		{
-			if (!ft_copy_var(envp, envp_copy, i, skip))
+			if (!ft_copy_var((*shell_data)->envp, envp_copy, i, skip))
 				return (0);
 		}
 		else
@@ -56,7 +56,7 @@ int	ft_envp_unset(char **envp, char *key)
 		i++;
 	}
 	envp_copy[i - skip] = NULL;
-	ft_free_split(envp);
-	envp = envp_copy;
+	ft_free_split((*shell_data)->envp);
+	(*shell_data)->envp = envp_copy;
 	return (1);
 }
