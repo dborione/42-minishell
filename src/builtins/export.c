@@ -60,10 +60,9 @@ int ft_export(t_shell_data **shell_data, t_cmd *cmd)
     {
         if (!ft_check_valid_char(cmd->args[i]))
         {
-            ft_export_error(cmd->args[i]);
-            i++;
+            ft_export_error(cmd->args[i++]);
             if (!cmd->args[i])
-                break ;
+                return (1);
         }
 		tmp = ft_strdup(cmd->args[i]);
 		if (!tmp)
@@ -73,7 +72,6 @@ int ft_export(t_shell_data **shell_data, t_cmd *cmd)
 			free(tmp);
 			return (127);
 		}
-		//free(tmp);
         i++;
     }
     return (0);
