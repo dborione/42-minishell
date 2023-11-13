@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:32:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 22:06:12 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 21:04:46 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,20 @@ char	*ft_include_var(t_data_split *data, char *input)
 	res = NULL;
 	while (input[i])
 	{
-		if (input[i] == '$' && (ft_is_var_char(input[i + 1]) ||input[i + 1] == '?'))
+		if (input[i] == '$' && (ft_is_var_char(input[i + 1]) || input[i + 1] == '?'))
 		{
-			res = ft_var_join(res, &input[start], i++);
+			//ft_printf("pre-res : '%s'\n", &input[start]);
+			res = ft_var_join(res, &input[start], i++ - start);
+			//ft_printf("res : '%s'\n", res);
 			if (!res)
 				return (0);
 			start = i;
-			while (input[i] && input[i]!= '?' &&  !ft_isspace(input[i]))
+			while (input[i] && (ft_is_var_char(input[i]) || input[i] == '?'))
 				i++;
-			tmp = ft_get_value(data, &input[start], i);
+			//ft_printf("%d\n", start);
+			tmp = ft_get_value(data, &input[start], i - 1 - (start - 1));
+			// ft_printf("tmp : '%s'\n", tmp);
+			// ft_printf("&input[i] : '%s'\n", &input[i]);
 			if (!tmp)
 			{
 				free(res);
@@ -111,10 +116,17 @@ char	*ft_include_var(t_data_split *data, char *input)
 			res = ft_var_join(res, tmp, ft_strlen(tmp));
 			if (!res)
 				return (0);
-			start = ++i;
+			start = i;
+			if (!input[i])
+				start = 0;
 		}
 		else
 			i++;
+	}
+	if (start && input[start])
+	{
+		res = ft_var_join(res, &input[start], ft_strlen(&input[start]));
+		//ft_printf("&input[start] : '%s'\n", &input[start]);
 	}
 	if (res)
 		return (res);
