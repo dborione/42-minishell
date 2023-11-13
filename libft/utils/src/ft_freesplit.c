@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freesplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:53:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/04 13:23:39 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:23:20 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	ft_free_split(char **args)
 		i++;
 	}
 	free(args);
+	args = NULL;
 }

@@ -1,7 +1,7 @@
 #include "../../inc/minishell.h"
 
 static
-int ft_print_export_env(char **envp)
+void	ft_print_export_env(char **envp)
 {
     int     i;
     char    *key;
@@ -21,11 +21,21 @@ int ft_print_export_env(char **envp)
 		printf("\n");
 		i++;
 	}
-    return (1);
 }
 
 static
-int ft_check_valid_char(char *arg)
+int		ft_export_env(t_shell_data **shell_data)
+{
+	ft_free_split((*shell_data)->envp);
+	(*shell_data)->envp = ft_envp_copy((*shell_data)->private_envp);
+	if (!(*shell_data)->envp)
+		return (0);
+	ft_print_export_env((*shell_data)->envp);
+	return (1);
+}
+
+static
+int		ft_check_valid_char(char *arg)
 {
     int i;
 
@@ -48,14 +58,14 @@ int ft_check_valid_char(char *arg)
     return (1);
 }
 
-int ft_export(t_shell_data **shell_data, t_cmd *cmd)
+int		ft_export(t_shell_data **shell_data, t_cmd *cmd)
 {
     int     i;
 	char	*tmp;
 
     i = 1;
     if (!cmd->args[1])
-        return (ft_print_export_env((*shell_data)->export_envp));
+        return (ft_export_env(shell_data));
     while (cmd->args[i])
     {
         if (!ft_check_valid_char(cmd->args[i]))

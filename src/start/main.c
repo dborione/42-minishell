@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/12 21:33:00 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:21:27 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_init_shell_sigaction(shell_data, MAIN);
 		ft_get_input(&shell_data);
 		ft_free_split(shell_data->envp);
-		ft_free_split(shell_data->export_envp);
+		ft_free_split(shell_data->private_envp);
 		error_code = shell_data->exit_code;
 		free(shell_data);
 	}

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/02 21:14:02 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:21:16 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[])
 		free(*shell_data);
 		return (0);
 	}
-    (*shell_data)->export_envp = ft_envp_copy((*shell_data)->envp);
-	if (!(*shell_data)->export_envp)
+    (*shell_data)->private_envp = ft_envp_copy((*shell_data)->envp);
+	if (!(*shell_data)->private_envp)
 	{
 		free(*shell_data);
 		return (0);
@@ -103,7 +103,7 @@ int	ft_init_shell(
 	if (!ft_set_shell_path(shell_data, shell_path))
 	{
 		free((*shell_data)->envp);
-		free((*shell_data)->export_envp);
+		free((*shell_data)->private_envp);
 		free(shell_data);
 		return (0);
 	}
