@@ -29,6 +29,7 @@ il faudra le prendre en charge dans le parsing
 - ~~exit code si cat sans input + ctl C~~
 - ~~exit avec arguments~~
 - erreur "is a directory" quand on entre un dossier en commande
+- bien vérifier que les variables importantes du shell_data sont intactes à chaque attente du prompt
 
 [Exit]
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
