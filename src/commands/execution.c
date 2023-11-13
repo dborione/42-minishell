@@ -126,6 +126,7 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 		target = *cmds;
 		while (target)
 		{
+			// waitpid(target->pid, &(target)->exit_code, WNOHANG); pour le cat | cat | ls
 			waitpid(target->pid, &(target)->exit_code, 0);
 			if (!target->next)
 			{

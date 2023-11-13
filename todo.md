@@ -54,16 +54,20 @@ il faudra le prendre en charge dans le parsing
 - ~~Prise en charge `echo $? hello`~~
 - ~~Prise en charge `echo ~`~~
 - Prise en charge `echo ~` quand $HOME est unset
+- `echo ~$USER/sdfsfsfdsfs` : chez nous donne `/Users/dborione`
 - --> remplacer ~/ par le path dans cat, par ex chez nous pour `cat ~/echo` l'erreur bash `cat: /Users/dborione/echo: No such file or directory$` sort `cat: ~/echo: No such file or directory$`
 - `echo "'$USER'"` devrait afficher la valeur de $USER, là il affiche `'`
+
+[Cat]
+- Dans bash, `cat | cat | ls` + deux fois entree: sort et remet le prompt, nous il ne sort pas
 
 ---- Mpanic tests checks ----
 
 Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est qu'ils sont bons et qu'il y a juste un erreur à cause du prompt ou d'un abort dans le tester
 
 [Mpanic echo]
-- test 16: remplacement du ~ par le path dans le msg d'erreur
-- test 18: unset PATH -> provoque un bug
+- test 16: remplacement du ~ par le path dans le msg d'erreur -> a cause de cat
+- ~~test 18: unset PATH -> provoque un bug~~
 
 [Mpanic export]
 - test 10: export EMPTY EMPTY_TOO= NOT_EMPTY=contnent ne march epas chez nous
