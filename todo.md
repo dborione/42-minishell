@@ -51,10 +51,11 @@ il faudra le prendre en charge dans le parsing
 - ~~prise en charge non valid chars~~
 
 [Echo]
-- Prise en charge `echo $? hello`
-- Prise en charge `echo ~`
+- ~~Prise en charge `echo $? hello`~~
+- ~~Prise en charge `echo ~`~~
 - Prise en charge `echo ~` quand $HOME est unset
-- --> remplacer ~/ par le path dans echo, par ex chez nous pour `cat ~/echo` l'erreur bash `cat: /Users/dborione/echo: No such file or directory$` sort `cat: ~/echo: No such file or directory$`
+- --> remplacer ~/ par le path dans cat, par ex chez nous pour `cat ~/echo` l'erreur bash `cat: /Users/dborione/echo: No such file or directory$` sort `cat: ~/echo: No such file or directory$`
+- `echo "'$USER'"` devrait afficher la valeur de $USER, là il affiche `'`
 
 ---- Mpanic tests checks ----
 

@@ -30,6 +30,7 @@ int ft_echo(char **envp, t_cmd *cmd)
 	int i;
 	int	new_line;
 	int	start;
+	char *tmp;
 
 	i = 1;
 	new_line = 0;
@@ -42,6 +43,15 @@ int ft_echo(char **envp, t_cmd *cmd)
 	{
 		if ((new_line && i > start) || (!new_line && i > start))
 			ft_putchar_fd(' ', 1);
+		if (ft_startswith(cmd->args[i], "~"))
+		{
+			tmp = ft_strjoin(ft_envp_get_value(envp, "HOME"), &cmd->args[i][1]); // a voir quand HOME est unset
+			ft_printf(tmp);
+			free(tmp);
+			i++;
+			if (!cmd->args[i])
+				break ;
+		}
 		ft_printf(cmd->args[i]);
 		i++;
 	}
