@@ -31,6 +31,7 @@ il faudra le prendre en charge dans le parsing
 - ~~exit avec arguments~~
 - erreur "is a directory" quand on entre un dossier en commande
 - bien vérifier que les variables importantes du shell_data sont intactes à chaque attente du prompt
+- le include_var ne marche pas quand un pipe colle la $VAR
 
 [Exit]
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
@@ -106,17 +107,3 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 - test 8: unset PWD no working
 - test 10: `echo hi <> file --> ls --> rm file`
 - test 11: no passed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
