@@ -61,7 +61,6 @@ int		ft_check_valid_char(char *arg)
 int		ft_export(t_shell_data **shell_data, t_cmd *cmd)
 {
     int     i;
-	char	*tmp;
 
     i = 1;
     if (!cmd->args[1])
@@ -74,14 +73,8 @@ int		ft_export(t_shell_data **shell_data, t_cmd *cmd)
             if (!cmd->args[i])
                 return (1);
         }
-		tmp = ft_strdup(cmd->args[i]);
-		if (!tmp)
+		if (!ft_envp_set(shell_data, cmd->args[i]) || !ft_private_envp_set(shell_data, cmd->args[i]))
 			return (127);
-		if (!ft_envp_set(shell_data, &tmp))
-		{
-			free(tmp);
-			return (127);
-		}
         i++;
     }
     return (0);

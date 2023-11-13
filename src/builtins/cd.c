@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 15:54:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:55:57 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	ft_change_oldpwd(t_shell_data **shell_data)
 	old_path = ft_strjoin("OLDPWD=", current_pwd);
 	if (!old_path)
 		return (EXIT_FAILURE);
-	if (!ft_envp_set(shell_data, &old_path))
+	if (!ft_envp_set(shell_data, old_path))
 	{
 		free(old_path);
 		return (EXIT_FAILURE);
 	}
+	free(old_path);
 	return (0);
 }
 
@@ -55,11 +56,12 @@ int	ft_cd_home(t_shell_data **shell_data)
 	new_path = ft_strjoin("PWD=", home);
 	if (!new_path)
 		return (127);
-	if (!ft_envp_set(shell_data, &new_path))
+	if (!ft_envp_set(shell_data, new_path))
 	{
 		free(new_path);
 		return (127);
 	}
+	free(new_path);
 	return (0);
 }
 
@@ -94,11 +96,12 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	new_path = ft_strjoin("PWD=", cwd);
 	if (!new_path)
 		return (127);
-	if (!ft_envp_set(shell_data, &new_path))
+	if (!ft_envp_set(shell_data, new_path))
 	{
 		free(new_path);
 		return (127);
 	}
+	free(new_path);
 	return (0);
 }
 

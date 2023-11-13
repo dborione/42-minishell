@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 23:21:16 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:56:16 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ static int	ft_set_shell_path(
 		free(absolute_shell_path);
 		return (0);
 	}
-	if (!ft_envp_set(shell_data, &input))
+	if (!ft_envp_set(shell_data, input))
 	{
 		free(input);
 		free(absolute_shell_path);
 		return (0);
 	}
+	free(input);
 	free(absolute_shell_path);
 	return (1);
 }
