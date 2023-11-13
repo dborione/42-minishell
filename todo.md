@@ -40,7 +40,6 @@ il faudra le prendre en charge dans le parsing
 
 [CD]
 - ~~bash prend en charge `cd ~ pwd` alors que nous non~~
-- ~~cd ~1~~
 - ~~cd -~~
 
 [Export]

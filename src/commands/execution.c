@@ -30,7 +30,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 			ft_command_not_found(cmd->name);
 		exit(127);
 	}
-	else
+	else // ajouter mkdir: file exists, et la ça s'affiche dans tous les cas
 	{
 		ft_perror("bash: ");
 		ft_perror(cmd->path);
