@@ -43,7 +43,7 @@ int ft_echo(char **envp, t_cmd *cmd)
 	{
 		if ((new_line && i > start) || (!new_line && i > start))
 			ft_putchar_fd(' ', 1);
-		if (ft_startswith(cmd->args[i], "~"))
+		if (ft_startswith(cmd->args[i], "~/") || ft_isequal(cmd->args[i], "~"))
 		{
 			tmp = ft_strjoin(ft_envp_get_value(envp, "HOME"), &cmd->args[i][1]); // a voir quand HOME est unset
 			ft_printf(tmp);
