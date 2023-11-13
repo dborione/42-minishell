@@ -7,6 +7,7 @@
 
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas, ou `ls << EOF | wc -l <<eof` donne des resultats differents
+- `ls >>eof` + ctl c; chez nous exit code 1, bash: 1
 
 [Gestion Commandes]
 - Ne pas oublier que :

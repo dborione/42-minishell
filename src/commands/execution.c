@@ -30,13 +30,13 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 			ft_command_not_found(cmd->name);
 		exit(127);
 	}
-	else // ajouter mkdir: file exists, et la ça s'affiche dans tous les cas
-	{
-		ft_perror("bash: ");
-		ft_perror(cmd->path);
-		ft_perror(": is a directory\n");
-		exit (126);
-	}
+	// else // ajouter mkdir: file exists, et la ça s'affiche dans tous les cas
+	// {
+	// 	ft_perror("bash: ");
+	// 	ft_perror(cmd->path);
+	// 	ft_perror(": is a directory\n");
+	// 	exit (126);
+	// }
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	//ft_printf("command failed : %s\n", (cmd)->args[0]);
 	exit(EXIT_FAILURE);
