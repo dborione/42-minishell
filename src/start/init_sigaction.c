@@ -9,7 +9,7 @@ void    ft_handle_sig_act_heredoc_child(int sig)
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, 0, &term);
 	if (sig == SIGINT)
-		exit(CTL_C_EXIT);
+		exit (SIGINT);
 }
 
 static

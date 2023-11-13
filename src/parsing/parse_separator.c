@@ -53,7 +53,7 @@ int	ft_parse_heredoc(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targ
 		return (1);
 	}
 	ft_heredoc(*shell_data, (*target)->next->value);
-	if ((*shell_data)->exit_code == CTL_C_EXIT)
+	if ((*shell_data)->exit_code == SIGINT)
 	{
 		ft_init_shell_sigaction(*shell_data, MAIN);
 		ft_putstr_fd("> \n", STDOUT_FILENO);

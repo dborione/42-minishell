@@ -100,7 +100,6 @@ void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
 	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd);
-	//printf("3: exit code: %d\n", (*shell_data)->exit_code);
 	if ((*shell_data)->infile)
 	{
 		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)
@@ -129,7 +128,15 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 		{
 			waitpid(target->pid, &(target)->exit_code, 0);
 			if (!target->next)
-				(*shell_data)->exit_code = WEXITSTATUS(target->exit_code);
+			{
+				if (WIFSIGNALED(target->exit_code))
+				{
+					printf("\n");
+					(*shell_data)->exit_code = 130;
+				}
+				else
+					(*shell_data)->exit_code = WEXITSTATUS(target->exit_code);
+			}
 			target = target->next;
 		}
 		ft_free_commands(cmds);

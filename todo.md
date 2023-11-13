@@ -24,9 +24,9 @@ il faudra le prendre en charge dans le parsing
 
 [Autres]
 - ~~variables env~~
-- checker si on a les bons exit codes par rapport a bash ($?)
+- ~~checker si on a les bons exit codes par rapport a bash ($?)~~
 - '>>': redirections en append mode
-- exit code si cat sans input + ctl C
+- ~~exit code si cat sans input + ctl C~~
 - ~~exit avec arguments~~
 - erreur "is a directory" quand on entre un dossier en commande
 
@@ -87,7 +87,7 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 [Mpanic status]
 - ~~test 4, 5, 7, 9: `cat < nonexist --> echo $?`: manque 'nonexist' dans le msd d'erreur~~
 - ~~test 6, 8: pareil + exit est 1 alors que bash 0~~
-- test 12, 13: exit code est 0 au lieu de 127 --> `sleep 1 | jgfk`
+- ~~test 12, 13: exit code est 0 au lieu de 127 --> `sleep 1 | jgfk`~~
 - ~~test 20, 21, 22, 23: pareil dans no such file~~
 - ~~test 24, 25: cmd not found au lieu de no such file~~
 
