@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 00:21:18 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:20:04 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_shell_data
 	int					exec;
 	int					rl_catch_signals;
 	char				**envp;
-	char				**export_envp;
+	char				**private_envp;
 	int					pipe[2];
 	size_t				pipes;
 	int					input_fd;
@@ -108,9 +108,12 @@ char			*ft_envp_get_key(char *input);
 char			*ft_envp_get_value(char **envp, char *key);
 int				ft_env_same_key(char *key, char *var);
 int				ft_env_has(char **envp, char *key);
+int				ft_private_envp_set(t_shell_data **shell_data, char **input);
 int				ft_envp_set(t_shell_data **shell_data, char **input);
+int				ft_private_envp_add(t_shell_data **shell_data, char **input);
 int				ft_envp_add(t_shell_data **shell_data, char **input);
 int				ft_envp_unset(t_shell_data **shell_data, char *key);
+int				ft_private_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_is_var_char(char c);
 char			*ft_include_var(t_data_split *data, char *input);
 
