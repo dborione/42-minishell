@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:08:19 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 12:40:35 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:06:35 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int	ft_change_pwds(t_shell_data **shell_data)
 	if (exit_code)
 		return (exit_code);
 	if (!getcwd(cwd, PATH_MAX))
+	{
+		perror("cd: error retrieving current directory:"
+		"getcwd: cannot access parent directories");
 		return (1);
+	}
 	new_pwd = ft_strjoin("PWD=", cwd);
 	if (!new_pwd)
 		return (127);
