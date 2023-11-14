@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 23:58:04 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:25:01 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ typedef struct s_shell_data
 
 /* Init */
 
+int				ft_init_all(t_shell_data **shell_data, char *shell_path, char *envp[]);
 int				ft_init_shell(
 					t_shell_data **shell_data, char *shell_path, char *envp[]);
+void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 
 /* Shell Env */
 
@@ -209,10 +211,7 @@ int				ft_get_outfile(
 int				ft_use_pipe(
 					t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 void			ft_reset_fd(t_shell_data **shell_data);
-
-/* Signals */
-
-void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
+char			*ft_get_shell_path(char **envp, char *shell_relative_path);
 
 /* Heredoc */
 
