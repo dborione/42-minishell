@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 16:15:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:35:17 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	ft_multi_execution(t_shell_data **shell_data, t_cmd *cmds)
 		ft_next_execution(shell_data, target);
 		target = target->next;
 	}
+	if ((*shell_data)->input_fd != STDIN_FILENO)
+		close((*shell_data)->input_fd);
 }
 
 static
