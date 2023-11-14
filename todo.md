@@ -7,7 +7,7 @@
 
 [Heredoc]
 - double heredoc (avec pipe; ex `cat <<EOF | cat<<EOF`) ne marche pas, ou `ls << EOF | wc -l <<eof` donne des resultats differents
-- `ls >>eof` + ctl c; chez nous exit code 1, bash: 1
+- ~~`ls >>eof` + ctl c; chez nous exit code 1, bash: 1~~
 
 [Gestion Commandes]
 - Ne pas oublier que :
@@ -32,6 +32,7 @@ il faudra le prendre en charge dans le parsing
 - erreur "is a directory" quand on entre un dossier en commande
 - bien vérifier que les variables importantes du shell_data sont intactes à chaque attente du prompt
 - le include_var ne marche pas quand un pipe colle la $VAR
+- ls |
 
 [Exit]
 - ~~Changer le atoi: pour l'instant ne prends en charge que les ints~~
@@ -43,6 +44,7 @@ il faudra le prendre en charge dans le parsing
 [CD]
 - ~~bash prend en charge `cd ~ pwd` alors que nous non~~
 - ~~cd -~~
+- `cd mpanic test`: bash cd dans mpanic, nous too many args
 
 [Export]
 - erreur message supprime les ' ' par ex `export '    456asd=value '`
@@ -60,7 +62,7 @@ il faudra le prendre en charge dans le parsing
 - `echo "'$USER'"` devrait afficher la valeur de $USER, là il affiche `'`
 
 [Cat]
-- Dans bash, `cat | cat | ls` + deux fois entree: sort et remet le prompt, nous il ne sort pas
+- ~~Dans bash, `cat | cat | ls` + deux fois entree: sort et remet le prompt, nous il ne sort pas~~
 
 ---- Mpanic tests checks ----
 
@@ -103,7 +105,7 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 [Mpanic panicm]
 - test 1: cannot access parent directories: No such file or directory
 - test 3: `echo all &> testfile < non_exist_file --> rm testfile`: nous no such file, bash pas d'erreur
-- test 7: `ecoh ~` pas pris en charge
+- ~~test 7: `ecoh ~` pas pris en charge~~
 - test 8: unset PWD no working
 - test 10: `echo hi <> file --> ls --> rm file`
 - test 11: no passed

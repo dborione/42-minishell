@@ -30,14 +30,14 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 			ft_command_not_found(cmd->name);
 		exit(127);
 	}
-	// else // ajouter mkdir: file exists, et la ça s'affiche dans tous les cas
-	// {
-	// 	ft_perror("bash: ");
-	// 	ft_perror(cmd->path);
-	// 	ft_perror(": is a directory\n");
-	// 	exit (126);
-	// }
-	execve(cmd->path, (cmd)->args, (*shell_data)->envp);
+	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
+	if (!chdir(cmd->path))
+	{
+		ft_perror("bash: ");
+		ft_perror(cmd->path);
+		ft_perror(": is a directory\n");
+		exit (126);
+	}
 	perror((cmd)->args[0]);
 	ft_destroy_shell(shell_data);
 	exit(EXIT_FAILURE);
@@ -142,7 +142,6 @@ void	ft_execution(t_shell_data **shell_data, t_cmd **cmds)
 		target = *cmds;
 		while (target)
 		{
-			// waitpid(target->pid, &(target)->exit_code, WNOHANG); pour le cat | cat | ls
 			waitpid(target->pid, &(target)->exit_code, 0);
 			if (!target->next)
 			{

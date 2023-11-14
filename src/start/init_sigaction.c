@@ -10,6 +10,8 @@ void    ft_handle_sig_act_heredoc_child(int sig)
 	tcsetattr(STDIN_FILENO, 0, &term);
 	if (sig == SIGINT)
 		exit (SIGINT);
+	if (sig == SIGPIPE)
+		printf("jfkdls\n");
 }
 
 static
@@ -38,6 +40,7 @@ void    ft_init_shell_sigaction(t_shell_data *shell_data, int process)
     sigemptyset(&shell_data->sa.sa_mask);
 	shell_data->sa.sa_flags = SA_RESTART;
     sigaction(SIGINT, &(shell_data->sa), NULL);
+    sigaction(SIGPIPE, &(shell_data->sa), NULL);
     shell_data->sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &(shell_data->sa), NULL);
 }
