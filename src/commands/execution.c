@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 19:26:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:37:25 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static
 void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 {
 	if (cmd->input_fd == -1 || cmd->output_fd == -1)
-		exit((*shell_data)->exit_code); // peut-etre créer un exitcode par cmd ?
+		exit((*shell_data)->exit_code);
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
 	close(pipe_fd[READ_PIPE]);
-	if (cmd->builtin)	// s'occuper des frees ?
+	if (cmd->builtin)
 		exit(ft_execute_builtin(shell_data, cmd, 1));
 	if (!cmd->path)
 	{
