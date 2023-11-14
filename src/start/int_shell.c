@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:40:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 10:26:25 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:52:42 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,10 @@ static
 int		ft_set_shell_path(
 	t_shell_data **shell_data, char *relative_shell_path)
 {
-	char	**split_path;
 	char	*absolute_shell_path;
 	char	*input;
-	size_t	i;
 
-	split_path = ft_split(relative_shell_path, '/');
-	if (!split_path)
-		return (0);
-	i = 0;
-	while (split_path[i] && split_path[i + 1])
-		i++;
-	absolute_shell_path = ft_get_shell_path((*shell_data)->envp, split_path[i]);
-	ft_free_split(split_path);
+	absolute_shell_path = ft_get_shell_path((*shell_data)->envp, relative_shell_path);
 	input = ft_strjoin("SHELL=", absolute_shell_path);
 	if (!input) // maybe some leaks here
 	{
@@ -55,8 +46,10 @@ char	*ft_get_new_shell_level(char *shlvl)
 	if (shlvl[0])
 	{
 		shlvl_int = ft_atoi(shlvl);
-		if (shlvl_int < -1 || shlvl_int == 2147483647)
+		if (shlvl_int < -1)
 			shlvl_int = -1;
+		else if (shlvl_int > 999)
+			shlvl_int = 0;
 		shlvl_int++;
 	}
 	return (ft_itoa(shlvl_int));
