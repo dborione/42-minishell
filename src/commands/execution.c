@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 17:11:23 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:26:45 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 		exit(EXIT_FAILURE);
 	close(pipe_fd[READ_PIPE]);
 	if (cmd->builtin)	// s'occuper des frees ?
-		exit(ft_execute_builtin(shell_data, cmd));
+		exit(ft_execute_builtin(shell_data, cmd, 1));
 	if (!cmd->path)
 	{
 		if (ft_strrchr(cmd->name, '/'))
@@ -37,9 +37,9 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	// 	ft_perror(": is a directory\n");
 	// 	exit (126);
 	// }
-	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
-	perror("cmd failed");
-	ft_printf("command failed : %s\n", (cmd)->args[0]);
+	execve(cmd->path, (cmd)->args, (*shell_data)->envp);
+	perror((cmd)->args[0]);
+	ft_destroy_shell(shell_data);
 	exit(EXIT_FAILURE);
 }
 
@@ -115,7 +115,7 @@ void	ft_unic_builtin(t_shell_data **shell_data, t_cmd *cmd)
 	}
 	if (!ft_use_pipe(shell_data, cmd, pipe_fd))
 		exit(EXIT_FAILURE);
-	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd);
+	(*shell_data)->exit_code = ft_execute_builtin(shell_data, cmd, 0);
 	if ((*shell_data)->infile)
 	{
 		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)

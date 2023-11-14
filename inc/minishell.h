@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 12:10:27 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:26:13 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_shell_data
 	int					exit;
 	char				*prompt;
 	char				**paths;
+	t_cmd				*cmds;
 	struct sigaction	sa;
 }				t_shell_data;
 
@@ -102,6 +103,7 @@ int				ft_init_all(t_shell_data **shell_data, char *shell_path, char *envp[]);
 int				ft_init_shell(
 					t_shell_data **shell_data, char *shell_path, char *envp[]);
 void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
+void			ft_destroy_shell(t_shell_data **shell_data);
 
 /* Shell Env */
 
@@ -184,7 +186,7 @@ size_t			ft_split_from_quotes(
 
 /* Builtins */
 
-int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd);
+int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd, int sub_process);
 int				ft_is_builtin(char *input);
 int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
