@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 15:35:15 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 00:19:25 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		ft_finish_split_args(t_data_split **data, t_args_list **args_list)
 			ft_free_args_list(args_list);
 			*args_list = NULL;
 		}
+		free(var_tmp);
 	}
 	free((*data)->tmp);
 	free(*data);

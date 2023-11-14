@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:32:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 21:04:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 00:23:46 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_get_value(t_data_split *data, char *str, size_t end)
 	tmp[end] = '\0';
 	res = ft_envp_get_value(data->envp, tmp);
 	free(tmp);
-	return (res);
+	return (ft_strdup(res));
 }
 
 int		ft_is_var_char(char c)
@@ -114,6 +114,7 @@ char	*ft_include_var(t_data_split *data, char *input)
 				return (NULL);
 			}
 			res = ft_var_join(res, tmp, ft_strlen(tmp));
+			free(tmp);
 			if (!res)
 				return (0);
 			start = i;
@@ -130,5 +131,5 @@ char	*ft_include_var(t_data_split *data, char *input)
 	}
 	if (res)
 		return (res);
-	return (input);
+	return (ft_strdup(input));
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:00:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 11:44:44 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 21:57:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,39 @@ size_t	ft_args_len(t_args_list *args)
 	return (len);
 }
 
+static
+int		ft_init(t_args_list *args, char ***new_args, t_args_list **target, size_t *i)
+{
+	*new_args = malloc(sizeof(char *) * (ft_args_len(args) + 1));
+	if (!(*new_args))
+		return (0);
+	*i = 0;
+	*target = args;
+	return (1);
+}
+
+static
+int		ft_extract_arg(char **new_args, t_args_list **target, size_t *i)
+{
+	new_args[*i] = ft_strdup((*target)->value);
+	if (!new_args[*i])
+	{
+		ft_free_split(new_args);
+		return (0);
+	}
+	*i += 1;
+	*target = (*target)->next;
+	return (1);
+}
+
 char	**ft_extract_args(t_args_list *args)
 {
 	char		**new_args;
 	t_args_list	*target;
 	size_t		i;
 
-	new_args = malloc(sizeof(char *) * (ft_args_len(args) + 1));
-	if (!new_args)
+	if (!ft_init(args, &new_args, &target, &i))
 		return (NULL);
-	i = 0;
-	target = args;
 	while (target && !(target->separator && ft_isequal("|", target->value)))
 	{
 		if (target->separator)
@@ -58,8 +80,8 @@ char	**ft_extract_args(t_args_list *args)
 		}
 		else
 		{
-			new_args[i++] = ft_strdup(target->value);
-			target = target->next;
+			if (!ft_extract_arg(new_args, &target, &i))
+				return (NULL);
 		}
 	}
 	new_args[i] = NULL;

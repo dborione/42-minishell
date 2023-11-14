@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:43:39 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 09:44:26 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 00:11:24 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 {
 	char	*var_tmp;
 
+	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
 	var_tmp = ft_include_var(*data, (*data)->tmp);
 	if (!var_tmp)
 		return (0);
-	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
 	if (!(*data)->space)
 	{
 		if (!ft_join_args(args_list, var_tmp))
@@ -29,11 +29,11 @@ int	ft_space_split(t_data_split **data, t_args_list **args_list, char *input)
 			(*data)->i++;
 		(*data)->start = (*data)->i;
 		(*data)->space = 1;
-		(*data)->tmp[0] = '\0';
 	}
 	else if (!ft_one_split(data, args_list, input, var_tmp))
 		return (0);
 	(*data)->space = 1;
+	free(var_tmp);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 15:01:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 11:09:06 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 23:30:29 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ int			ft_join_args(t_args_list **cmd_split, char *tmp)
 {
 	t_args_list	*target_arg;
 
-	if (!*cmd_split)
+	if (!*cmd_split || !tmp)
 		return (0);
 	target_arg = *cmd_split;
 	while (target_arg->next)
 		target_arg = target_arg->next;
-	//ft_printf("cleanjoin %s && %s\n", target_arg->value, tmp);
 	target_arg->value = ft_cleanjoin(target_arg->value, tmp);
 	if (!target_arg)
 		return (0);
