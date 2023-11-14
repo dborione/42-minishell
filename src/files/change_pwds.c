@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:08:19 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 13:06:35 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:57:34 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,11 @@ int	ft_change_oldpwd(t_shell_data **shell_data)
 	return (0);
 }
 
-int	ft_change_pwds(t_shell_data **shell_data)
+static
+int	ft_change_pwd(t_shell_data **shell_data, char *cwd)
 {
-	int		exit_code;
-	char	cwd[PATH_MAX];
 	char	*new_pwd;
 
-	exit_code = ft_change_oldpwd(shell_data);
-	if (exit_code)
-		return (exit_code);
-	if (!getcwd(cwd, PATH_MAX))
-	{
-		perror("cd: error retrieving current directory:"
-		"getcwd: cannot access parent directories");
-		return (1);
-	}
 	new_pwd = ft_strjoin("PWD=", cwd);
 	if (!new_pwd)
 		return (127);
@@ -65,4 +55,21 @@ int	ft_change_pwds(t_shell_data **shell_data)
 	}
 	free(new_pwd);
 	return (0);
+}
+
+int	ft_change_pwds(t_shell_data **shell_data)
+{
+	int		exit_code;
+	char	cwd[PATH_MAX];
+
+	exit_code = ft_change_oldpwd(shell_data);
+	if (exit_code)
+		return (exit_code);
+	if (!getcwd(cwd, PATH_MAX))
+	{
+		perror("cd: error retrieving current directory:"
+		"getcwd: cannot access parent directories");
+		return (1);
+	}
+	return (ft_change_pwd(shell_data, cwd));
 }
