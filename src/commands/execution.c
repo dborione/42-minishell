@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 20:48:27 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/10 16:52:16 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:15:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	// 	exit (126);
 	// }
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
-	//ft_printf("command failed : %s\n", (cmd)->args[0]);
+	perror("cmd failed");
+	ft_printf("command failed : %s\n", (cmd)->args[0]);
 	exit(EXIT_FAILURE);
 }
 
@@ -71,6 +72,8 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 		cmd->pid = parent;
 		if (cmd->next)
 			(*shell_data)->input_fd = pipe_fd[READ_PIPE];
+		else
+			close(pipe_fd[READ_PIPE]);
 	}
 }
 
