@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 11:14:48 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:10:27 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ int				ft_use_pipe(
 					t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 void			ft_reset_fd(t_shell_data **shell_data);
 char			*ft_get_shell_path(char **envp, char *shell_relative_path);
+int				ft_change_pwds(t_shell_data **shell_data);
 
 /* Heredoc */
 
