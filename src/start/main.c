@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 10:27:29 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:30:15 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	main(int argc, char *argv[], char *envp[])
 			return (EXIT_FAILURE);
 		}
 		ft_get_input(&shell_data);
-		ft_free_split(shell_data->envp);
-		ft_free_split(shell_data->private_envp);
 		if (shell_data)
 			error_code = shell_data->exit_code;
 		else
