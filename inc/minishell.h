@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 10:25:01 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:14:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,6 @@ int				ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_exit_arg_msg(t_shell_data **shell_data);
 void			ft_no_such_file(char *cmd_name);
 void			ft_perm_denied(char *cmd_name);
+void			ft_shlvl_to_hight(int level);
 
 #endif

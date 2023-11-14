@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:40:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 10:52:42 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:19:57 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ char	*ft_get_new_shell_level(char *shlvl)
 {
 	int		shlvl_int;
 
-	shlvl_int = 0;
+	shlvl_int = 1;
 	if (shlvl[0])
 	{
 		shlvl_int = ft_atoi(shlvl);
 		if (shlvl_int < -1)
 			shlvl_int = -1;
-		else if (shlvl_int > 999)
+		else if (shlvl_int >= 999)
+		{
+			ft_shlvl_to_hight(shlvl_int);
 			shlvl_int = 0;
+		}
 		shlvl_int++;
 	}
 	return (ft_itoa(shlvl_int));
