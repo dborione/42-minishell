@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macoslimits.h                                      :+:      :+:    :+:   */
+/*   linuxlimits.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 16:16:00 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/24 16:16:34 by rbarbiot         ###   ########.fr       */
+/*   Created: 2023/10/24 16:15:54 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/10/24 16:19:21 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LIMITS_H
 # define FT_LIMITS_H
 
-# include <sys/syslimits.h>
+# include <linux/limits.h>
 
 #endif

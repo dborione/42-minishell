@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/13 00:25:19 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:33:33 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	test_print_args(t_args_list *args)
 	ft_printf("¨¨¨\n");
 	while (target_a)
 	{
-			printf("separator: %i (%s)\n", target_a->separator, target_a->value);
+		ft_printf("separator: %i (%s)\n", target_a->separator, target_a->value);
 		target_a = target_a->next;
 	}
 	ft_printf("¨¨¨\n");
@@ -103,11 +103,10 @@ void ft_get_input(t_shell_data **shell_data)
 {
 	char	*line;
 	t_args_list	*args;
-	t_cmd	*cmds;
 
 	using_history();
 	stifle_history(1000);
-	while (!(*shell_data)->exit)
+	while ((*shell_data)->private_envp && (*shell_data)->envp && !(*shell_data)->exit)
 	{
 		line = ft_get_line(shell_data);
 		if (!line)
@@ -116,13 +115,13 @@ void ft_get_input(t_shell_data **shell_data)
 		args = ft_get_args(shell_data, &line);
 		if (!args || ft_invalide_start(shell_data, &args, &line))
 			continue;
-		cmds = ft_parse_input(shell_data, args);
+		(*shell_data)->cmds = ft_parse_input(shell_data, args);
 		ft_free_args_list(&args);
 		free(line);
-		if (!cmds)
+		if (!(*shell_data)->cmds)
 			continue ;
-		ft_execution(shell_data, &cmds);
-		ft_free_commands(&cmds);
+		ft_execution(shell_data, &(*shell_data)->cmds);
+		ft_free_commands(&(*shell_data)->cmds);
 	}
 	clear_history();
 }
