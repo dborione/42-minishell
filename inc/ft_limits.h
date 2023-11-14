@@ -13,6 +13,6 @@
 #ifndef FT_LIMITS_H
 # define FT_LIMITS_H
 
-# include <linux/limits.h>
+# include <sys/syslimits.h>
 
 #endif

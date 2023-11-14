@@ -31,7 +31,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 		exit(127);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
-		if (!chdir(cmd->path))
+	if (!chdir(cmd->path))
 	{
 		ft_perror("bash: ");
 		ft_perror(cmd->path);
