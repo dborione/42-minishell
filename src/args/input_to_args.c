@@ -6,11 +6,23 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 13:21:09 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:35:15 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static
+char		*ft_init_tmp(size_t len)
+{
+	char	*tmp;
+
+	tmp = malloc(sizeof(char) * (len + 1));
+	if (!tmp)
+		return (NULL);
+	ft_bzero(tmp, len);
+	return (tmp);
+}
 
 static
 int			ft_init_data_split(t_shell_data *shell_data, t_data_split **data, t_args_list **args_list, size_t len)
@@ -21,12 +33,13 @@ int			ft_init_data_split(t_shell_data *shell_data, t_data_split **data, t_args_l
 	(*data)->envp = shell_data->envp;
 	(*data)->exit_code = shell_data->exit_code;
 	*args_list = NULL;
-	(*data)->tmp = malloc(sizeof(char) * (len + 1));
+	(*data)->tmp = ft_init_tmp(len);//malloc(sizeof(char) * (len + 1));
 	if (!(*data)->tmp)
 	{
 		free(data);
 		return (0);
 	}
+	(*data)->tmp[0] = '\0';
 	(*data)->i = 0;
 	(*data)->space = 1;
 	return (1);
