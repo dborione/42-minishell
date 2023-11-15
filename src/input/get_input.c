@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/15 00:20:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:24:49 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,9 @@ void ft_get_input(t_shell_data **shell_data)
 		args = ft_get_args(shell_data, &line);
 		if (!args || ft_invalide_start(shell_data, &args, &line))
 			continue;
-		//test_print_args(args);
+		test_print_args(args);
 		(*shell_data)->cmds = ft_parse_input(shell_data, args);
+		test_print_cmds((*shell_data)->cmds);
 		ft_free_args_list(&args);
 		free(line);
 		if (!(*shell_data)->cmds)
