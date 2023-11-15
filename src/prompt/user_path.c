@@ -79,6 +79,8 @@ char	*ft_show_user_path(char **envp)
 
 	user = ft_envp_get_value(envp, "USER");
 	path = ft_envp_get_value(envp, "PWD");
+	if (!path)
+		return (NULL);
 	home = ft_envp_get_value(envp, "HOME");
 	user = ft_change_user_colour(user, "\x1b[32m");
 	if (!user)
