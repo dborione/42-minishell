@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_all.c                                         :+:      :+:    :+:   */
+/*   set_command_fds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 01:18:21 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 13:44:47 by rbarbiot         ###   ########.fr       */
+/*   Created: 2023/11/14 18:52:20 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/11/15 13:45:06 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		ft_init_all(t_shell_data **shell_data, char *shell_path, char *envp[])
+void	ft_set_command_fds(t_shell_data **shell_data, t_cmd *cmds)
 {
-	if (!ft_init_shell(shell_data, shell_path, envp))
-	{
-		perror("bash");
-		return (0);
-	}
-	ft_init_shell_sigaction(*shell_data, MAIN);
-	return (1);
+	t_cmd	*target;
+
+	if (!cmds)
+		return ;
+	target = cmds;
+	while (target->next)
+		target = target->next;
+	target->input_fd = (*shell_data)->input_fd;
+	(*shell_data)->input_fd = STDIN_FILENO;
+	target->output_fd = (*shell_data)->output_fd;
+	(*shell_data)->output_fd = STDOUT_FILENO;
 }
