@@ -76,26 +76,45 @@ static
 int		ft_set_path(t_cmd *new_cmd, char **paths)
 {
 	int		i;
+	int		j;
 	char	*tmp_path;
+	char	**cmd_paths;
 
 	if (!new_cmd->name[0])
 		return (0);
 	i = 0;
+	j = 0;
+	cmd_paths = ft_split(new_cmd->name, '/');
+	if (!cmd_paths)
+		return (0); // a voir
+	while (cmd_paths[j])
+		j++;
+	j -= 1;
 	while (paths[i])
 	{
 		tmp_path = ft_strjoin(paths[i], "/");
 		if (!tmp_path)
+		{
+			ft_free_split(cmd_paths);
 			return (0);
-		new_cmd->path = ft_strjoin(tmp_path, new_cmd->name);
+		}
+		new_cmd->path = ft_strjoin(tmp_path, cmd_paths[j]);
 		free(tmp_path);
 		if (!new_cmd->path)
+		{
+			ft_free_split(cmd_paths);
 			return (0);
+		}
 		if (access(new_cmd->path, F_OK) == 0)
+		{
+			ft_free_split(cmd_paths);
 			return (1);
+		}
 		free(new_cmd->path);
 		new_cmd->path = NULL;
 		i++;
 	}
+	ft_free_split(cmd_paths);
 	free(new_cmd->path);
 	new_cmd->path = NULL;
 	return (ft_set_relative_path(new_cmd));

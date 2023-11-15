@@ -46,6 +46,5 @@ t_cmd	*ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 			target = target->next;
 	}
 	ft_free_split((*shell_data)->paths);
-	//(*shell_data)->exit_code = 127;
 	return (cmds);
 }

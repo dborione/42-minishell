@@ -20,7 +20,7 @@ int ft_heredoc(t_shell_data *shell_data, char *eof)
 
     pid = fork();
     if (pid < 0)
-        perror("bash");
+		ft_memory_error(&shell_data);
     if (pid == 0)
     {
         ft_init_shell_sigaction(shell_data, HEREDOC_CHILD);
