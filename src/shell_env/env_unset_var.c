@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:37:37 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 23:19:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:02:17 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	ft_private_envp_unset(t_shell_data **shell_data, char *key)
 	size_t	skip;
 
 	envp_copy = NULL;
-	if (!ft_init(&i, &skip, &envp_copy, (*shell_data)->envp))
+	if (!ft_init(&i, &skip, &envp_copy, (*shell_data)->private_envp))
 		return (0);
-	while ((*shell_data)->envp[i])
+	while ((*shell_data)->private_envp[i])
 	{
-		if (!ft_startswith((*shell_data)->envp[i], key))
+		if (!ft_startswith((*shell_data)->private_envp[i], key))
 		{
-			if (!ft_copy_var((*shell_data)->envp, envp_copy, i, skip))
+			if (!ft_copy_var((*shell_data)->private_envp, envp_copy, i, skip))
 				return (0);
 		}
 		else
@@ -82,7 +82,7 @@ int	ft_private_envp_unset(t_shell_data **shell_data, char *key)
 		i++;
 	}
 	envp_copy[i - skip] = NULL;
-	ft_free_split((*shell_data)->envp);
-	(*shell_data)->envp = envp_copy;
+	ft_free_split((*shell_data)->private_envp);
+	(*shell_data)->private_envp = envp_copy;
 	return (1);
 }
