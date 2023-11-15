@@ -233,5 +233,6 @@ int				ft_exit_arg_msg(t_shell_data **shell_data);
 void			ft_no_such_file(char *cmd_name);
 void			ft_perm_denied(char *cmd_name);
 void			ft_shlvl_to_hight(int level);
+void			ft_memory_error(t_shell_data **shell_data);
 
 #endif

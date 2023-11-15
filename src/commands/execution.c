@@ -28,7 +28,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 			ft_no_such_file(cmd->name);
 		else
 			ft_command_not_found(cmd->name);
-		exit(127);
+		exit (127);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
 	if (!chdir(cmd->path))
@@ -52,11 +52,11 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 	if (pipe(pipe_fd) == -1)
 		perror("bash");
 	parent = fork();
-	if (parent < 0) // define exit_code
+	if (parent < 0)
 	{
 		close(pipe_fd[READ_PIPE]);
 		close(pipe_fd[WRITE_PIPE]);
-		perror("bash");
+		ft_memory_error(&(*shell_data));
 	}
 	else if (parent == 0)
 	{

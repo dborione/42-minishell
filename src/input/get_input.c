@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 static
-char		*ft_get_line(t_shell_data **shell_data) // define exit_code
+char		*ft_get_line(t_shell_data **shell_data)
 {
 	char	*line;
 	char	*prompt;
@@ -21,7 +21,7 @@ char		*ft_get_line(t_shell_data **shell_data) // define exit_code
 	prompt = ft_show_user_path((*shell_data)->envp);
 	if (!prompt)
 	{
-		perror("bash");
+		ft_memory_error(shell_data);
 		return (NULL);
 	}
 	line = readline(prompt);

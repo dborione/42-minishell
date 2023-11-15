@@ -12,23 +12,19 @@
 
 #include "../../inc/minishell.h"
 
-static void ft_free_str_and_exit(char *str)
+static char *ft_free_str_and_return(char *str)
 {
 	free (str);
-	exit (1); // a voir
+	return (NULL);
 }
 
-static char	*ft_join_and_free(char *tmp_user_path, char *str2, char *tmp_path)
+static char	*ft_join_and_free(char *tmp_user_path, char *str2)
 {
 	char *joined_str;
 
 	joined_str = ft_strjoin(tmp_user_path, str2);
 	if (!joined_str)
-	{
-		free (tmp_user_path);
-		free (tmp_path);
-		exit (1); // a voir
-	}
+		return (NULL);
 	return (joined_str);
 }
 
@@ -38,7 +34,7 @@ static char *ft_change_user_colour(char *user, char *colour)
 
 	tmp_user = ft_strjoin(colour, user);
 	if (!tmp_user)
-		exit (1); //protect
+		return (NULL);
 	return (tmp_user);
 }
 
@@ -51,20 +47,25 @@ static char	*ft_print_user_path(char *user, char *host, char *path, int home)
 
 	tmp_path = ft_strjoin("~", path);
 	if (!tmp_path)
-		exit (1); // a voir
+		return (ft_free_str_and_return(user));
 	tmp_user_path = ft_strjoin(user, host);
 	if (!tmp_user_path)
-		ft_free_str_and_exit(tmp_path);
+	{
+		free(user);
+		return (ft_free_str_and_return(tmp_path));
+	}
 	if (home)
-		tmp_prompt = ft_join_and_free(tmp_user_path, tmp_path, tmp_path);
+		tmp_prompt = ft_join_and_free(tmp_user_path, tmp_path);
 	else
-		tmp_prompt = ft_join_and_free(tmp_user_path, path, tmp_path);
+		tmp_prompt = ft_join_and_free(tmp_user_path, path);	
 	free(tmp_path);
 	free(tmp_user_path);
+	if (!tmp_prompt)
+		return (ft_free_str_and_return(user));
 	prompt = ft_strjoin(tmp_prompt, "\x1b[37m$ ");
 	free (tmp_prompt);
 	if (!prompt)
-		exit (1); //a voir
+		return (ft_free_str_and_return(user));
 	free(user);
 	return (prompt);
 }
@@ -80,6 +81,8 @@ char	*ft_show_user_path(char **envp)
 	path = ft_envp_get_value(envp, "PWD");
 	home = ft_envp_get_value(envp, "HOME");
 	user = ft_change_user_colour(user, "\x1b[32m");
+	if (!user)
+		return (NULL);
 	if (ft_startswith(path, home))
 	{
 		len = ft_strlen(home);
