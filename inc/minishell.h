@@ -125,6 +125,7 @@ int				ft_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_private_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_is_var_char(char c);
 char			*ft_include_var(t_data_split *data, char *input);
+int				ft_check_shell_health(char **envp, char **private_envp);
 
 /* Prompt */
 

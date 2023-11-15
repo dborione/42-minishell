@@ -95,4 +95,3 @@ char	*ft_show_user_path(char **envp)
 	}
 	return (ft_print_user_path(user, "\x1b[32m@student.s19.be\x1b[37m:\x1b[34m", path, 0));
 }
-

@@ -123,6 +123,8 @@ void ft_get_input(t_shell_data **shell_data)
 			continue ;
 		ft_execution(shell_data, &(*shell_data)->cmds);
 		ft_free_commands(&(*shell_data)->cmds);
+		if (!ft_check_shell_health((*shell_data)->private_envp, (*shell_data)->envp))
+			break ;
 	}
 	clear_history();
 }
