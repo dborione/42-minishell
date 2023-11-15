@@ -75,14 +75,17 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 	exit_code = access(path, F_OK);
 	if (exit_code)
 	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_no_such_file(path);
 		return (1);
 	}
 	exit_code = chdir(path);
 	if (exit_code)
 	{
+		if (errno == EACCES)
+		{
+			ft_perm_denied(path);
+			return (1);
+		}
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": Not a directory\n", 2);

@@ -22,6 +22,13 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	close(pipe_fd[READ_PIPE]);
 	if (cmd->builtin)
 		exit(ft_execute_builtin(shell_data, cmd, 1));
+	if (opendir(cmd->name) && ft_strrchr(cmd->name, '/'))
+	{
+		ft_perror("bash: ");
+		ft_perror(cmd->name);
+		ft_perror(": is a directory\n");
+		exit (126);
+	}
 	if (!cmd->path)
 	{
 		if (ft_strrchr(cmd->name, '/'))
@@ -31,13 +38,6 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 		exit (127);
 	}
 	execve(cmd->path, &(cmd)->args[0], (*shell_data)->envp);
-	if (!chdir(cmd->path))
-	{
-		ft_perror("bash: ");
-		ft_perror(cmd->path);
-		ft_perror(": is a directory\n");
-		exit (126);
-	}
 	perror((cmd)->args[0]);
 	ft_destroy_shell(shell_data);
 	exit(EXIT_FAILURE);
