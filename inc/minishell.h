@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 12:25:49 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:24:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_shell_data
 	char				**private_envp;
 	int					pipe[2];
 	size_t				pipes;
+	char				*pwd;
 	int					input_target_fd;
 	int					input_fd;
 	int					output_source_fd;
@@ -196,7 +197,7 @@ int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd, int sub_process
 int				ft_is_builtin(char *input);
 int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
-int				ft_pwd(void);
+int				ft_pwd(t_shell_data *shell_data);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_export(t_shell_data **shell_env, t_cmd *cmd);
@@ -220,7 +221,7 @@ int				ft_use_pipe(
 					t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 void			ft_reset_fd(t_shell_data **shell_data);
 char			*ft_get_shell_path(char **envp, char *shell_relative_path);
-int				ft_change_pwds(t_shell_data **shell_data);
+int				ft_change_pwds(t_shell_data **shell_data, char *target_dir);
 
 /* Heredoc */
 

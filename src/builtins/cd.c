@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 12:42:22 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:25:45 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_cd_home(t_shell_data **shell_data)
 		perror("bash: cd");
 		return (exit_code);
 	}
-	return (ft_change_pwds(shell_data));
+	return (ft_change_pwds(shell_data, home));
 }
 
 static
@@ -48,8 +48,8 @@ int	ft_cd_oldpwd(t_shell_data **shell_data)
 		exit_code = chdir(oldpwd);
 		if (exit_code)
 			return (ft_cd_errors(oldpwd, ": Not a directory\n"));
-		ft_pwd();
-		return (ft_change_pwds(shell_data));
+		ft_pwd(*shell_data);
+		return (ft_change_pwds(shell_data, oldpwd));
 	}
 	ft_perror("bash: cd: OLDPWD not set\n");
 	return (1);
@@ -72,7 +72,7 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 			return (ft_cd_errors(path, ": Permission denied\n"));
 		return (ft_cd_errors(path, ": Not a directory\n"));
 	}
-	return (ft_change_pwds(shell_data));
+	return (ft_change_pwds(shell_data, path));
 }
 
 int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)

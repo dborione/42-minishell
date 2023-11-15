@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:47:51 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 10:59:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:48:15 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,4 @@ int	ft_parse_separator(
 	if (res)
 		return (1);
 	return (-1);
-	// return (res);
 }
