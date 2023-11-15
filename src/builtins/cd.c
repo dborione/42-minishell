@@ -44,20 +44,10 @@ int	ft_cd_oldpwd(t_shell_data **shell_data)
 		oldpwd = ft_envp_get_value((*shell_data)->envp, "OLDPWD");
 		exit_code = access(oldpwd, F_OK);
 		if (exit_code)
-		{
-			ft_putstr_fd("bash: cd: ", 2);
-			ft_putstr_fd(oldpwd, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			return (1);
-		}
+			return (ft_cd_errors(oldpwd, ": No such file or directory\n"));
 		exit_code = chdir(oldpwd);
 		if (exit_code)
-		{
-			ft_putstr_fd("bash: cd: ", 2);
-			ft_putstr_fd(oldpwd, 2);
-			ft_putstr_fd(": Not a directory\n", 2);
-			return (1);
-		}
+			return (ft_cd_errors(oldpwd, ": Not a directory\n"));
 		ft_pwd();
 		return (ft_change_pwds(shell_data));
 	}
@@ -74,22 +64,13 @@ int	ft_cd_path(t_shell_data **shell_data, char *path)
 		return (ft_cd_oldpwd(shell_data));
 	exit_code = access(path, F_OK);
 	if (exit_code)
-	{
-		ft_no_such_file(path);
-		return (1);
-	}
+		return (ft_cd_errors(path, ": No such file or directory\n"));
 	exit_code = chdir(path);
 	if (exit_code)
 	{
 		if (errno == EACCES)
-		{
-			ft_perm_denied(path);
-			return (1);
-		}
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": Not a directory\n", 2);
-		return (1);
+			return (ft_cd_errors(path, ": Permission denied\n"));
+		return (ft_cd_errors(path, ": Not a directory\n"));
 	}
 	return (ft_change_pwds(shell_data));
 }
@@ -102,12 +83,7 @@ int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 		return (1);
 	}
 	if (cmd->args[1] && ft_strlen(cmd->args[1]) >= 256)
-	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(cmd->args[1], 2);
-		ft_putstr_fd(": File name too long\n", 2);
-		return (1);
-	}
+		return (ft_cd_errors(cmd->args[1], ": File name too long\n"));
 	if (!cmd->args[1] || ft_isequal(cmd->args[1], "~"))
 		return (ft_cd_home(shell_data));
 	return (ft_cd_path(shell_data, cmd->args[1]));
