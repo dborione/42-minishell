@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 19:26:13 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:25:49 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ typedef struct s_cmd
 	pid_t			pid;
 	char			**args;
 	int				builtin;
+	int				input_target_fd;
 	int				input_fd;
+	int				output_source_fd;
 	int				output_fd;
 	char			*path;
 	int				exit_code;
@@ -85,7 +87,9 @@ typedef struct s_shell_data
 	char				**private_envp;
 	int					pipe[2];
 	size_t				pipes;
+	int					input_target_fd;
 	int					input_fd;
+	int					output_source_fd;
 	int					output_fd;
 	int					infile;
 	int					outfile;

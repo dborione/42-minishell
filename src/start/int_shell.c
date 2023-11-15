@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 09:40:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 11:19:57 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:28:35 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ int	ft_init_defaults(t_shell_data **shell_data, char *envp[], char *shell_path)
 		return (0);
     if (!ft_set_shell_level(shell_data))
 		return (0);
+	(*shell_data)->input_target_fd = STDIN_FILENO;
 	(*shell_data)->input_fd = STDIN_FILENO;
+	(*shell_data)->output_source_fd = STDOUT_FILENO;
 	(*shell_data)->output_fd = STDOUT_FILENO;
 	(*shell_data)->infile = 0;
 	(*shell_data)->outfile = 0;
