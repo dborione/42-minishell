@@ -29,7 +29,7 @@ il faudra le prendre en charge dans le parsing
 - '>>': redirections en append mode
 - ~~exit code si cat sans input + ctl C~~
 - ~~exit avec arguments~~
-- erreur "is a directory" quand on entre un dossier en commande
+- ~~erreur "is a directory" quand on entre un dossier en commande~~
 - bien vérifier que les variables importantes du shell_data sont intactes à chaque attente du prompt
 - le include_var ne marche pas quand un pipe colle la $VAR
 - ls |
@@ -84,7 +84,7 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 - test 5: cd "" "" pareil que 6
 - test 6: `cd / non_existent` : bash no output exit 0, nous: bash: cd: too many arguments.$
 - test 15 : `cd file/non_existent`: nous 'not such file or dir', bash 'not a dir'
-- test 21: cd 'fichier sans perm' -> nous on sort l'erreur not a directory alors que bash: Permissiomn denied
+- ~~test 21: cd 'fichier sans perm' -> nous on sort l'erreur not a directory alors que bash: Permissiomn denied~~
 
 [Mpanic parser]
 
