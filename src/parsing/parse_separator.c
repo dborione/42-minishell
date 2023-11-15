@@ -79,7 +79,7 @@ int	ft_parse_outfile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targ
 		*target = (*target)->next->next;
 		return (1);
 	}
-	if (!ft_get_outfile(shell_data, *cmds, (*target)->next->value, append))
+	if (!ft_get_outfirn le(shell_data, *cmds, (*target)->next->value, append))
 	{
 		ft_free_commands(cmds);
 		return (0);
@@ -129,4 +129,5 @@ int	ft_parse_separator(
 	if (res)
 		return (1);
 	return (-1);
+	// return (res);
 }

@@ -16,14 +16,14 @@ il faudra le prendre en charge dans le parsing
 [Prompt]
 
 [Autres]
-- '>>': redirections en append mode
+- ~~'>>': redirections en append mode~~
 - bien vérifier que les variables importantes du shell_data sont intactes à chaque attente du prompt
 - le include_var ne marche pas quand un pipe colle la $VAR
 
 [Exit]
 
 [CD]
-- `cd mpanic test`: bash cd dans mpanic, nous too many args
+- ~~`cd mpanic test`: bash cd dans mpanic, nous too many args~~
 - cd avec unset variables
 
 [Export]
@@ -64,8 +64,8 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 [Mpanic directory]
 - test 3: `pwd -> cd "" -> pwd`: nous 'no such file'
 - test 5: cd "" "" pareil que 6
-- test 6: `cd / non_existent` : bash no output exit 0, nous: bash: cd: too many arguments.$
-- test 15 : `cd file/non_existent`: nous 'not such file or dir', bash 'not a dir'
+- ~~test 6: `cd / non_existent` : bash no output exit 0, nous: bash: cd: too many arguments.$~~
+- ~~test 15 : `cd file/non_existent`: nous 'not such file or dir', bash 'not a dir'~~
 
 [Mpanic parser]
 
@@ -78,9 +78,13 @@ Quand les tests sont marqués KO dans mpanic mais ne sont pas notés ici c'est q
 [Mpanic shlvl]
 
 [Mpanic panicm]
-- test 1: cannot access parent directories: No such file or directory
+- ~~test 1: cannot access parent directories: No such file or directory~~
 - test 3: `echo all &> testfile < non_exist_file --> rm testfile`: nous no such file, bash pas d'erreur
 - ~~test 7: `ecoh ~` pas pris en charge~~
 - test 8: unset PWD no working
 - test 10: `echo hi <> file --> ls --> rm file`
 - test 11: no passed
+
+
+45456456> file
+-bash: 45456456: Mauvais descripteur de fichier

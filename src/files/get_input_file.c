@@ -42,7 +42,6 @@ int		ft_get_infile(
 {
 	int	fd;
 
-	//ft_printf("infile: %s\n", infile_path);
 	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
 	{
 		fd = open(infile_path, O_RDONLY, 0644);
@@ -57,10 +56,7 @@ int		ft_get_infile(
 	}
 	ft_set_cmd_infile_fd(shell_data, cmds, -1);
 	if (access(infile_path, F_OK))
-	{
-		//(*shell_data)->exit_code = 1;
 		ft_no_such_file(infile_path);
-	}
 	else if (access(infile_path, R_OK))
 	{
 		(*shell_data)->exit_code = 1;

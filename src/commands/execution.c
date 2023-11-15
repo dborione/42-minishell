@@ -50,7 +50,7 @@ void	ft_next_execution(t_shell_data **shell_data, t_cmd *cmd)
 	int		pipe_fd[2];
 
 	if (pipe(pipe_fd) == -1)
-		perror("bash");
+		perror("bash"); // a voir
 	parent = fork();
 	if (parent < 0)
 	{

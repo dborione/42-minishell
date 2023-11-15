@@ -40,15 +40,16 @@ int		ft_check_valid_char(char *arg)
     int i;
 
     i = 0;
-    if (!ft_isalpha(arg[0]))
+    if (!ft_isalpha(arg[0]) && arg[0] != '_')
         return (0);
+    i++;
     while (arg[i])
     {
         if (!ft_isalnum(arg[i]))
         {
             if (arg[i] == '=' || arg[i] == '_')
             {
-                if (ft_isalnum(arg[i - 1]) || arg[i - 1] == '+')
+                if (ft_isalnum(arg[i - 1]) || arg[i - 1] == '+' || arg[i - 1] == '_')
                     return (1);
                 return (0);
             }
