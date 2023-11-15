@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:38:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 19:01:19 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:46:06 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,6 @@ int		ft_set_path(t_cmd *new_cmd, char **paths)
 	free(new_cmd->path);
 	new_cmd->path = NULL;
 	return (ft_set_relative_path(new_cmd));
-}
-
-void	ft_set_command_fds(t_shell_data **shell_data, t_cmd *cmds)
-{
-	t_cmd	*target;
-
-	if (!cmds)
-		return ;
-	target = cmds;
-	while (target->next)
-		target = target->next;
-	target->input_fd = (*shell_data)->input_fd;
-	(*shell_data)->input_fd = STDIN_FILENO;
-	target->output_fd = (*shell_data)->output_fd;
-	(*shell_data)->output_fd = STDOUT_FILENO;
 }
 
 t_cmd	*ft_get_command(t_args_list *cmd_args, char **paths)
