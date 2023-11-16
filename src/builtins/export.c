@@ -59,6 +59,21 @@ int		ft_check_valid_char(char *arg)
     return (1);
 }
 
+static
+int		ft_redifine(char *var)
+{
+	size_t	i;
+
+	i = 0;
+	while (var[i])
+	{
+		if (var[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		ft_export(t_shell_data **shell_data, t_cmd *cmd)
 {
     int     i;
@@ -74,8 +89,11 @@ int		ft_export(t_shell_data **shell_data, t_cmd *cmd)
             if (!cmd->args[i])
                 return (1);
         }
-		if (!ft_envp_set(shell_data, cmd->args[i]) || !ft_private_envp_set(shell_data, cmd->args[i]))
+		if (!ft_env_has((*shell_data)->private_envp, cmd->args[i]) || ft_redifine(cmd->args[i]))
+		{
+			if (!ft_envp_set(shell_data, cmd->args[i]) || !ft_private_envp_set(shell_data, cmd->args[i]))
 			return (127);
+		}
         i++;
     }
     return (0);
