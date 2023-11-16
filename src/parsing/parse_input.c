@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 21:57:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 21:37:35 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:49:22 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_is_empty_line(char *line)
 }
 
 static
-int		ft_something_to_do(t_args_list *args)
+int		ft_something_to_do(t_shell_data *shell_data, t_args_list *args)
 {
 	t_args_list	*target;
 
@@ -53,6 +53,11 @@ int		ft_something_to_do(t_args_list *args)
 	{
 		if (!ft_is_empty_line(target->value))
 			return (1);
+		if (!target->next && target->separator)
+		{
+			ft_wrong_redirection_syntax(shell_data);
+			return (0);
+		}
 		target = target->next;
 	}
 	return (0);
@@ -65,7 +70,7 @@ t_cmd	*ft_parse_input(t_shell_data **shell_data, t_args_list *args)
 	t_cmd		*cmds;
 	int			res;
 
-	if (!ft_something_to_do(args))
+	if (!ft_something_to_do(*shell_data, args))
 		return (NULL);
 	if (!ft_init_parsing(shell_data, &cmds, &skip))
 		return (NULL);

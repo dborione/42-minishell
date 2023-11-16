@@ -6,31 +6,11 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 00:19:12 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:42:36 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	ft_is_speparators(char *input, size_t i)
-{
-	return (input[i + 1]
-		&& ((input[i] == '<' && input[i + 1] == '<')
-		||  (input[i] == '>' && input[i + 1] == '>')));
-}
-
-int	ft_is_invalid_args_separator(t_shell_data **shell_data, char *input)
-{
-	if (ft_startswith(input, "||"))
-		ft_wrong_tokens_syntax(shell_data, "||");
-	else if (ft_startswith(input, "<<<"))
-		ft_wrong_tokens_syntax(shell_data, "<");
-	else if (ft_startswith(input, ">>>"))
-		ft_wrong_tokens_syntax(shell_data, ">");
-	else
-		return (0);
-	return (1);
-}
 
 static
 void	ft_set_type_separator(t_args_list **args_list)

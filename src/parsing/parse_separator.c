@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:47:51 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 21:48:15 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:50:15 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_parse_infile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targe
 {
 	if (!(*target)->next)
 	{
-		ft_wrong_redirection_syntax(shell_data);
+		ft_wrong_redirection_syntax(*shell_data);
 		*target = (*target)->next;
 		return (1);
 	}
@@ -42,7 +42,7 @@ int	ft_parse_heredoc(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targ
 {
 	if (!(*target)->next)
 	{
-		ft_wrong_redirection_syntax(shell_data);
+		ft_wrong_redirection_syntax(*shell_data);
 		*target = (*target)->next;
 		return (1);
 	}
@@ -69,7 +69,7 @@ int	ft_parse_outfile(t_shell_data **shell_data, t_cmd **cmds, t_args_list **targ
 {
 	if (!(*target)->next)
 	{
-		ft_wrong_redirection_syntax(shell_data);
+		ft_wrong_redirection_syntax(*shell_data);
 		*target = (*target)->next;
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/15 21:24:49 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:08:42 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_args_list	*ft_get_args(t_shell_data **shell_data, char **line)
 	args = ft_split_args(shell_data, *line);
 	if (!args)
 	{
-		//perror("bash");
+		perror("bash");
 		free(*line);
 		return (NULL);
 	};
@@ -106,7 +106,7 @@ void ft_get_input(t_shell_data **shell_data)
 
 	using_history();
 	stifle_history(1000);
-	while ((*shell_data)->private_envp && (*shell_data)->envp && !(*shell_data)->exit)
+	while (ft_check_shell_health(*shell_data) && !(*shell_data)->exit)
 	{
 		line = ft_get_line(shell_data);
 		if (!line)
@@ -115,17 +115,17 @@ void ft_get_input(t_shell_data **shell_data)
 		args = ft_get_args(shell_data, &line);
 		if (!args || ft_invalide_start(shell_data, &args, &line))
 			continue;
-		test_print_args(args);
+		test_print_args(args); // tests
 		(*shell_data)->cmds = ft_parse_input(shell_data, args);
 		test_print_cmds((*shell_data)->cmds);
-		ft_free_args_list(&args);
+		ft_free_args_list(&args); // tests
 		free(line);
-		if (!(*shell_data)->cmds)
+		if (!*shell_data || !(*shell_data)->cmds)
 			continue ;
 		ft_execution(shell_data, &(*shell_data)->cmds);
+		if (!*shell_data)
+			continue ;
 		ft_free_commands(&(*shell_data)->cmds);
-		if (!ft_check_shell_health((*shell_data)->private_envp, (*shell_data)->envp))
-			break ;
 	}
 	clear_history();
 }

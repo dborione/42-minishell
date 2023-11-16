@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:47:14 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/09 17:18:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:49:44 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_get_outfile(t_shell_data **shell_data, t_cmd *cmds, char *outfile_path, i
 		fd = open(outfile_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else
 	{
-		ft_wrong_redirection_syntax(shell_data);
+		ft_wrong_redirection_syntax(*shell_data);
 		fd = -1;
 		exit_code = 258;
 	}

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 10:43:34 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:04:46 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int				ft_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_private_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_is_var_char(char c);
 char			*ft_include_var(t_data_split *data, char *input);
-int				ft_check_shell_health(char **envp, char **private_envp);
+int				ft_check_shell_health(t_shell_data *shell_data);
 
 /* Prompt */
 
@@ -194,7 +194,6 @@ size_t			ft_split_from_quotes(
 
 /* Builtins */
 
-int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd, int sub_process);
 int				ft_is_builtin(char *input);
 int				ft_cd(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_env(char **envp);
@@ -207,6 +206,8 @@ int				ft_unset(t_shell_data **shell_data , t_cmd *cmd);
 /* Execution */
 
 void			ft_execution(t_shell_data **t_shell_data, t_cmd **cmd);
+void			ft_next_execution(t_shell_data **shell_data, t_cmd *cmd);
+int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd, int sub_process);
 
 /* History */
 
@@ -233,7 +234,7 @@ int	ft_heredoc(t_shell_data *shell_data, char *eof);
 
 int				ft_perror(char *message);
 void			ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token);
-void			ft_wrong_redirection_syntax(t_shell_data **shell_data);
+void			ft_wrong_redirection_syntax(t_shell_data *shell_data);
 void			ft_command_not_found(char *cmd_name);
 int				ft_export_error(char *arg);
 int				ft_exit_num_msg(t_shell_data **shell_data, t_cmd *cmd);
