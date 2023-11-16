@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 22:24:37 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 10:43:34 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int				ft_split_char_separator(
 int				ft_split_string_separator(
 					t_data_split **data, t_args_list **args_list,
 					char *input, char *separator);
+int				ft_last_arg(t_data_split *data, t_args_list **args_list);
 char			**ft_extract_args(t_args_list *args);
 
 /* Args Spaces */
