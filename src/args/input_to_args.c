@@ -6,14 +6,14 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 12:39:00 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:53:02 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static
-char		*ft_init_tmp(size_t len)
+char	*ft_init_tmp(size_t len)
 {
 	char	*tmp;
 
@@ -25,7 +25,9 @@ char		*ft_init_tmp(size_t len)
 }
 
 static
-int			ft_init_data_split(t_shell_data *shell_data, t_data_split **data, t_args_list **args_list, size_t len)
+int	ft_init_data_split(
+	t_shell_data *shell_data, t_data_split **data,
+	t_args_list **args_list, size_t len)
 {
 	*data = malloc(sizeof(t_data_split));
 	if (!(*data))
@@ -46,7 +48,7 @@ int			ft_init_data_split(t_shell_data *shell_data, t_data_split **data, t_args_l
 }
 
 static
-int		ft_finish_split_args(t_data_split **data, t_args_list **args_list)
+int	ft_finish_split_args(t_data_split **data, t_args_list **args_list)
 {
 	int		success;
 
@@ -68,8 +70,13 @@ int		ft_finish_split_args(t_data_split **data, t_args_list **args_list)
 }
 
 static
-int			ft_split_checker(t_shell_data **shell_data, t_data_split **data, t_args_list **args_list, char *input)
+int	ft_split_checker(
+	t_shell_data **shell_data, t_data_split **data,
+	t_args_list **args_list, char *input)
 {
+	int	res;
+
+	res = 1;
 	if (ft_is_invalid_args_separator(shell_data, &input[(*data)->i]))
 	{
 		ft_free_args_list(args_list);
@@ -78,30 +85,31 @@ int			ft_split_checker(t_shell_data **shell_data, t_data_split **data, t_args_li
 		return (0);
 	}
 	if (ft_is_speparators(&input[(*data)->i]))
-		ft_split_string_separator(data, args_list, input, &input[(*data)->i]);
+		res = ft_split_string_separator(data, args_list, input, &input[(*data)->i]);
 	else if (input[(*data)->i] == '<' || input[(*data)->i] == '|' || input[(*data)->i] == '>')
-		ft_split_char_separator(data, args_list, input, input[(*data)->i]);
+		res = ft_split_char_separator(data, args_list, input, input[(*data)->i]);
 	else if (ft_isspace(input[(*data)->i]))
-		ft_space_split(data, args_list, input);
-	else if ((input[(*data)->i] == '\'' || input[(*data)->i] == '"') && ft_has_endof_quotes(&input[(*data)->i], input[(*data)->i]))
-		ft_quotes_split(data, args_list, input);
+		res = ft_space_split(data, args_list, input);
+	else if ((input[(*data)->i] == '\'' || input[(*data)->i] == '"')
+		&& ft_has_endof_quotes(&input[(*data)->i], input[(*data)->i]))
+		res = ft_quotes_split(data, args_list, input);
 	else
 	{
 		(*data)->tmp[(*data)->i - (*data)->start] = input[(*data)->i];
 		(*data)->i++;
 	}
-	return (1);
+	return (res);
 }
 
 t_args_list	*ft_input_to_args_list(t_shell_data **shell_data, char *input, size_t len)
 {
 	t_data_split	*data;
-	t_args_list	*args_list;
+	t_args_list		*args_list;
 
 	if (!ft_init_data_split(*shell_data, &data, &args_list, len))
 		return (NULL);
 	while (ft_isspace(input[data->i]))
-			data->i++;
+		data->i++;
 	data->start = data->i;
 	while (input[data->i])
 	{

@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 15:01:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 23:30:29 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:29:41 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ t_args_list	*ft_new_args_list(char *tmp)
 		return (NULL);
 	}
 	new_arg->separator = 0;
+	new_arg->fd = -1;
 	new_arg->next = NULL;
 	return (new_arg);
 }
-int			ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
+
+int	ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
 {
 	t_args_list	*target_arg;
 
@@ -49,7 +51,7 @@ int			ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
 	return (1);
 }
 
-int			ft_join_args(t_args_list **cmd_split, char *tmp)
+int	ft_join_args(t_args_list **cmd_split, char *tmp)
 {
 	t_args_list	*target_arg;
 
@@ -64,7 +66,7 @@ int			ft_join_args(t_args_list **cmd_split, char *tmp)
 	return (1);
 }
 
-char		**ft_args_list_to_str_split(t_args_list **cmd_split)
+char	**ft_args_list_to_str_split(t_args_list **cmd_split)
 {
 	t_args_list	*target;
 	size_t		i;
