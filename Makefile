@@ -62,7 +62,7 @@ endif
 		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
 
 leaks: 	${NAME}
-		valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./$(NAME)
+		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./$(NAME)
 
 -include $(DEPENDS)
 
