@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/16 12:08:42 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:11:37 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_args_list	*ft_get_args(t_shell_data **shell_data, char **line)
 	args = ft_split_args(shell_data, *line);
 	if (!args)
 	{
-		perror("bash");
 		free(*line);
 		return (NULL);
 	};
