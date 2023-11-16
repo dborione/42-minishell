@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:43:39 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 00:11:24 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 10:42:43 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,28 @@ int	ft_quotes_split(t_data_split **data, t_args_list **args_list, char *input)
 	return (1);
 }
 
+int		ft_last_arg(t_data_split *data, t_args_list **args_list)
+{
+	char	*var_tmp;
+
+	var_tmp = ft_include_var(data, data->tmp);
+	if (!var_tmp)
+		return (0);
+	if (!data->space)
+	{
+		if (!ft_join_args(args_list, var_tmp))
+		{
+			ft_free_args_list(args_list);
+			*args_list = NULL;
+		}
+		return (0);
+	}
+	else if (!ft_add_arg_to_list(args_list, var_tmp))
+	{
+		ft_free_args_list(args_list);
+		*args_list = NULL;
+		return (0);
+	}
+	free(var_tmp);
+	return (1);
+}

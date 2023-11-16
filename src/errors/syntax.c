@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 20:42:15 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/13 00:21:09 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 10:55:49 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token)
 	}
 	if (!ft_perror(message))
 		(*shell_data)->exit_code = 127;
+	free(message);
 }
 
 void	ft_wrong_redirection_syntax(t_shell_data **shell_data)
