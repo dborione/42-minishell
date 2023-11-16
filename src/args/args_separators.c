@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 13:24:33 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:15:12 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_split_char_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char separator)
 {
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
-	if (ft_is_separator_fd((*data)->tmp))
+	if (separator != '|' && ft_is_separator_fd((*data)->tmp))
 		ft_set_separator_fd(args_list, input);
 	else if (!ft_set_previous_arg(data, args_list, input))
 		return (0);

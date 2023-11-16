@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:16:18 by dborione          #+#    #+#             */
-/*   Updated: 2023/11/16 14:11:37 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:14:12 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	test_print_args(t_args_list *args)
 	ft_printf("¨¨¨\n");
 	while (target_a)
 	{
-		ft_printf("separator: %i (%s)\n", target_a->separator, target_a->value);
+		ft_printf("separator: %i fd: %i value: (%s)\n", target_a->separator, target_a->fd, target_a->value);
 		target_a = target_a->next;
 	}
 	ft_printf("¨¨¨\n");
