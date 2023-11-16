@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:02:31 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 11:20:20 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:55:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_shlvl_to_hight(int level)
 {
 	char	*str_level;
-	char 	*tmp;
+	char	*tmp;
 
 	if (level == 2147483647)
 		str_level = ft_strdup("2147483647");

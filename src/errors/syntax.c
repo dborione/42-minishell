@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 20:42:15 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 10:55:49 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:57:53 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token)
 	free(message);
 }
 
-void	ft_wrong_redirection_syntax(t_shell_data **shell_data)
+void	ft_wrong_redirection_syntax(t_shell_data *shell_data)
 {
-	(*shell_data)->exit_code = 258;
+	shell_data->exit_code = 258;
 	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 }
