@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:15:02 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 10:52:22 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:39:00 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			ft_split_checker(t_shell_data **shell_data, t_data_split **data, t_args_li
 		free(*data);
 		return (0);
 	}
-	if (ft_is_speparators(input, (*data)->i))
+	if (ft_is_speparators(&input[(*data)->i]))
 		ft_split_string_separator(data, args_list, input, &input[(*data)->i]);
 	else if (input[(*data)->i] == '<' || input[(*data)->i] == '|' || input[(*data)->i] == '>')
 		ft_split_char_separator(data, args_list, input, input[(*data)->i]);

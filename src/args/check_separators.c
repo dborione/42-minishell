@@ -6,20 +6,24 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:59:03 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 11:49:01 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:38:42 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_is_speparators(char *input, size_t i)
+int	ft_is_speparators(char *input)
 {
-	return (input[i + 1]
-		&& ((input[i] == '<' && input[i + 1] == '<')
-		||  (input[i] == '>' && input[i + 1] == '>')));
+	return (input[1]
+		&& ((input[0] == '<' && input[1] == '<')
+		||  (input[0] == '>' && input[1] == '>')));
 }
 
-//int	ft_is_separators_with_fd()
+// int	ft_is_separators_with_fd(t_shell_data *shell_data, t_data_split *data, char *input)
+// {
+// 	if (ft_is_speparators(intput))
+	
+// }
 
 int	ft_is_invalid_args_separator(t_shell_data **shell_data, char *input)
 {

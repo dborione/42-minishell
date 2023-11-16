@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 12:04:46 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:37:43 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char			**ft_args_list_to_str_split(t_args_list **cmd_split);
 void			ft_free_args_list(t_args_list **cmd_split);
 void			*ft_exit_split_args(
 					t_data_split **data, t_args_list **args_list);
-int				ft_is_speparators(char *input, size_t i);
+int				ft_is_speparators(char *input);
 int				ft_is_invalid_args_separator(
 					t_shell_data **shell_data, char *input);
 int				ft_split_char_separator(
