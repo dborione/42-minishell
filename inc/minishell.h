@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:55:56 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 13:12:21 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:38:51 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@
 # include <dirent.h>
 # include <errno.h>
 
-/* Colours */
-# define GREEN \033[0;92m
-# define BLUE \033[0;34m
-# define DEFAULT \033[0;37m
-
 /* PIPES */
 
 # define READ_PIPE 0
@@ -40,6 +35,9 @@
 # define MAIN 0
 # define HEREDOC_CHILD 2
 # define CTL_C_EXIT 1
+
+# define FALSE 0
+# define TRUE 1
 
 typedef struct s_env_var
 {
@@ -77,9 +75,19 @@ typedef struct s_data_split
 	size_t	i;
 	size_t	start;
 	char	**envp;
+	char	*home;
 	int		exit_code;
 	int		space;
 }			t_data_split;
+
+typedef struct s_data_include_var
+{
+	size_t	i;
+	size_t	start;
+	size_t	len;
+	int		quotes;
+	char	*res;
+}			t_data_include_var;
 
 typedef struct s_shell_data
 {
@@ -90,6 +98,7 @@ typedef struct s_shell_data
 	int					pipe[2];
 	size_t				pipes;
 	char				*pwd;
+	char				*home;
 	int					input_target_fd;
 	int					input_fd;
 	int					output_source_fd;
@@ -106,9 +115,12 @@ typedef struct s_shell_data
 
 /* Init */
 
-int				ft_init_all(t_shell_data **shell_data, char *shell_path, char *envp[]);
-int				ft_init_shell(
-					t_shell_data **shell_data, char *shell_path, char *envp[]);
+int				ft_init_all(t_shell_data **shell_data, 
+					char *envp[], char *shell_path);
+int				ft_init_shell(t_shell_data **shell_data, 
+					char *envp[], char *shell_path);
+int				ft_init_envp(t_shell_data **shell_data, 
+					char **envp, char *shell_path);
 void			ft_init_shell_sigaction(t_shell_data *shell_data, int process);
 void			ft_destroy_shell(t_shell_data **shell_data);
 
@@ -117,6 +129,10 @@ void			ft_destroy_shell(t_shell_data **shell_data);
 char			**ft_envp_copy(char *envp[]);
 char			*ft_envp_get_key(char *input);
 char			*ft_envp_get_value(char **envp, char *key);
+char			*ft_var_get_value(char *var);
+char			*ft_envp_get_var(char **envp, char *var);
+char			*ft_var_new_value(char *var, char *old_var);
+int				ft_export_env(t_shell_data **shell_data);
 int				ft_env_same_key(char *key, char *var);
 int				ft_env_has(char **envp, char *key);
 int				ft_private_envp_set(t_shell_data **shell_data, char *input);
@@ -125,9 +141,25 @@ int				ft_private_envp_add(t_shell_data **shell_data, char *input);
 int				ft_envp_add(t_shell_data **shell_data, char *input);
 int				ft_envp_unset(t_shell_data **shell_data, char *key);
 int				ft_private_envp_unset(t_shell_data **shell_data, char *key);
-int				ft_is_var_char(char c);
-char			*ft_include_var(t_data_split *data, char *input);
+char			*ft_envp_get_home(t_shell_data *shell_data);
 int				ft_check_shell_health(t_shell_data *shell_data);
+
+/* Include Var */
+
+char			**ft_include_var(t_data_split *data, char *input, int quotes);
+int				ft_is_var_char(char c);
+char			*ft_get_value(t_data_split *data, char *str, size_t end);
+char			*ft_var_join(char *s1, char *s2, size_t len);
+int				ft_include_envp_var(
+					t_data_split *data, char *input, 
+					t_data_include_var **data_i);
+int				ft_include_home(
+					t_data_split *data, char *input, 
+					t_data_include_var **data_i);
+int				ft_include_envp_var(
+					t_data_split *data, char *input, 
+					t_data_include_var **data_i);
+int				ft_include_var_split(t_args_list **args, char **var_split);
 
 /* Prompt */
 
@@ -136,12 +168,20 @@ char			*ft_show_user_path(char **envp);
 /*	Input */
 
 void			ft_get_input(t_shell_data	**shell_data);
+int				ft_ends_with_pipe(t_args_list *args);
+int				ft_invalide_start(
+					t_shell_data **shell_data, t_args_list **args);
+int				ft_add_more_inputs(
+					t_shell_data **shell_data, t_args_list **args_list);
 
 /*	Parsing */
 
 t_cmd			*ft_parse_input(t_shell_data **shell_data, t_args_list *args);
-int	ft_parse_separator(
-	t_shell_data **shell_data, t_cmd **cmds, t_args_list **target, int *skip);
+int				ft_parse_separator(
+					t_shell_data **shell_data, t_cmd **cmds, 
+					t_args_list **target, int *skip);
+int				ft_is_empty_line(char *line);
+int				ft_set_res(t_shell_data **shell_data, int res);
 
 /* Commands */
 
@@ -149,6 +189,7 @@ t_cmd			*ft_get_command(t_args_list *args, char **paths);
 size_t			ft_add_command(t_cmd **cmds, t_args_list *args, char **paths);
 void			ft_set_command_fds(t_shell_data **shell_data, t_cmd *cmds);
 void			ft_free_commands(t_cmd **cmds);
+int				ft_set_path(t_cmd *new_cmd, char **paths);
 
 /* Args */
 
@@ -156,6 +197,8 @@ t_args_list		*ft_new_args_list(char *tmp);
 t_args_list		*ft_split_args(t_shell_data **shell_data, char *input);
 t_args_list		*ft_input_to_args_list(
 					t_shell_data **shell_data, char *input, size_t len);
+int				ft_split_checker(t_shell_data **shell_data, t_data_split **data,
+					t_args_list **args_list, char *input);
 int				ft_add_arg_to_list(t_args_list **cmd_split, char *tmp);
 int				ft_join_args(t_args_list **cmd_split, char *tmp);
 int				ft_one_split(
@@ -166,7 +209,6 @@ void			ft_free_args_list(t_args_list **cmd_split);
 void			*ft_exit_split_args(
 					t_data_split **data, t_args_list **args_list);
 int				ft_is_speparators(char *input);
-int				ft_is_separator_fd(char *input);
 int				ft_is_invalid_args_separator(
 					t_shell_data **shell_data, char *input);
 int				ft_split_char_separator(
@@ -190,7 +232,8 @@ char			*ft_between_quotes(char *str);
 int				ft_quotes_split(
 					t_data_split **data, t_args_list **args_list, char *input);
 size_t			ft_join_from_quotes(
-					t_data_split *data, t_args_list **cmd_split, char *str_before, char *str_after);
+					t_data_split *data, t_args_list **cmd_split, 
+					char *str_before, char *str_after);
 size_t			ft_split_from_quotes(
 					t_data_split *data, t_args_list **cmd_split, char *input);
 
@@ -203,13 +246,14 @@ int				ft_pwd(t_shell_data *shell_data);
 int				ft_echo(char **envp, t_cmd *cmd);
 int				ft_exit(t_shell_data **shell_data, t_cmd *cmd);
 int				ft_export(t_shell_data **shell_env, t_cmd *cmd);
-int				ft_unset(t_shell_data **shell_data , t_cmd *cmd);
+int				ft_unset(t_shell_data **shell_data, t_cmd *cmd);
 
 /* Execution */
 
 void			ft_execution(t_shell_data **t_shell_data, t_cmd **cmd);
 void			ft_next_execution(t_shell_data **shell_data, t_cmd *cmd);
-int				ft_execute_builtin(t_shell_data **shell_data, t_cmd *cmd, int sub_process);
+int				ft_execute_builtin(t_shell_data **shell_data, 
+					t_cmd *cmd, int sub_process);
 
 /* History */
 
@@ -220,7 +264,8 @@ void			ft_add_to_history_file(char **hist_file, char *line);
 int				ft_get_infile(
 					t_shell_data **shell_data, t_cmd *cmds, char *infile_path);
 int				ft_get_outfile(
-					t_shell_data **shell_data, t_cmd *cmds, char *outfile_path, int append);
+					t_shell_data **shell_data, t_cmd *cmds, 
+					char *outfile_path, int append);
 int				ft_use_pipe(
 					t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2]);
 void			ft_reset_fd(t_shell_data **shell_data);
@@ -229,8 +274,7 @@ int				ft_change_pwds(t_shell_data **shell_data, char *target_dir);
 
 /* Heredoc */
 
-int	ft_heredoc(t_shell_data *shell_data, char *eof);
-
+int				ft_heredoc(t_shell_data *shell_data, char *eof);
 
 /* Errors */
 
@@ -245,6 +289,7 @@ void			ft_no_such_file(char *cmd_name);
 void			ft_perm_denied(char *cmd_name);
 void			ft_shlvl_to_hight(int level);
 void			ft_memory_error(t_shell_data **shell_data);
-int			ft_cd_errors(char *cmd_name, char *msg);
+int				ft_cd_errors(char *cmd_name, char *msg);
+int				ft_dup2_error(t_shell_data **shell_data, int pipe);
 
 #endif

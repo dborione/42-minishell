@@ -33,13 +33,13 @@ void	ft_reset_unic_builtin_fds(t_shell_data **shell_data)
 	if ((*shell_data)->infile)
 	{
 		if (dup2((*shell_data)->input_fd, STDIN_FILENO) == -1)
-			return ;
+			ft_dup2_error(&(*shell_data), FALSE);
 		close((*shell_data)->input_fd);
 	}
 	if ((*shell_data)->outfile)
 	{
 		if (dup2((*shell_data)->output_fd, STDOUT_FILENO) == -1)
-			return ;
+			ft_dup2_error(&(*shell_data), FALSE);
 		close((*shell_data)->output_fd);
 	}
 }

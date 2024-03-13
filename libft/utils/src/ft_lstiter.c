@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 15:47:16 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/04/14 22:25:52 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:41:09 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 			f(target->content);
 			target = target->next;
 		}
-	}	
+	}
 }
 /*
 int	main(void)

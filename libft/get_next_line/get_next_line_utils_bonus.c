@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:04:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/06/01 10:13:42 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:42:49 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strdup_gnl(const char *s)
 	{
 		dup[i] = s[i];
 		i++;
-	}	
+	}
 	dup[i] = '\0';
 	return (dup);
 }

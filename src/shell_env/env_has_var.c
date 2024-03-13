@@ -27,7 +27,6 @@ int	ft_env_same_key(char *key, char *var)
 	}
 	if (i != end || (var[i] && var[i] != '='))
 		return (0);
-	//ft_printf("right one key: %s, var: %s\n", key, var);
 	return (1);
 }
 

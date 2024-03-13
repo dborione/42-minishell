@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 00:42:05 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 22:33:39 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:50:39 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_destroy_shell(t_shell_data **shell_data)
 		ft_free_commands(&(*shell_data)->cmds);
 		if ((*shell_data)->pwd)
 			free((*shell_data)->pwd);
+		if ((*shell_data)->home)
+			free((*shell_data)->home);
 		free(*shell_data);
 	}
 }
@@ -33,7 +35,7 @@ int	main(int argc, char *argv[], char *envp[])
 	error_code = 0;
 	if (argc == 1 && ft_isequal(argv[0], "./minishell"))
 	{
-		if (!ft_init_all(&shell_data, argv[0], envp))
+		if (!ft_init_all(&shell_data, envp, argv[0]))
 		{
 			ft_destroy_shell(&shell_data);
 			perror("bash");

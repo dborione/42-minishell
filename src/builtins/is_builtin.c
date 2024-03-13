@@ -14,7 +14,6 @@
 
 int	ft_is_builtin(char *input)
 {
-	// espaces?
 	if (ft_isequal(input, "cd") || ft_startswith(input, "cd "))
 		return (1);
 	if (ft_startswith(input, "pwd ") || ft_isequal(input, "pwd"))

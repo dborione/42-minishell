@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:00:36 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 21:57:53 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 08:37:48 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ size_t	ft_args_len(t_args_list *args)
 }
 
 static
-int		ft_init(t_args_list *args, char ***new_args, t_args_list **target, size_t *i)
+int	ft_init(
+	t_args_list *args, char ***new_args, t_args_list **target, size_t *i)
 {
 	*new_args = malloc(sizeof(char *) * (ft_args_len(args) + 1));
 	if (!(*new_args))
@@ -49,7 +50,7 @@ int		ft_init(t_args_list *args, char ***new_args, t_args_list **target, size_t *
 }
 
 static
-int		ft_extract_arg(char **new_args, t_args_list **target, size_t *i)
+int	ft_extract_arg(char **new_args, t_args_list **target, size_t *i)
 {
 	new_args[*i] = ft_strdup((*target)->value);
 	if (!new_args[*i])
@@ -75,7 +76,7 @@ char	**ft_extract_args(t_args_list *args)
 		if (target->separator)
 		{
 			if (!target->next)
-				break;
+				break ;
 			target = target->next->next;
 		}
 		else

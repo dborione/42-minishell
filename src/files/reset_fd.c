@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:08:28 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 16:19:21 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:14:04 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_reset_fd(t_shell_data **shell_data)
 {
-    (*shell_data)->infile = 0;
-    (*shell_data)->outfile = 0;
-    (*shell_data)->input_fd = STDIN_FILENO;
-    (*shell_data)->output_fd = STDOUT_FILENO;
+	(*shell_data)->infile = 0;
+	(*shell_data)->outfile = 0;
+	(*shell_data)->input_fd = STDIN_FILENO;
+	(*shell_data)->output_fd = STDOUT_FILENO;
 }

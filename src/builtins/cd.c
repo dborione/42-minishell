@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:06:32 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/15 22:25:45 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:29:43 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int	ft_cd_home(t_shell_data **shell_data)
 	int		exit_code;
 	char	*home;
 
-	home = ft_envp_get_value((*shell_data)->envp, "HOME"); // voir que faire si la var home n'existe pas
-	if (!home[0])
+	home = ft_envp_get_value((*shell_data)->envp, "HOME");
+	if (!ft_env_has((*shell_data)->envp, "HOME"))
 	{
 		ft_putendl_fd("bash: cd: « HOME » is not defined", 2);
 		return (1);
 	}
-	exit_code = chdir(home);
+	if (home[0])
+		exit_code = chdir(home);
+	else
+		exit_code = chdir(".");
 	if (exit_code)
 	{
 		perror("bash: cd");
@@ -88,4 +91,3 @@ int	ft_cd(t_shell_data **shell_data, t_cmd *cmd)
 		return (ft_cd_home(shell_data));
 	return (ft_cd_path(shell_data, cmd->args[1]));
 }
-

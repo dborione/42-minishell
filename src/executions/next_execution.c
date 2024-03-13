@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   next_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:11:01 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 11:25:51 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:11:02 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,22 @@ void	ft_command_error(t_cmd *cmd, int path_error)
 }
 
 static
+int	ft_is_dir(char *path)
+{
+	void	*fd;
+
+	if (!ft_startswith(path, "/"))
+		return (0);
+	fd = opendir(path);
+	if (fd)
+	{
+		closedir(fd);
+		return (1);
+	}
+	return (0);
+}
+
+static
 void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 {
 	if (cmd->input_fd == -1 || cmd->output_fd == -1)
@@ -40,7 +56,7 @@ void	ft_next_command(t_shell_data **shell_data, t_cmd *cmd, int pipe_fd[2])
 	close(pipe_fd[READ_PIPE]);
 	if (cmd->builtin)
 		exit(ft_execute_builtin(shell_data, cmd, 1));
-	if (opendir(cmd->name) && ft_strrchr(cmd->name, '/'))
+	if (ft_is_dir(cmd->name))
 	{
 		ft_command_error(cmd, 0);
 		ft_destroy_shell(shell_data);

@@ -38,6 +38,6 @@ void	ft_wrong_tokens_syntax(t_shell_data **shell_data, char *token)
 
 void	ft_wrong_redirection_syntax(t_shell_data *shell_data)
 {
-	shell_data->exit_code = 258;
-	ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+	shell_data->exit_code = 2;
+	ft_putstr_fd("bash: syntax error near unexpected token « newline »\n", 2);
 }

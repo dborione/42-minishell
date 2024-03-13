@@ -6,13 +6,13 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:36:50 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/10/06 16:36:50 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:30:23 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_env(char **envp)
+int	ft_env(char **envp)
 {
 	int	i;
 
@@ -22,5 +22,5 @@ int ft_env(char **envp)
 		ft_putendl_fd(envp[i], 1);
 		i++;
 	}
-    return (0);
+	return (0);
 }

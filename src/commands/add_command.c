@@ -21,7 +21,6 @@ size_t	ft_add_command(t_cmd **cmds, t_args_list *args, char **paths)
 	if (!*cmds)
 	{
 		*cmds = ft_get_command(args, paths);
-		// erreurs de création de commande à prendre en compte
 		if (!*cmds)
 			return (0);
 		return (1);
@@ -33,6 +32,5 @@ size_t	ft_add_command(t_cmd **cmds, t_args_list *args, char **paths)
 	if (!target->next)
 		return (0);
 	target->next->id = target->id + 1;
-	// exit 127 : erreurs de création de commande à prendre en compte
 	return (1);
 }

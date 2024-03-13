@@ -58,7 +58,7 @@ char	*ft_betterdup(const char *s, size_t len)
 	{
 		dup[i] = s[i];
 		i++;
-	}	
+	}
 	dup[i] = '\0';
 	return (dup);
 }

@@ -52,18 +52,6 @@ fclean:
 
 re: fclean all
 
-os:
-	@echo "${BLUE} [Make] ${YELLOW} Copy ${DEFAULT}$(UNAME)${YELLOW} !"
-ifeq ($(UNAME), Linux)
-	@cp ./os/linux_limits.h ./inc/ft_limits.h
-else
-	@cp ./os/macos_limits.h ./inc/ft_limits.h 
-endif
-		@echo "${BLUE} [Make] ${GREEN} Done. ${DEFAULT}"
-
-leaks: 	${NAME}
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./$(NAME)
-
 -include $(DEPENDS)
 
 .PHONY: all clean fclean re os leaks

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/17 09:15:47 by rbarbiot          #+#    #+#             */
+/*   Updated: 2023/11/17 15:29:53 by dborione         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static
@@ -25,12 +37,14 @@ void	ft_skip_n_options(char **args, int *i)
 		(*i)++;
 }
 
-int ft_echo(char **envp, t_cmd *cmd)
+// static 
+// void	ft_echo() espace en trop a regler 
+
+int	ft_echo(char **envp, t_cmd *cmd)
 {
-	int i;
-	int	new_line;
-	int	start;
-	char *tmp;
+	int		i;
+	int		new_line;
+	int		start;
 
 	i = 1;
 	new_line = 0;
@@ -43,21 +57,12 @@ int ft_echo(char **envp, t_cmd *cmd)
 	{
 		if ((new_line && i > start) || (!new_line && i > start))
 			ft_putchar_fd(' ', 1);
-		if (ft_startswith(cmd->args[i], "~/") || ft_isequal(cmd->args[i], "~"))
-		{
-			tmp = ft_strjoin(ft_envp_get_value(envp, "HOME"), &cmd->args[i][1]); // a voir quand HOME est unset
-			ft_printf(tmp);
-			free(tmp);
-			i++;
-			if (!cmd->args[i])
-				break ;
-		}
-		ft_printf(cmd->args[i]);
+		ft_putstr_fd(cmd->args[i], 1);
 		i++;
 	}
 	if (new_line)
 		ft_putendl_fd("", 1);
 	if (cmd && envp)
-    	return (0);
+		return (0);
 	return (0);
 }

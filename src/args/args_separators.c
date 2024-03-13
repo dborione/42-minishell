@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_separators.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:16:55 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 14:20:43 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 12:13:10 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,49 +24,37 @@ void	ft_set_type_separator(t_args_list **args_list)
 }
 
 static
-void	ft_set_separator_fd(t_args_list **args_list, char *input)
+int	ft_set_previous_arg(
+	t_data_split **data, t_args_list **args_list, char *input)
 {
-	t_args_list	*target;
+	char	**tmp;
 
-	target = (*args_list);
-	while (target->next)
-		target = target->next;
-	target->fd = ft_atoi(input);
-}
-
-static
-int	ft_set_previous_arg(t_data_split **data, t_args_list **args_list, char *input)
-{
-	char	*tmp;
-
-	tmp = ft_include_var(*data, (*data)->tmp);
+	tmp = ft_include_var(*data, (*data)->tmp, 0);
 	if (!tmp)
 		return (0);
 	if (!(*data)->space && (*data)->tmp[0])
 	{
-		if (!ft_join_args(args_list, tmp))
+		if (!ft_join_args(args_list, tmp[0]))
 		{
-			free(tmp);
+			ft_free_split(tmp);
 			return (0);
 		}
 		(*data)->tmp[0] = '\0';
 	}
-	else if ((*data)->tmp[0] && !ft_one_split(data, args_list, input, tmp) && (*data)->tmp[0])
+	else if ((*data)->tmp[0]
+		&& !ft_one_split(data, args_list, input, tmp[0]) && (*data)->tmp[0])
 	{
-		free(tmp);
+		ft_free_split(tmp);
 		return (0);
 	}
-	free(tmp);
-	return (1);
+	return (ft_include_var_split(args_list, tmp));
 }
 
 int	ft_split_char_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char separator)
 {
 	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
-	if (separator != '|' && ft_is_separator_fd((*data)->tmp))
-		ft_set_separator_fd(args_list, (*data)->tmp);
-	else if (!ft_set_previous_arg(data, args_list, input))
+	if (!ft_set_previous_arg(data, args_list, input))
 		return (0);
 	(*data)->tmp[0] = separator;
 	(*data)->tmp[1] = '\0';
@@ -85,10 +73,7 @@ int	ft_split_char_separator(
 int	ft_split_string_separator(
 	t_data_split **data, t_args_list **args_list, char *input, char *separator)
 {
-	(*data)->tmp[(*data)->i - (*data)->start] = '\0';
-	if (ft_is_separator_fd((*data)->tmp))
-		ft_set_separator_fd(args_list, (*data)->tmp);
-	else if (!ft_set_previous_arg(data, args_list, input))
+	if (!ft_set_previous_arg(data, args_list, input))
 		return (0);
 	(*data)->tmp[0] = separator[0];
 	(*data)->tmp[1] = separator[1];

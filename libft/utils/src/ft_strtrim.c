@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:44:23 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/04/14 22:25:52 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 13:35:57 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		i++;
 	while (s1[i + new_len] && !ft_ends_with(&s1[i + new_len], set))
 		new_len++;
-	res = (char *)malloc(new_len + 1);
+	res = malloc(sizeof(char) * (new_len + 1));
 	if (!res)
 		return (NULL);
 	while (s1[i] && y < new_len)

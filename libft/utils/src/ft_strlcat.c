@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 10:55:12 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/04/14 22:25:52 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:40:52 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		len++;
 	while (src[i] && len + i + 1 < dstsize)
 	{
-			dst[len + i] = src[i];
+		dst[len + i] = src[i];
 		i++;
 	}
 	if (len < dstsize)

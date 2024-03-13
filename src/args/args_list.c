@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 15:01:24 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/16 13:29:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 13:29:05 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	ft_add_arg_to_list(t_args_list **cmd_split, char *tmp)
 {
 	t_args_list	*target_arg;
 
+	if (!tmp)
+		return (1);
 	if (!*cmd_split)
 	{
 		*cmd_split = ft_new_args_list(tmp);

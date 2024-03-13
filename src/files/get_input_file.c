@@ -6,7 +6,7 @@
 /*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 12:46:57 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/07 21:41:47 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:20:49 by dborione         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,34 @@ void	ft_set_cmd_infile_fd(
 	}
 }
 
-int		ft_get_infile(
+static
+int	ft_infile_access(
 	t_shell_data **shell_data, t_cmd *cmds, char *infile_path)
 {
 	int	fd;
 
-	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
+	fd = open(infile_path, O_RDONLY, 0644);
+	ft_set_cmd_infile_fd(shell_data, cmds, fd);
+	if (fd == -1)
 	{
-		fd = open(infile_path, O_RDONLY, 0644);
-		ft_set_cmd_infile_fd(shell_data, cmds, fd);
-		if (fd == -1)
-		{
-			(*shell_data)->exit_code = EXIT_FAILURE;
-			return (0);
-		}
-		//(*shell_data)->infile = 1;
-		return (1);
+		(*shell_data)->exit_code = EXIT_FAILURE;
+		return (0);
 	}
+	return (1);
+}
+
+int	ft_get_infile(
+	t_shell_data **shell_data, t_cmd *cmds, char *infile_path)
+{
+	if (access(infile_path, F_OK) == 0 && access(infile_path, R_OK) == 0)
+		return (ft_infile_access(shell_data, cmds, infile_path));
 	ft_set_cmd_infile_fd(shell_data, cmds, -1);
 	if (access(infile_path, F_OK))
+	{
+		(*shell_data)->exit_code = 1;
 		ft_no_such_file(infile_path);
+		return (2);
+	}
 	else if (access(infile_path, R_OK))
 	{
 		(*shell_data)->exit_code = 1;

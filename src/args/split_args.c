@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbiot <rbarbiot@student.s19.be>         +#+  +:+       +#+        */
+/*   By: rbarbiot <rbarbiot@student.19.be>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:14:26 by rbarbiot          #+#    #+#             */
-/*   Updated: 2023/11/14 23:37:41 by rbarbiot         ###   ########.fr       */
+/*   Updated: 2023/11/17 08:56:30 by rbarbiot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int			ft_one_split(t_data_split **data, t_args_list **args_list, char *input, char *tmp)
+int	ft_one_split(
+	t_data_split **data, t_args_list **args_list, char *input, char *tmp)
 {
 	if (!ft_add_arg_to_list(args_list, tmp))
 	{
@@ -30,7 +31,7 @@ int			ft_one_split(t_data_split **data, t_args_list **args_list, char *input, ch
 	return (1);
 }
 
-t_args_list		*ft_split_args(t_shell_data **shell_data, char *input)
+t_args_list	*ft_split_args(t_shell_data **shell_data, char *input)
 {
 	size_t		len;
 	t_args_list	*args_list;
